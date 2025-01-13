@@ -2,13 +2,19 @@ package appli.lprs.jfx_rdv.accueil;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 
 public class LoginController {
     @FXML
-    private Label welcomeText;
+    private Label erreur;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private PasswordField passwordField;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    protected void connexion() {
+
     }
 }

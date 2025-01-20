@@ -8,6 +8,7 @@ module appli.lprs.jfx_rdv {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires java.sql;
 
     opens appli.lprs.jfx_rdv to javafx.fxml;
     exports appli.lprs.jfx_rdv;

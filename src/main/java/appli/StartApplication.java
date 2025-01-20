@@ -1,4 +1,4 @@
-package appli.lprs.jfx_rdv;
+package appli;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -10,8 +10,8 @@ module appli.lprs.jfx_rdv {
     requires eu.hansolo.tilesfx;
     requires java.sql;
 
-    opens appli.lprs.jfx_rdv to javafx.fxml;
-    exports appli.lprs.jfx_rdv;
-    exports appli.lprs.jfx_rdv.accueil;
-    opens appli.lprs.jfx_rdv.accueil to javafx.fxml;
+    opens appli to javafx.fxml;
+    exports appli;
+    exports appli.accueil;
+    opens appli.accueil to javafx.fxml;
 }

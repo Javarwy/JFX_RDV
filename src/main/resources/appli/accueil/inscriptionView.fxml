@@ -61,6 +61,16 @@
       <Font size="10.0" />
     </font>
   </PasswordField>
+  <Label fx:id="confirmPasswordText" text="Confirmer mot de passe :">
+    <font>
+      <Font size="14.0" />
+    </font>
+  </Label>
+  <PasswordField fx:id="confirmPasswordField">
+    <font>
+      <Font size="10.0" />
+    </font>
+  </PasswordField>
   <Label fx:id="roleText" text="Rôle :">
     <font>
       <Font size="14.0" />

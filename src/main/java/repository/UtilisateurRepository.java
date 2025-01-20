@@ -21,7 +21,7 @@ public class UtilisateurRepository {
 
         connection = db.getConnection();
 
-        String SQLReq = "INSERT INTO utilisateur (prenom, nom, email, mdp, role, fourni_com) VALUES (?, ?, ?, ?, ?, ?)";
+        String SQLReq = "INSERT INTO utilisateur (prenom, nom, email, mdp, role, fourni_com) VALUES (?, ?, ?, ?, ?, null)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQLReq)) {
             preparedStatement.setString(1, user.getPrenom());
@@ -44,7 +44,7 @@ public class UtilisateurRepository {
 
         connection = db.getConnection();
 
-        String SQLReqConnexion = "SELECT nom, prenom, email, motDePasse FROM utlisateur";
+        String SQLReqConnexion = "SELECT nom, prenom, email, motDePasse FROM utilisateur";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQLReqConnexion)) {
             preparedStatement.setString(1, user.getPrenom());

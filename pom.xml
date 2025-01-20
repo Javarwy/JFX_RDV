@@ -79,6 +79,7 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+<<<<<<< Updated upstream
     <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
     <dependency>
       <groupId>com.mysql</groupId>
@@ -91,6 +92,13 @@
       <artifactId>spring-security-core</artifactId>
       <version>6.3.3</version>
     </dependency>
+=======
+  <dependency>
+   <groupId>com.sun.mail</groupId>
+   <artifactId>javax.mail</artifactId>
+   <version>1.6.2</version>
+  </dependency>
+>>>>>>> Stashed changes
   </dependencies>
 
   <build>

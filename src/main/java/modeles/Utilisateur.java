@@ -2,22 +2,31 @@ package modeles;
 
 public class Utilisateur {
     private int id_utilisateur;
-    private String prenom;
     private String nom;
+    private String prenom;
     private String email;
     private String mdp;
     private String role;
-    private String fourni_com;
+    private int fourni_com;
 
-    public Utilisateur(int id_utilisateur, String prenom, String nom, String email, String mdp, String role, String fourni_com) {
+    public Utilisateur(int id_utilisateur, String nom, String prenom, String email, String mdp, String role) {
 
         this.id_utilisateur = id_utilisateur;
-        this.prenom = prenom;
         this.nom = nom;
+        this.prenom = prenom;
         this.email = email;
         this.mdp = mdp;
         this.role = role;
-        this.fourni_com = fourni_com;
+
+    }
+
+    public Utilisateur(String nom, String prenom, String email, String mdp, String role) {
+
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.mdp = mdp;
+        this.role = role;
 
     }
 
@@ -57,18 +66,16 @@ public class Utilisateur {
         return role;
     }
 
-    public String getFourniCom() {
+    public int getFourniCom() {
         return fourni_com;
     }
 
-    public String setRole(String role) {
+    public void setRole(String role) {
         this.role = role;
-        return role;
     }
 
-    public String setFourniCom(String fourni_com) {
+    public void setFourniCom(int fourni_com) {
         this.fourni_com = fourni_com;
-        return fourni_com;
     }
 
     public int getId_utilisateur() {

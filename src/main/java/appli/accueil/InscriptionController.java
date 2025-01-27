@@ -63,7 +63,19 @@ public class InscriptionController implements Initializable {
                     this.erreur.setVisible(true);
                 } else {
                     this.erreur.setVisible(false);
-                    utilisateurRepository.inscription(utilisateur);
+                    boolean check = utilisateurRepository.inscription(utilisateur);
+                    if (check == true){
+                        this.erreur.setText("Utilisateur bien ajouté !");
+                        this.erreur.setVisible(true);
+                        this.nomField.clear();
+                        this.prenomField.clear();
+                        this.emailField.clear();
+                        this.passwordField.clear();
+                        this.confirmPasswordField.clear();
+                    } else {
+                        this.erreur.setText("Erreur lors de l'ajout.");
+                        this.erreur.setVisible(true);
+                    }
                 }
             } else {
                 this.erreur.setText("Erreur, les mots de passe ne coïncident pas !");

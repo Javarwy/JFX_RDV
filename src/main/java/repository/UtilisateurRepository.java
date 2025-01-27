@@ -17,20 +17,29 @@ public class UtilisateurRepository {
         this.valide = valide;
     }
 
-    public void inscription(Utilisateur user) throws SQLException {
+    public boolean inscription(Utilisateur user) throws SQLException {
         Database db = new Database();
 
         connection = db.getConnection();
 
-        String SQLReq = "INSERT INTO utilisateur (prenom, nom, email, mdp, role, fourni_com) VALUES (?, ?, ?, ?, ?, null)";
+        String SQLReq = "INSERT INTO utilisateur (nom, prenom, email, mdp, role, fourni_com) VALUES (?, ?, ?, ?, ?, null)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQLReq)) {
-            preparedStatement.setString(1, user.getPrenom());
-            preparedStatement.setString(2, user.getNom());
+            preparedStatement.setString(1, user.getNom());
+            preparedStatement.setString(2, user.getPrenom());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getMotDePasse());
             preparedStatement.setString(5, user.getRole());
             preparedStatement.executeUpdate();
+            PreparedStatement reqPrepareSelect = db.getConnection().prepareStatement("SELECT * FROM utilisateur WHERE email = ?"
+            );
+            reqPrepareSelect.setString(1, user.getEmail());
+            ResultSet resultatRequete = reqPrepareSelect.executeQuery();
+            if (resultatRequete.next()) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Inscription Impossible", e);
         } finally {

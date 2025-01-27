@@ -23,7 +23,9 @@
   <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
   <ButtonBar>
     <buttons>
-      <Button text="Déconnexion" onAction="#deconnexion" />
+      <Button text="Test" onAction="#deconnexion" />
+      <Button text="Modifier mes informations" onAction="#modifierInfos" />
     </buttons>
   </ButtonBar>
+  <Button text="Déconnexion" onAction="#deconnexion" />
 </VBox>

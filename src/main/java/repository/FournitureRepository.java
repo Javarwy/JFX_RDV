@@ -9,12 +9,33 @@ import database.Database;
 import modeles.Fourniture;
 
 public class FournitureRepository {
-    
+
+    Database db = new Database();
+    Connection connection = db.getConnection();
+
     public void getListFourniture(Fourniture fourniture) throws SQLException, IOException {
-        Database db = new Database();
-        Connection connection = db.getConnection();
         String SQLReqFurn = "SELECT id_fourniture, libelle, description, prix, fournisseur FROM fourniture";
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQLReqFurn)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                fourniture.setId_fourniture(resultSet.getInt("id_fourniture"));
+                fourniture.setLibelle(resultSet.getString("libelle"));
+                fourniture.setDescription(resultSet.getString("description"));
+                fourniture.setPrix(resultSet.getInt("prix"));
+                fourniture.setFournisseur(resultSet.getString("fournisseur"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur lors de la récupération des fournitures", e);
+        } finally {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        }
+    }
+
+    public void addFourniture(Fourniture fourniture) throws SQLException, IOException {
+        String SQLReqFurnAdd = "INSERT INTO fourniture (id_fourniture, libelle, description, prix, fournisseur) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQLReqFurnAdd)) {
             preparedStatement.setInt(1, fourniture.getId_fourniture());
             preparedStatement.setString(2, fourniture.getLibelle());
             preparedStatement.setString(3, fourniture.getDescription());
@@ -22,12 +43,24 @@ public class FournitureRepository {
             preparedStatement.setString(5, fourniture.getFournisseur());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Inscription Impossible", e);
+            throw new RuntimeException("Erreur lors de l'ajout de la fourniture", e);
         } finally {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
             }
         }
-
-
-}}
+    }
+        public void deleteFourniture(Fourniture fourniture) throws SQLException, IOException {
+            String SQLReqFurnDelete = "DELETE FROM fourniture WHERE id_fourniture = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQLReqFurnDelete)) {
+                preparedStatement.setInt(1, fourniture.getId_fourniture());
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException("Erreur lors de la suppression de la fourniture", e);
+            } finally {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            }
+    }
+}

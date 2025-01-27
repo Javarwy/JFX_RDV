@@ -21,6 +21,15 @@ public class Utilisateur {
 
     }
 
+    public Utilisateur(int id_utilisateur, String nom, String prenom, String email, String mdp, String role){
+        this.id_utilisateur = id_utilisateur;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.mdp = mdp;
+        this.role = role;
+    }
+
     public Utilisateur(String nom, String prenom, String email, String mdp, String role) {
 
         this.nom = nom;

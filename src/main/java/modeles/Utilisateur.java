@@ -9,7 +9,7 @@ public class Utilisateur {
     private String role;
     private int fourni_com;
 
-    public Utilisateur(int id_utilisateur, String nom, String prenom, String email, String mdp, String role) {
+    public Utilisateur(int id_utilisateur, String nom, String prenom, String email, String mdp, String role, int fourni_com) {
 
         this.id_utilisateur = id_utilisateur;
         this.nom = nom;
@@ -17,6 +17,7 @@ public class Utilisateur {
         this.email = email;
         this.mdp = mdp;
         this.role = role;
+        this.fourni_com = fourni_com;
 
     }
 

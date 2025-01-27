@@ -57,7 +57,14 @@ public class InscriptionController implements Initializable {
                     nom, prenom, email, encoder.encode(password), role
                 );
                 UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
-                utilisateurRepository.inscription(utilisateur);
+                Utilisateur emailCheck = utilisateurRepository.getUtilisateurByEmail(email);
+                if (emailCheck != null) {
+                    this.erreur.setText("L'adresse e-mail est déjà utilisée !");
+                    this.erreur.setVisible(true);
+                } else {
+                    this.erreur.setVisible(false);
+                    utilisateurRepository.inscription(utilisateur);
+                }
             } else {
                 this.erreur.setText("Erreur, les mots de passe ne coïncident pas !");
                 this.erreur.setVisible(true);

@@ -40,6 +40,28 @@ public class UtilisateurRepository {
         }
     }
 
+    public boolean modification(Utilisateur utilisateur) throws SQLException {
+        Database db = new Database();
+        PreparedStatement requetePrepareModif = db.getConnection().prepareStatement(
+                "UPDATE utilisateur SET nom = ?, prenom = ?, email = ?, mdp = ? WHERE id_utilisateur = ?"
+        );
+        requetePrepareModif.setString(1, utilisateur.getNom());
+        requetePrepareModif.setString(2, utilisateur.getPrenom());
+        requetePrepareModif.setString(3, utilisateur.getEmail());
+        requetePrepareModif.setString(4, utilisateur.getMotDePasse());
+        requetePrepareModif.setInt(5, utilisateur.getId_utilisateur());
+        requetePrepareModif.executeUpdate();
+        PreparedStatement reqPrepareSelect = db.getConnection().prepareStatement("SELECT * FROM utilisateur WHERE email = ?"
+        );
+        reqPrepareSelect.setString(1, utilisateur.getEmail());
+        ResultSet resultatRequete = reqPrepareSelect.executeQuery();
+        if (resultatRequete.next()){
+            return true;
+        } else {
+                return false;
+        }
+    }
+
     public void Connexion(Utilisateur user) throws SQLException {
         Database db = new Database();
 
@@ -67,6 +89,20 @@ public class UtilisateurRepository {
         PreparedStatement reqPrepareSelect = db.getConnection().prepareStatement("SELECT * FROM utilisateur WHERE email = ?"
         );
         reqPrepareSelect.setString(1, email);
+        ResultSet resultSet = reqPrepareSelect.executeQuery();
+        if (resultSet.next()) {
+            Utilisateur utilisateur = new Utilisateur(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getInt(7));
+            return utilisateur;
+        } else {
+            return null;
+        }
+    }
+
+    public Utilisateur getUtilisateurById(int id) throws SQLException {
+        Database db = new Database();
+        PreparedStatement reqPrepareSelect = db.getConnection().prepareStatement("SELECT * FROM utilisateur WHERE id_utilisateur = ?"
+        );
+        reqPrepareSelect.setInt(1, id);
         ResultSet resultSet = reqPrepareSelect.executeQuery();
         if (resultSet.next()) {
             Utilisateur utilisateur = new Utilisateur(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getInt(7));

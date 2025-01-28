@@ -39,7 +39,7 @@ public class InscriptionController implements Initializable {
     }
 
     @FXML
-    protected void inscription() throws SQLException {
+    protected void inscription() throws SQLException, IOException {
         String nom = this.nomField.getText();
         String prenom = this.prenomField.getText();
         String email = this.emailField.getText();
@@ -65,13 +65,13 @@ public class InscriptionController implements Initializable {
                     this.erreur.setVisible(false);
                     boolean check = utilisateurRepository.inscription(utilisateur);
                     if (check == true){
-                        this.erreur.setText("Utilisateur bien ajouté !");
-                        this.erreur.setVisible(true);
+                        this.erreur.setVisible(false);
                         this.nomField.clear();
                         this.prenomField.clear();
                         this.emailField.clear();
                         this.passwordField.clear();
                         this.confirmPasswordField.clear();
+                        StartApplication.changeScene("accueil/loginView.fxml");
                     } else {
                         this.erreur.setText("Erreur lors de l'ajout.");
                         this.erreur.setVisible(true);

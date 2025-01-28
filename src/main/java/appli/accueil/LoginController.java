@@ -38,12 +38,30 @@ public class LoginController {
                     this.erreur.setVisible(true);
                 } else {
                     UtilisateurConnecte.initInstance(check);
-                    StartApplication.changeScene("accueil/accueilView.fxml");
+                    redirection();
                 }
             } else {
                 this.erreur.setText("Utilisateur inexistant.");
                 this.erreur.setVisible(true);
             }
+        }
+    }
+
+    @FXML
+    protected void redirection() throws IOException {
+        switch (UtilisateurConnecte.getInstance().getRole()){
+            case "Secrétaire":
+                StartApplication.changeScene("secretaire/menuSecretaireView.fxml");
+                break;
+            case "Professeur":
+                StartApplication.changeScene("professeur/menuProfesseurView.fxml");
+                break;
+            case "Gestionnaire de stock":
+                StartApplication.changeScene("stock/stockView.fxml");
+                break;
+            default:
+                StartApplication.changeScene("accueil/accueilView.fxml");
+                break;
         }
     }
 

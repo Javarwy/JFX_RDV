@@ -15,4 +15,8 @@ module appli.lprs.jfx_rdv {
     exports appli;
     exports appli.accueil;
     opens appli.accueil to javafx.fxml;
+    exports appli.professeur;
+    opens appli.professeur to javafx.fxml;
+    exports appli.secretaire;
+    opens appli.secretaire to javafx.fxml;
 }

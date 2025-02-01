@@ -20,7 +20,7 @@ public class MenuProfesseurController implements Initializable {
     }
     @FXML
     protected void dossiers() throws IOException {
-
+        StartApplication.changeScene("professeur/dossiersProfesseurView.fxml");
     }
     @FXML
     protected void rendezVous() throws IOException {

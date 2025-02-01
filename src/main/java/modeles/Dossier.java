@@ -7,15 +7,15 @@ public class Dossier {
     public String heure;
     public String filliere;
     public String motivation;
-    public int ref_rdv;
+    public Etudiant refEtudiant;
 
-    public Dossier (int id_dossier, String date, String heure, String filliere, String motivation, int ref_rdv) {
+    public Dossier (int id_dossier, String date, String heure, String filliere, String motivation, Etudiant refEtudiant) {
         this.id_dossier = id_dossier;
         this.date = date;
         this.heure = heure;
         this.filliere = filliere;
         this.motivation = motivation;
-        this.ref_rdv = ref_rdv;
+        this.refEtudiant = refEtudiant;
     }
 
     public int getId_dossier() {
@@ -58,12 +58,12 @@ public class Dossier {
         this.motivation = motivation;
     }
 
-    public int getRef_rdv() {
-        return ref_rdv;
+    public Etudiant getRefEtudiant() {
+        return refEtudiant;
     }
 
-    public void setRef_rdv(int ref_rdv) {
-        this.ref_rdv = ref_rdv;
+    public void setRefEtudiant(Etudiant refEtudiant) {
+        this.refEtudiant = refEtudiant;
     }
 }
 

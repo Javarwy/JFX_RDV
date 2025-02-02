@@ -34,7 +34,7 @@ public class dossiersProfesseurController implements Initializable {
                 {"Heure", "heure"},
                 {"Filière", "filliere"},
                 {"Motivation", "motivation"},
-                {"Test", "refEtudiant"}
+                {"Étudiant", "refEtudiant"}
         };
         for (int i = 0; i < colonnes.length; i++) {
             TableColumn<Dossier,String> maColonne = new TableColumn<>(colonnes[i][0]);

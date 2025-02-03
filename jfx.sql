@@ -98,8 +98,10 @@ CREATE TABLE IF NOT EXISTS `rendezvous` (
   `date_rendezvous` date NOT NULL,
   `heure_rendezvous` time NOT NULL,
   `ref_dossier` int NOT NULL,
+  `ref_salle` int NOT NULL,
   PRIMARY KEY (`id_rendezvous`),
-  KEY `ref_dossier` (`ref_dossier`)
+  KEY `ref_dossier` (`ref_dossier`),
+  KEY `ref_salle` (`ref_salle`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table Rendez Vous';
 
 -- --------------------------------------------------------
@@ -114,10 +116,8 @@ CREATE TABLE IF NOT EXISTS `salle` (
   `nom_salle` varchar(20) NOT NULL,
   `occupe` tinyint(1) NOT NULL DEFAULT '0',
   `professeur_present` int NOT NULL,
-  `rdv_ref` int NOT NULL,
   PRIMARY KEY (`id_salle`),
-  KEY `professeur_present` (`professeur_present`),
-  KEY `rdv_ref` (`rdv_ref`)
+  KEY `professeur_present` (`professeur_present`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table des salles';
 
 -- --------------------------------------------------------
@@ -160,14 +160,14 @@ ALTER TABLE `dossier`
 -- Contraintes pour la table `rendezvous`
 --
 ALTER TABLE `rendezvous`
-  ADD CONSTRAINT `dossier_on_rdv` FOREIGN KEY (`ref_dossier`) REFERENCES `dossier` (`id_dossier`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `dossier_on_rdv` FOREIGN KEY (`ref_dossier`) REFERENCES `dossier` (`id_dossier`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `salle_on_rdv` FOREIGN KEY (`ref_salle`) REFERENCES `salle` (`id_salle`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `salle`
 --
 ALTER TABLE `salle`
-  ADD CONSTRAINT `salle_on_prof` FOREIGN KEY (`professeur_present`) REFERENCES `utilisateur` (`id_utilisateur`),
-  ADD CONSTRAINT `salle_on_rdv` FOREIGN KEY (`rdv_ref`) REFERENCES `rendezvous` (`id_rendezvous`);
+  ADD CONSTRAINT `salle_on_prof` FOREIGN KEY (`professeur_present`) REFERENCES `utilisateur` (`id_utilisateur`);
 
 --
 -- Contraintes pour la table `utilisateur`

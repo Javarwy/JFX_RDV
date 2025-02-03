@@ -7,8 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import modeles.Dossier;
 import repository.DossierRepository;
 
@@ -93,8 +96,20 @@ public class dossiersProfesseurController implements Initializable {
         observableList.setAll(dossiers);
     }
     @FXML
-    protected void onDossierSelection() throws IOException {
-
+    protected void onDossierSelection(MouseEvent event) throws IOException {
+        if (event.getButton() == MouseButton.PRIMARY  && event.getClickCount() == 1){
+            rdv.setDisable(false);
+            TablePosition cell = tableauDossier.getSelectionModel().getSelectedCells().get(0);
+            int indexLigne = cell.getRow();
+            TableColumn colonne = cell.getTableColumn();
+            Dossier dossier = tableauDossier.getItems().get(indexLigne);
+        } else if (event.getButton() == MouseButton.PRIMARY  && event.getClickCount() == 2) {
+            TablePosition cell = tableauDossier.getSelectionModel().getSelectedCells().get(0);
+            int indexLigne = cell.getRow();
+            TableColumn colonne = cell.getTableColumn();
+            Dossier dossier = tableauDossier.getItems().get(indexLigne);
+            prendreRdv();
+        }
     }
     @FXML
     protected void prendreRdv() throws IOException {

@@ -55,7 +55,6 @@ public class LoginController implements Initializable {
         }
     }
 
-    @FXML
     protected void redirection() throws IOException {
         switch (UtilisateurConnecte.getInstance().getRole()){
             case "Secrétaire":

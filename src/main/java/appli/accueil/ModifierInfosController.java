@@ -63,7 +63,7 @@ public class ModifierInfosController implements Initializable {
                 if (check == true){
                     UtilisateurConnecte.clearInstance();
                     UtilisateurConnecte.initInstance(utilisateur);
-                    StartApplication.changeScene("accueil/accueilView.fxml");
+                    redirection();
                 } else {
                     this.erreur.setText("Erreur lors de la modification.");
                     this.erreur.setVisible(true);
@@ -75,9 +75,26 @@ public class ModifierInfosController implements Initializable {
         }
     }
 
+    protected void redirection() throws IOException {
+        switch (UtilisateurConnecte.getInstance().getRole()){
+            case "Secrétaire":
+                StartApplication.changeScene("secretaire/menuSecretaireView.fxml");
+                break;
+            case "Professeur":
+                StartApplication.changeScene("professeur/menuProfesseurView.fxml");
+                break;
+            case "Gestionnaire de stock":
+                StartApplication.changeScene("stock/stockView.fxml");
+                break;
+            default:
+                StartApplication.changeScene("accueil/accueilView.fxml");
+                break;
+        }
+    }
+
     @FXML
     protected void retour() throws IOException {
-        StartApplication.changeScene("accueil/accueilView.fxml");
+        redirection();
     }
 
 }

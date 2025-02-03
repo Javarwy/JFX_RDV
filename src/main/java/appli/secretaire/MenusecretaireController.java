@@ -6,11 +6,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import modeles.UtilisateurConnecte;
 
 import java.io.IOException;
 
 public class MenusecretaireController {
-
+    @FXML
+    private Label welcomeText;
 
     @FXML
     public void creationFiche(ActionEvent event) throws IOException {
@@ -36,6 +38,7 @@ public class MenusecretaireController {
 
     @FXML
     public void deconnexion(ActionEvent event) throws IOException {
+        UtilisateurConnecte.clearInstance();
         StartApplication.changeScene("accueil/loginView.fxml");
 
     }

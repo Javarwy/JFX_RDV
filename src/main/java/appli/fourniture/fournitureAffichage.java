@@ -14,10 +14,10 @@ import repository.FournitureRepository;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class FournitureAffichage implements Initializable {
+public class fournitureAffichage implements Initializable {
 
     @FXML
     private TableView<Fourniture> tableauFourniture;
@@ -42,13 +42,13 @@ public class FournitureAffichage implements Initializable {
         chargerDonnees();
     }
 
-    private void chargerDonnees() {
+        private void chargerDonnees() {
         FournitureRepository fournitureRepository = new FournitureRepository();
         try {
-            List<Fourniture> fournitures = fournitureRepository.getListFourniture();
+            ArrayList<Fourniture> fournitures = fournitureRepository.getListFourniture();
             ObservableList<Fourniture> observableList = FXCollections.observableArrayList(fournitures);
             tableauFourniture.setItems(observableList);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }

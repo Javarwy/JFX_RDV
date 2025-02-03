@@ -2,6 +2,7 @@ package appli.accueil;
 
 import appli.StartApplication;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
@@ -11,15 +12,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import repository.UtilisateurRepository;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class LoginController {
+public class LoginController implements Initializable {
     @FXML
     private Label erreur;
     @FXML
     private TextField emailField;
     @FXML
     private PasswordField passwordField;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        StartApplication.changeTitle("Connexion");
+    }
 
     @FXML
     protected void connexion() throws SQLException, IOException {
@@ -69,4 +77,5 @@ public class LoginController {
     protected void inscription() throws IOException {
         StartApplication.changeScene("accueil/inscriptionView.fxml");
     }
+
 }

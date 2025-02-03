@@ -28,7 +28,7 @@ public class prendreRdvProfesseurController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        StartApplication.changeTitle("Prise de rendez-vous");
     }
     @FXML
     protected void onSalleSelection(MouseEvent event) throws IOException {

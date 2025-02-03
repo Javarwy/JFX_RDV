@@ -31,6 +31,7 @@ public class dossiersProfesseurController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        StartApplication.changeTitle("Dossiers d'inscription");
         String[][] colonnes = {
                 {"Id. dossier", "id_dossier"},
                 {"Date", "date"},

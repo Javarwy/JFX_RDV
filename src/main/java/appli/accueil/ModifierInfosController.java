@@ -30,6 +30,7 @@ public class ModifierInfosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        StartApplication.changeTitle("Modifier mes informations");
         this.nomField.setText(UtilisateurConnecte.getInstance().getNom());
         this.prenomField.setText(UtilisateurConnecte.getInstance().getPrenom());
         this.emailField.setText(UtilisateurConnecte.getInstance().getEmail());

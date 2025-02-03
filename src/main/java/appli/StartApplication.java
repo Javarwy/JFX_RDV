@@ -40,6 +40,10 @@ public class StartApplication extends Application {
         }
     }
 
+    public static void changeTitle(String titre){
+        mainStage.setTitle(titre);
+    }
+
     public static void main(String[] args) {
         launch();
     }

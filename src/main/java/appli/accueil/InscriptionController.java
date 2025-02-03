@@ -34,8 +34,8 @@ public class InscriptionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        StartApplication.changeTitle("Inscription");
         this.roleField.getItems().addAll("Professeur","Secrétaire","Gestionnaire de stock");
-
     }
 
     @FXML

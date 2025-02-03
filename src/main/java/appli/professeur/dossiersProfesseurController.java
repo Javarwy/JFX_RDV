@@ -1,6 +1,7 @@
 package appli.professeur;
 
 import appli.StartApplication;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,11 +35,51 @@ public class dossiersProfesseurController implements Initializable {
                 {"Heure", "heure"},
                 {"Filière", "filliere"},
                 {"Motivation", "motivation"},
-                {"Étudiant", "refEtudiant"}
+                {"Id. étudiant", "id_etudiant"},
+                {"Nom", "nomEtudiant"},
+                {"Prénom", "prenomEtudiant"},
+                {"Diplôme", "diplome"},
+                {"E-mail", "emailEtudiant"},
+                {"Téléphone", "telephone"}
         };
         for (int i = 0; i < colonnes.length; i++) {
             TableColumn<Dossier,String> maColonne = new TableColumn<>(colonnes[i][0]);
             maColonne.setCellValueFactory(new PropertyValueFactory<Dossier,String>(colonnes[i][1]));
+            switch(colonnes[i][1]){
+                case "id_etudiant":
+                    maColonne.setVisible(false);
+                    maColonne.setCellValueFactory(cellData ->
+                            new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefEtudiant().getId_etudiant()))
+                    );
+                    break;
+                case "nomEtudiant":
+                    maColonne.setCellValueFactory(cellData ->
+                            new javafx.beans.property.SimpleStringProperty(cellData.getValue().getRefEtudiant().getNomEtudiant())
+                    );
+                    break;
+                case "prenomEtudiant":
+                    maColonne.setCellValueFactory(cellData ->
+                            new javafx.beans.property.SimpleStringProperty(cellData.getValue().getRefEtudiant().getPrenomEtudiant())
+                    );
+                    break;
+                case "diplome":
+                    maColonne.setCellValueFactory(cellData ->
+                            new javafx.beans.property.SimpleStringProperty(cellData.getValue().getRefEtudiant().getDiplome())
+                    );
+                    break;
+                case "emailEtudiant":
+                    maColonne.setCellValueFactory(cellData ->
+                            new javafx.beans.property.SimpleStringProperty(cellData.getValue().getRefEtudiant().getEmailEtudiant())
+                    );
+                    break;
+                case "telephone":
+                    maColonne.setCellValueFactory(cellData ->
+                            new javafx.beans.property.SimpleStringProperty(cellData.getValue().getRefEtudiant().getTelephone())
+                    );
+                    break;
+                default:
+                    break;
+            }
             tableauDossier.getColumns().add(maColonne);
         }
         DossierRepository dossierRepository = new DossierRepository();

@@ -6,15 +6,19 @@ public class Salle {
     public String nom_salle;
     public Boolean occupe;
     public String professeur_absent;
-    public String rdv_ref;
 
-    public Salle (int id_salle, String nom_salle, Boolean occupe, String professeur_absent, String rdv_ref) {
+    public Salle (int id_salle, String nom_salle, Boolean occupe, String professeur_absent) {
         this.id_salle = id_salle;
         this.nom_salle = nom_salle;
         this.occupe = occupe;
         this.professeur_absent = professeur_absent;
-        this.rdv_ref = rdv_ref;
     }
+
+    public Salle (int id_salle, String nom_salle) {
+        this.id_salle = id_salle;
+        this.nom_salle = nom_salle;
+    }
+
     public int getId_salle() {
         return id_salle;
     }
@@ -47,13 +51,6 @@ public class Salle {
         this.professeur_absent = professeur_absent;
     }
 
-    public String getRdv_ref() {
-        return rdv_ref;
-    }
-
-    public void setRdv_ref(String rdv_ref) {
-        this.rdv_ref = rdv_ref;
-    }
 }
 
 

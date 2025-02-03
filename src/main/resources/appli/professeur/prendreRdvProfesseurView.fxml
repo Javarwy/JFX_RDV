@@ -17,8 +17,14 @@
         <Font size="18.0" />
     </font>
   </Label>
+    <Label fx:id="idDossier">
+        <font>
+            <Font name="System Bold" />
+        </font>
+    </Label>
     <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
         <children>
+            <Label text="Salles disponibles" />
             <TableView fx:id="tableauSalle" onMouseClicked="#onSalleSelection" prefHeight="400.0" prefWidth="600.0" />
             <Button fx:id="confirmerRdv" disable="true" onAction="#confirmerRdv" text="Confirmer rendez-vous">
                 <VBox.margin>

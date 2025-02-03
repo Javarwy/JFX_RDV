@@ -4,10 +4,9 @@ import appli.StartApplication;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import modeles.Dossier;
 import modeles.Salle;
@@ -25,8 +24,11 @@ public class prendreRdvProfesseurController implements Initializable {
     private TableView<Salle> tableauSalle;
     @FXML
     private Button confirmerRdv;
+    @FXML
+    private Label idDossier;
 
     private Dossier dossierSel;
+    private Salle salleSel;
 
     public prendreRdvProfesseurController(Dossier dossierSel){
         this.dossierSel = dossierSel;
@@ -35,6 +37,7 @@ public class prendreRdvProfesseurController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         StartApplication.changeTitle("Prise de rendez-vous");
+        this.idDossier.setText("Rendez-vous pour dossier n°" + this.dossierSel.getId_dossier() + " (" + this.dossierSel.getRefEtudiant().getNomEtudiant() + " " + this.dossierSel.getRefEtudiant().getPrenomEtudiant() + ")");
         String[][] colonnes = {
                 {"Id. salle", "id_salle"},
                 {"Nom", "nom_salle"}
@@ -56,11 +59,31 @@ public class prendreRdvProfesseurController implements Initializable {
     }
     @FXML
     protected void onSalleSelection(MouseEvent event) throws IOException {
-
+        if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+            confirmerRdv.setDisable(false);
+            TablePosition cell = tableauSalle.getSelectionModel().getSelectedCells().get(0);
+            int indexLigne = cell.getRow();
+            TableColumn colonne = cell.getTableColumn();
+            this.salleSel = tableauSalle.getItems().get(indexLigne);
+        } else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+            TablePosition cell = tableauSalle.getSelectionModel().getSelectedCells().get(0);
+            int indexLigne = cell.getRow();
+            TableColumn colonne = cell.getTableColumn();
+            confirmerRdv();
+        }
     }
     @FXML
     protected void confirmerRdv() throws IOException {
-
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmer rendez-vous");
+        alert.setHeaderText("Souhaitez-vous confirmer votre rendez-vous dans la salle n°" + this.salleSel.getId_salle() + " (" + this.salleSel.getNom_salle() + ") ?");
+        alert.showAndWait().ifPresent(reponse -> {
+            if (reponse == ButtonType.OK){
+                System.out.println("OK");
+            } else if (reponse == ButtonType.CANCEL){
+                System.out.println("CANCEL");
+            }
+        });
     }
 
     @FXML

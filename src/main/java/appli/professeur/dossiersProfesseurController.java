@@ -102,12 +102,11 @@ public class dossiersProfesseurController implements Initializable {
             TablePosition cell = tableauDossier.getSelectionModel().getSelectedCells().get(0);
             int indexLigne = cell.getRow();
             TableColumn colonne = cell.getTableColumn();
-            Dossier dossier = tableauDossier.getItems().get(indexLigne);
+            this.dossierSel = tableauDossier.getItems().get(indexLigne);
         } else if (event.getButton() == MouseButton.PRIMARY  && event.getClickCount() == 2) {
             TablePosition cell = tableauDossier.getSelectionModel().getSelectedCells().get(0);
             int indexLigne = cell.getRow();
             TableColumn colonne = cell.getTableColumn();
-            Dossier dossier = tableauDossier.getItems().get(indexLigne);
             prendreRdv();
         }
     }

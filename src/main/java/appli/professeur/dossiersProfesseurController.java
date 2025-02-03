@@ -1,7 +1,6 @@
 package appli.professeur;
 
 import appli.StartApplication;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -113,7 +112,7 @@ public class dossiersProfesseurController implements Initializable {
     }
     @FXML
     protected void prendreRdv() throws IOException {
-
+        StartApplication.changeScene("professeur/prendreRdvProfesseurView.fxml", new prendreRdvProfesseurController(this.dossierSel));
     }
 
     @FXML

@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import database.Database;
-import modeles.Dossier;
 import modeles.Etudiant;
 
 

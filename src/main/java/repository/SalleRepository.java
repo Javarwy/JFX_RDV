@@ -16,10 +16,9 @@ public class SalleRepository {
         ps.setInt(2, salle.getId_salle());
         ps.executeUpdate();
         PreparedStatement ps2 = db.getConnection().prepareStatement(
-          "SELECT occupe, professeur_present WHERE id_salle = ?"
+          "SELECT occupe, professeur_present FROM salle WHERE id_salle = ?"
         );
         ps2.setInt(1, salle.getId_salle());
-        ps2.executeUpdate();
         ResultSet rs = ps2.executeQuery();
         if (rs.next()){
             return true;

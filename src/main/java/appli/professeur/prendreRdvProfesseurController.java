@@ -9,7 +9,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import modeles.Dossier;
+import modeles.RendezVous;
 import modeles.Salle;
+import modeles.UtilisateurConnecte;
+import repository.RendezVousRepository;
 import repository.SalleRepository;
 
 import java.io.IOException;
@@ -27,13 +30,19 @@ public class prendreRdvProfesseurController implements Initializable {
     @FXML
     private Label idDossier;
     @FXML
+    private Label erreur;
+    @FXML
     private Label labelDate;
     @FXML
     private DatePicker date;
     @FXML
-    private Label labelTime;
+    private Label labelHeure;
     @FXML
-    private ComboBox time;
+    private Spinner heure;
+    @FXML
+    private Label labelMinute;
+    @FXML
+    private Spinner minute;
 
     private Dossier dossierSel;
     private Salle salleSel;
@@ -75,18 +84,56 @@ public class prendreRdvProfesseurController implements Initializable {
             this.salleSel = tableauSalle.getItems().get(indexLigne);
             this.labelDate.setVisible(true);
             this.date.setVisible(true);
-            this.labelTime.setVisible(true);
-            this.time.setVisible(true);
+            this.labelHeure.setVisible(true);
+            this.heure.setVisible(true);
+            this.labelMinute.setVisible(true);
+            this.minute.setVisible(true);
         }
     }
     @FXML
-    protected void confirmerRdv() throws IOException {
+    protected void confirmerRdv() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmer rendez-vous");
         alert.setHeaderText("Souhaitez-vous confirmer votre rendez-vous dans la salle n°" + this.salleSel.getId_salle() + " (" + this.salleSel.getNom_salle() + ") ?");
         alert.showAndWait().ifPresent(reponse -> {
             if (reponse == ButtonType.OK){
-                System.out.println("OK");
+                if (this.date.getValue() == null || this.heure.getValue() == null || this.minute.getValue() == null){
+                    this.erreur.setText("Veuillez mettre une date et une heure.");
+                    this.erreur.setVisible(true);
+                } else {
+                    String date = this.date.getValue().toString();
+                    String heure = this.heure.getValue().toString();
+                    String minute = this.minute.getValue().toString();
+                    heure = heure + ":" + minute;
+                    RendezVousRepository rendezVousRepository = new RendezVousRepository();
+                    boolean check = false;
+                    try {
+                        check = rendezVousRepository.ajout(new RendezVous(date, heure, this.dossierSel, this.salleSel));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (check == true){
+                        SalleRepository salleRepository = new SalleRepository();
+                        try {
+                            check = salleRepository.reserver(new Salle(this.salleSel.getId_salle(), this.salleSel.getNom_salle(), true, UtilisateurConnecte.getInstance().getId_utilisateur()));
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if (check == true){
+                            try {
+                                StartApplication.changeScene("professeur/menuProfesseurView.fxml");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            this.erreur.setText("Une erreur est survenue.");
+                            this.erreur.setVisible(true);
+                        }
+                    } else {
+                        this.erreur.setText("Un rendez-vous est déjà pris avec ce dossier.");
+                        this.erreur.setVisible(true);
+                    }
+                }
             } else if (reponse == ButtonType.CANCEL){
                 System.out.println("CANCEL");
             }

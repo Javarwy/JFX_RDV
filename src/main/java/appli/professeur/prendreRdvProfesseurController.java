@@ -26,6 +26,14 @@ public class prendreRdvProfesseurController implements Initializable {
     private Button confirmerRdv;
     @FXML
     private Label idDossier;
+    @FXML
+    private Label labelDate;
+    @FXML
+    private DatePicker date;
+    @FXML
+    private Label labelTime;
+    @FXML
+    private ComboBox time;
 
     private Dossier dossierSel;
     private Salle salleSel;
@@ -65,11 +73,10 @@ public class prendreRdvProfesseurController implements Initializable {
             int indexLigne = cell.getRow();
             TableColumn colonne = cell.getTableColumn();
             this.salleSel = tableauSalle.getItems().get(indexLigne);
-        } else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-            TablePosition cell = tableauSalle.getSelectionModel().getSelectedCells().get(0);
-            int indexLigne = cell.getRow();
-            TableColumn colonne = cell.getTableColumn();
-            confirmerRdv();
+            this.labelDate.setVisible(true);
+            this.date.setVisible(true);
+            this.labelTime.setVisible(true);
+            this.time.setVisible(true);
         }
     }
     @FXML

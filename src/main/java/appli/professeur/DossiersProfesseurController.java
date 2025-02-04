@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class dossiersProfesseurController implements Initializable {
+public class DossiersProfesseurController implements Initializable {
 
     @FXML
     private TableView<Dossier> tableauDossier;
@@ -112,7 +112,7 @@ public class dossiersProfesseurController implements Initializable {
     }
     @FXML
     protected void prendreRdv() throws IOException {
-        StartApplication.changeScene("professeur/prendreRdvProfesseurView.fxml", new prendreRdvProfesseurController(this.dossierSel));
+        StartApplication.changeScene("professeur/prendreRdvProfesseurView.fxml", new PrendreRdvProfesseurController(this.dossierSel));
     }
 
     @FXML

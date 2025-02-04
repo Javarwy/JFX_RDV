@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class prendreRdvProfesseurController implements Initializable {
+public class PrendreRdvProfesseurController implements Initializable {
 
     @FXML
     private TableView<Salle> tableauSalle;
@@ -47,7 +47,7 @@ public class prendreRdvProfesseurController implements Initializable {
     private Dossier dossierSel;
     private Salle salleSel;
 
-    public prendreRdvProfesseurController(Dossier dossierSel){
+    public PrendreRdvProfesseurController(Dossier dossierSel){
         this.dossierSel = dossierSel;
     }
 

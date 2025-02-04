@@ -25,7 +25,7 @@ public class MenuProfesseurController implements Initializable {
     }
     @FXML
     protected void rendezVous() throws IOException {
-
+        StartApplication.changeScene("professeur/RdvProfesseurView.fxml");
     }
     @FXML
     protected void demandeFourniture() throws IOException {

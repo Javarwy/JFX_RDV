@@ -64,7 +64,7 @@ public class LoginController implements Initializable {
                 StartApplication.changeScene("professeur/menuProfesseurView.fxml");
                 break;
             case "Gestionnaire de stock":
-                StartApplication.changeScene("stock/stockView.fxml");
+                StartApplication.changeScene("stock/menuStockView.fxml");
                 break;
             default:
                 StartApplication.changeScene("accueil/accueilView.fxml");

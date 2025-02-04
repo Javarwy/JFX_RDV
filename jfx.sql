@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `salle` (
   `id_salle` int NOT NULL AUTO_INCREMENT,
   `nom_salle` varchar(20) NOT NULL,
   `occupe` tinyint(1) NOT NULL DEFAULT '0',
-  `professeur_present` int NOT NULL,
+  `professeur_present` int NULL,
   PRIMARY KEY (`id_salle`),
   KEY `professeur_present` (`professeur_present`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table des salles';

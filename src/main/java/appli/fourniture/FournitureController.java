@@ -22,4 +22,15 @@ public class FournitureController implements Initializable {
         StartApplication.changeScene("stock/stockView.fxml");
     }
 
+    @FXML
+    protected void modifierInfos() throws IOException {
+        StartApplication.changeScene("stock/menuStockView.fxml");
+    }
+
+    @FXML
+    protected void deconnexion() throws IOException {
+        UtilisateurConnecte.clearInstance();
+        StartApplication.changeScene("accueil/loginView.fxml");
+    }
+
 }

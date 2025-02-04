@@ -5,9 +5,9 @@ public class Salle {
     public int id_salle;
     public String nom_salle;
     public Boolean occupe;
-    public String professeur_absent;
+    public int professeur_absent;
 
-    public Salle (int id_salle, String nom_salle, Boolean occupe, String professeur_absent) {
+    public Salle (int id_salle, String nom_salle, Boolean occupe, int professeur_absent) {
         this.id_salle = id_salle;
         this.nom_salle = nom_salle;
         this.occupe = occupe;
@@ -43,11 +43,11 @@ public class Salle {
         this.occupe = occupe;
     }
 
-    public String getProfesseur_absent() {
+    public int getProfesseur_absent() {
         return professeur_absent;
     }
 
-    public void setProfesseur_absent(String professeur_absent) {
+    public void setProfesseur_absent(int professeur_absent) {
         this.professeur_absent = professeur_absent;
     }
 

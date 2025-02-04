@@ -9,7 +9,7 @@ public class Demande_Fourniture {
     private String raison;
     private LocalDateTime dateDemande;
 
-    public Demande_Fourniture(int professeurId, int professeurId, int fournitureId, int quantite, String raison){
+    public Demande_Fourniture(int professeurId, int fournitureId, int quantite, String raison){
         this.professeurId = professeurId;
         this.fournitureId = fournitureId;
         this.quantite = quantite;

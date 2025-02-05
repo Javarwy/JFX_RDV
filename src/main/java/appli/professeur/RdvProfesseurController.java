@@ -4,10 +4,13 @@ import appli.StartApplication;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import modeles.RendezVous;
 import modeles.UtilisateurConnecte;
@@ -27,6 +30,8 @@ public class RdvProfesseurController implements Initializable {
     private Button modifRdv;
     @FXML
     private Button annulerRdv;
+
+    private RendezVous rdvSel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -100,8 +105,32 @@ public class RdvProfesseurController implements Initializable {
         observableList.setAll(rendezVous);
     }
     @FXML
-    protected void onRdvSelection(MouseEvent event) throws IOException {
-
+    protected void onRdvSelection(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1){
+            TablePosition cell = tableauRdv.getSelectionModel().getSelectedCells().get(0);
+            int indexLigne = cell.getRow();
+            TableColumn colonne = cell.getTableColumn();
+            this.rdvSel = tableauRdv.getItems().get(indexLigne);
+            modifRdv.setDisable(false);
+            annulerRdv.setDisable(false);
+        } else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2){
+            TablePosition cell = tableauRdv.getSelectionModel().getSelectedCells().get(0);
+            int indexLigne = cell.getRow();
+            TableColumn colonne = cell.getTableColumn();
+            modifRdv.setDisable(false);
+            annulerRdv.setDisable(false);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Informations du dossier d'inscription");
+            String informations =
+                    "Dossier de : " + this.rdvSel.getRefDossier().getRefEtudiant().getNomEtudiant() + " " + this.rdvSel.getRefDossier().getRefEtudiant().getPrenomEtudiant() + "\n" +
+                    "Créé le : " + this.rdvSel.getRefDossier().getDate() + " à " + this.rdvSel.getRefDossier().getHeure() + "\n" +
+                    "Souhaite intégrer : " + this.rdvSel.getRefDossier().getFilliere() + "\n" +
+                    "Motivation : " + this.rdvSel.getRefDossier().getMotivation()
+            ;
+            alert.setHeaderText(informations);
+            alert.setContentText("Dossier pris en charge pour le rendez-vous n°" + this.rdvSel.getId_rendezvous() + ".");
+            alert.showAndWait();
+        }
     }
     @FXML
     protected void modifRdv() {

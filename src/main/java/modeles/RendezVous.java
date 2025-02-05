@@ -8,11 +8,13 @@ public class RendezVous {
     public Dossier refDossier;
     public Salle refSalle;
 
-    public RendezVous (int id_rendezvous, String date_rendezvous, String heure_rendez) {
+    public RendezVous (int id_rendezvous, String date_rendezvous, String heure_rendez, Dossier refDossier, Salle refSalle) {
 
         this.id_rendezvous = id_rendezvous;
         this.date_rendezvous = date_rendezvous;
         this.heure_rendez = heure_rendez;
+        this.refDossier = refDossier;
+        this.refSalle = refSalle;
     }
     public RendezVous (String date_rendezvous, String heure_rendez, Dossier refDossier, Salle refSalle) {
 

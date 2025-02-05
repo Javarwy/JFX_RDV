@@ -20,6 +20,7 @@
     <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
         <children>
             <TableView fx:id="tableauDossier" onMouseClicked="#onDossierSelection" prefHeight="400.0" prefWidth="600.0" />
+            <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
             <Button fx:id="rdv" disable="true" onAction="#prendreRdv" text="Prendre rendez-vous">
                 <VBox.margin>
                     <Insets top="10.0" />

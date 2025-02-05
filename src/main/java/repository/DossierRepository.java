@@ -19,4 +19,22 @@ public class DossierRepository {
         }
         return dossiers;
     }
+
+    public boolean estPrisEnCharge(int refDossier) throws SQLException {
+        Database db = new Database();
+        PreparedStatement ps = db.getConnection().prepareStatement(
+          "SELECT COUNT(*) FROM dossier as d INNER JOIN rendezvous as rdv ON rdv.ref_dossier = d.id_dossier WHERE rdv.ref_dossier = ?;"
+        );
+        ps.setInt(1, refDossier);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()) {
+            if (rs.getInt(1) == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

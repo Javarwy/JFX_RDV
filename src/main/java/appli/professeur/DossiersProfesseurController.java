@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
@@ -24,6 +25,8 @@ public class DossiersProfesseurController implements Initializable {
 
     @FXML
     private TableView<Dossier> tableauDossier;
+    @FXML
+    private Label erreur;
     @FXML
     private Button rdv;
 
@@ -96,18 +99,35 @@ public class DossiersProfesseurController implements Initializable {
         observableList.setAll(dossiers);
     }
     @FXML
-    protected void onDossierSelection(MouseEvent event) throws IOException {
+    protected void onDossierSelection(MouseEvent event) throws IOException, SQLException {
+        DossierRepository dossierRepository = new DossierRepository();
+        boolean estPrisEnCharge = false;
         if (event.getButton() == MouseButton.PRIMARY  && event.getClickCount() == 1){
-            rdv.setDisable(false);
             TablePosition cell = tableauDossier.getSelectionModel().getSelectedCells().get(0);
             int indexLigne = cell.getRow();
             TableColumn colonne = cell.getTableColumn();
             this.dossierSel = tableauDossier.getItems().get(indexLigne);
+            estPrisEnCharge = dossierRepository.estPrisEnCharge(this.dossierSel.getId_dossier());
+            if (estPrisEnCharge == true){
+                rdv.setDisable(true);
+                erreur.setText("Ce dossier est déjà pris en charge.");
+                erreur.setVisible(true);
+            } else {
+                rdv.setDisable(false);
+                erreur.setVisible(false);
+            }
         } else if (event.getButton() == MouseButton.PRIMARY  && event.getClickCount() == 2) {
             TablePosition cell = tableauDossier.getSelectionModel().getSelectedCells().get(0);
             int indexLigne = cell.getRow();
             TableColumn colonne = cell.getTableColumn();
-            prendreRdv();
+            estPrisEnCharge = dossierRepository.estPrisEnCharge(this.dossierSel.getId_dossier());
+            if (estPrisEnCharge == true){
+                rdv.setDisable(true);
+                erreur.setText("Ce dossier est déjà pris en charge.");
+                erreur.setVisible(true);
+            } else {
+                prendreRdv();
+            }
         }
     }
     @FXML

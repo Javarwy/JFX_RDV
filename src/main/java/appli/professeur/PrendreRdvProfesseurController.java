@@ -38,11 +38,11 @@ public class PrendreRdvProfesseurController implements Initializable {
     @FXML
     private Label labelHeure;
     @FXML
-    private Spinner heure;
+    private Spinner<Integer> heure;
     @FXML
     private Label labelMinute;
     @FXML
-    private Spinner minute;
+    private Spinner<Integer> minute;
 
     private Dossier dossierSel;
     private Salle salleSel;
@@ -102,13 +102,13 @@ public class PrendreRdvProfesseurController implements Initializable {
                     this.erreur.setVisible(true);
                 } else {
                     String date = this.date.getValue().toString();
-                    String heure = this.heure.getValue().toString();
-                    String minute = this.minute.getValue().toString();
-                    heure = heure + ":" + minute;
+                    int heure = this.heure.getValue();
+                    int minute = this.minute.getValue();
+                    String time = String.format("%02d:%02d:%02d", heure, minute, 0);
                     RendezVousRepository rendezVousRepository = new RendezVousRepository();
                     boolean check = false;
                     try {
-                        check = rendezVousRepository.ajout(new RendezVous(date, heure, this.dossierSel, this.salleSel));
+                        check = rendezVousRepository.ajout(new RendezVous(date, time, this.dossierSel, this.salleSel));
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }

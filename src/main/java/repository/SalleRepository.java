@@ -26,6 +26,26 @@ public class SalleRepository {
             return false;
         }
     }
+
+    public boolean liberer(Salle salle) throws SQLException {
+        Database db = new Database();
+        PreparedStatement ps = db.getConnection().prepareStatement(
+          "UPDATE salle SET occupe = 0, professeur_present = NULL WHERE id_salle = ?"
+        );
+        ps.setInt(1, salle.getId_salle());
+        ps.executeUpdate();
+        PreparedStatement ps2 = db.getConnection().prepareStatement(
+                "SELECT occupe, professeur_present FROM salle WHERE id_salle = ?"
+        );
+        ps2.setInt(1, salle.getId_salle());
+        ResultSet rs = ps2.executeQuery();
+        if (rs.next()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public ArrayList<Salle> getSallesLibres() throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement("SELECT id_salle, nom_salle FROM salle WHERE occupe = 0;");

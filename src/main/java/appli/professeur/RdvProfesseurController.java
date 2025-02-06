@@ -134,7 +134,7 @@ public class RdvProfesseurController implements Initializable {
     }
     @FXML
     protected void modifRdv() {
-
+        StartApplication.changeScene("professeur/modifierRdvView.fxml", new ModifierRdvController(this.rdvSel));
     }
 
     @FXML

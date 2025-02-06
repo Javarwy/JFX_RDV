@@ -19,6 +19,11 @@ public class Salle {
         this.nom_salle = nom_salle;
     }
 
+    @Override
+    public String toString() {
+        return nom_salle;
+    }
+
     public int getId_salle() {
         return id_salle;
     }

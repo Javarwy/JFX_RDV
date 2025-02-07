@@ -4,17 +4,14 @@ import appli.StartApplication;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import modeles.RendezVous;
 import modeles.UtilisateurConnecte;
 import repository.RendezVousRepository;
+import repository.SalleRepository;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +27,8 @@ public class RdvProfesseurController implements Initializable {
     private Button modifRdv;
     @FXML
     private Button annulerRdv;
+    @FXML
+    private Label erreur;
 
     private RendezVous rdvSel;
 
@@ -139,7 +138,44 @@ public class RdvProfesseurController implements Initializable {
 
     @FXML
     protected void annulerRdv() {
-
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Annuler le rendez-vous");
+        alert.setHeaderText("Souhaitez-vous annuler ce rendez-vous ?");
+        alert.setContentText("Cette action est irréversible !");
+        alert.showAndWait().ifPresent(reponse -> {
+            if (reponse == ButtonType.OK){
+                RendezVousRepository rendezVousRepository = new RendezVousRepository();
+                boolean check = false;
+                try {
+                    check = rendezVousRepository.annuler(this.rdvSel);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                if (check == true){
+                    SalleRepository salleRepository = new SalleRepository();
+                    try {
+                        check = salleRepository.liberer(this.rdvSel.getRefSalle());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (check == true){
+                        try {
+                            StartApplication.changeScene("professeur/rdvProfesseurView.fxml");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        this.erreur.setText("Une erreur est survenue.");
+                        this.erreur.setVisible(true);
+                    }
+                } else {
+                    this.erreur.setText("Ce rendez-vous n'existe déjà plus.");
+                    this.erreur.setVisible(true);
+                }
+            } else if (reponse == ButtonType.CANCEL){
+                System.out.println("CANCEL");
+            }
+        });
     }
 
     @FXML

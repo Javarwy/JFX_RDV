@@ -22,6 +22,7 @@
         <children>
             <Label text="Pour visualiser le dossier d'inscription du rendez-vous, double-cliquez sur celui-ci." textFill="blue" />
             <TableView fx:id="tableauRdv" onMouseClicked="#onRdvSelection" prefHeight="400.0" prefWidth="600.0" />
+            <Label fx:id="erreur" textFill="red" visible="false" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="50.0" spacing="5">
                 <children>
                     <Button fx:id="modifRdv" disable="true" onAction="#modifRdv" text="Modifier rendez-vous" />

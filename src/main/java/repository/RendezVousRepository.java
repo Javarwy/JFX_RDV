@@ -67,6 +67,29 @@ public class RendezVousRepository {
         }
     }
 
+    public boolean annuler(RendezVous rendezVous) throws SQLException {
+        Database db = new Database();
+        PreparedStatement ps = db.getConnection().prepareStatement(
+          "DELETE FROM rendezvous WHERE id_rendezvous = ?"
+        );
+        ps.setInt(1, rendezVous.getId_rendezvous());
+        ps.executeUpdate();
+        PreparedStatement ps2 = db.getConnection().prepareStatement(
+                "SELECT COUNT(*) FROM rendezvous WHERE id_rendezvous = ?"
+        );
+        ps2.setInt(1, rendezVous.getId_rendezvous());
+        ResultSet rs = ps2.executeQuery();
+        if (rs.next()) {
+            if (rs.getInt(1) == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     public ArrayList<RendezVous> getMesRendezVous(int idUtilisateur) throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement(

@@ -21,7 +21,11 @@ public class SalleRepository {
         ps2.setInt(1, salle.getId_salle());
         ResultSet rs = ps2.executeQuery();
         if (rs.next()){
-            return true;
+            if (rs.getInt("occupe") == 1 && rs.getString("professeur_present") != null){
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -40,7 +44,11 @@ public class SalleRepository {
         ps2.setInt(1, salle.getId_salle());
         ResultSet rs = ps2.executeQuery();
         if (rs.next()){
-            return true;
+            if (rs.getInt("occupe") == 0 && rs.getString("professeur_present") == null){
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

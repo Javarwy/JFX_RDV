@@ -34,7 +34,7 @@ public class ModifierInfosController implements Initializable {
         this.nomField.setText(UtilisateurConnecte.getInstance().getNom());
         this.prenomField.setText(UtilisateurConnecte.getInstance().getPrenom());
         this.emailField.setText(UtilisateurConnecte.getInstance().getEmail());
-        this.passwordField.setPromptText(UtilisateurConnecte.getInstance().getMotDePasse());
+        this.passwordField.setText(UtilisateurConnecte.getInstance().getMotDePasse());
     }
 
     @FXML
@@ -47,12 +47,17 @@ public class ModifierInfosController implements Initializable {
         if (nom.isEmpty() && prenom.isEmpty() && email.isEmpty() && password.isEmpty()){
             this.erreur.setText("Veuillez remplir au minimum un champ.");
             this.erreur.setVisible(true);
+        } else if (nom.equals(UtilisateurConnecte.getInstance().getNom()) && prenom.equals(UtilisateurConnecte.getInstance().getPrenom()) && email.equals(UtilisateurConnecte.getInstance().getEmail()) && (password.equals(UtilisateurConnecte.getInstance().getMotDePasse()) || encoder.matches(password, UtilisateurConnecte.getInstance().getMotDePasse()))) {
+            this.erreur.setText("Veuillez modifier au moins une information.");
+            this.erreur.setVisible(true);
         } else {
             this.erreur.setVisible(false);
             Utilisateur utilisateur = new Utilisateur(
                 UtilisateurConnecte.getInstance().getId_utilisateur(), nom, prenom, email, UtilisateurConnecte.getInstance().getMotDePasse(), UtilisateurConnecte.getInstance().getRole()
             );
-            if (!encoder.matches(password, utilisateur.getMotDePasse()) && !password.isEmpty()){
+            if (!password.equals(utilisateur.getMotDePasse()) && !password.isEmpty()){
+                System.out.println(password);
+                System.out.println(utilisateur.getMotDePasse());
                 utilisateur.setMotDePasse(encoder.encode(password));
             }
             UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
@@ -65,7 +70,7 @@ public class ModifierInfosController implements Initializable {
                     UtilisateurConnecte.initInstance(utilisateur);
                     redirection();
                 } else {
-                    this.erreur.setText("Erreur lors de la modification.");
+                    this.erreur.setText("Erreur lors de la modification. Si le problème persiste, veuillez contacter le support.");
                     this.erreur.setVisible(true);
                 }
             } else {

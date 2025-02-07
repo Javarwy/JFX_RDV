@@ -60,14 +60,18 @@ public class UtilisateurRepository {
         requetePrepareModif.setString(4, utilisateur.getMotDePasse());
         requetePrepareModif.setInt(5, utilisateur.getId_utilisateur());
         requetePrepareModif.executeUpdate();
-        PreparedStatement reqPrepareSelect = db.getConnection().prepareStatement("SELECT * FROM utilisateur WHERE email = ?"
+        PreparedStatement ps = db.getConnection().prepareStatement("SELECT nom, prenom, email, mdp FROM utilisateur WHERE id_utilisateur = ?"
         );
-        reqPrepareSelect.setString(1, utilisateur.getEmail());
-        ResultSet resultatRequete = reqPrepareSelect.executeQuery();
-        if (resultatRequete.next()){
-            return true;
-        } else {
+        ps.setInt(1, utilisateur.getId_utilisateur());
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()){
+            if (rs.getString("nom").equals(utilisateur.getNom()) && rs.getString("prenom").equals(utilisateur.getPrenom()) && rs.getString("email").equals(utilisateur.getEmail()) && rs.getString("mdp").equals(utilisateur.getMotDePasse())) {
+                return true;
+            } else {
                 return false;
+            }
+        } else {
+            return false;
         }
     }
 

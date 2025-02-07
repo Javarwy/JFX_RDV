@@ -43,11 +43,6 @@ public class RendezVousRepository {
 
     public boolean modifier(RendezVous rendezVous) throws SQLException {
         Database db = new Database();
-        PreparedStatement ps = db.getConnection().prepareStatement(
-                "SELECT date_rendezvous, heure_rendezvous, ref_salle FROM rendezvous WHERE id_rendezvous = ?"
-        );
-        ps.setInt(1, rendezVous.getId_rendezvous());
-        ResultSet rs = ps.executeQuery();
         PreparedStatement ps2 = db.getConnection().prepareStatement(
                 "UPDATE rendezvous SET date_rendezvous = ?, heure_rendezvous = ?, ref_salle = ? WHERE id_rendezvous = ?"
         );
@@ -56,8 +51,13 @@ public class RendezVousRepository {
         ps2.setInt(3, rendezVous.getRefSalle().getId_salle());
         ps2.setInt(4, rendezVous.getId_rendezvous());
         ps2.executeUpdate();
+        PreparedStatement ps = db.getConnection().prepareStatement(
+                "SELECT date_rendezvous, heure_rendezvous, ref_salle FROM rendezvous WHERE id_rendezvous = ?"
+        );
+        ps.setInt(1, rendezVous.getId_rendezvous());
+        ResultSet rs = ps.executeQuery();
         if (rs.next()) {
-            if (!rs.getString("date_rendezvous").equals(rendezVous.getDate_rendezvous()) || !rs.getString("heure_rendezvous").equals((rendezVous.getHeure_rendez())) || rs.getInt("ref_salle") != rendezVous.getRefSalle().getId_salle()) {
+            if (rs.getString("date_rendezvous").equals(rendezVous.getDate_rendezvous()) && rs.getString("heure_rendezvous").equals((rendezVous.getHeure_rendez())) && rs.getInt("ref_salle") == rendezVous.getRefSalle().getId_salle()) {
                 return true;
             } else {
                 return false;

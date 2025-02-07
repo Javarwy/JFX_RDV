@@ -62,12 +62,15 @@ public class ModifierRdvController implements Initializable {
         if (this.date.getValue() == null || this.heure.getValue() == null || this.minute.getValue() == null || this.salle.getValue() == null) {
             this.erreur.setText("Veuillez mettre une date, une heure et une salle.");
             this.erreur.setVisible(true);
+        } else if (String.valueOf(this.date.getValue()).equals(this.rdvSel.getDate_rendezvous()) && (String.format("%02d:%02d:%02d", this.heure.getValue(), this.minute.getValue(), 0)).equals(this.rdvSel.getHeure_rendez()) && salle.getValue().equals(this.rdvSel.getRefSalle())) {
+            this.erreur.setText("Veuillez modifier au moins une information.");
+            this.erreur.setVisible(true);
         } else {
             String date = this.date.getValue().toString();
             int heure = this.heure.getValue();
             int minute = this.minute.getValue();
-            Salle salle = this.salle.getValue();
             String time = String.format("%02d:%02d:%02d", heure, minute, 0);
+            Salle salle = this.salle.getValue();
             RendezVousRepository rendezVousRepository = new RendezVousRepository();
             boolean check = false;
             check = rendezVousRepository.modifier(new RendezVous(this.rdvSel.getId_rendezvous(), date, time, this.rdvSel.getRefDossier(), this.salle.getValue()));
@@ -79,7 +82,7 @@ public class ModifierRdvController implements Initializable {
                 }
                 StartApplication.changeScene("professeur/rdvProfesseurView.fxml");
             } else {
-                this.erreur.setText("Le rendez-vous n'a pas eu de modifications.");
+                this.erreur.setText("Erreur lors de la modification. Si le problème persiste, veuillez contacter le support.");
                 this.erreur.setVisible(true);
             }
         }

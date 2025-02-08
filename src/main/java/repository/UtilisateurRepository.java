@@ -22,7 +22,7 @@ public class UtilisateurRepository {
 
         connection = db.getConnection();
 
-        String SQLReq = "INSERT INTO utilisateur (nom, prenom, email, mdp, role, fourni_com) VALUES (?, ?, ?, ?, ?, null)";
+        String SQLReq = "INSERT INTO utilisateur (nom, prenom, email, mdp, role) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQLReq)) {
             preparedStatement.setString(1, user.getNom());
@@ -104,7 +104,7 @@ public class UtilisateurRepository {
         reqPrepareSelect.setString(1, email);
         ResultSet resultSet = reqPrepareSelect.executeQuery();
         if (resultSet.next()) {
-            Utilisateur utilisateur = new Utilisateur(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getInt(7));
+            Utilisateur utilisateur = new Utilisateur(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
             return utilisateur;
         } else {
             return null;
@@ -118,7 +118,7 @@ public class UtilisateurRepository {
         reqPrepareSelect.setInt(1, id);
         ResultSet resultSet = reqPrepareSelect.executeQuery();
         if (resultSet.next()) {
-            Utilisateur utilisateur = new Utilisateur(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getInt(7));
+            Utilisateur utilisateur = new Utilisateur(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
             return utilisateur;
         } else {
             return null;

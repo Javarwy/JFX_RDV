@@ -7,19 +7,6 @@ public class Utilisateur {
     private String email;
     private String mdp;
     private String role;
-    private int fourni_com;
-
-    public Utilisateur(int id_utilisateur, String nom, String prenom, String email, String mdp, String role, int fourni_com) {
-
-        this.id_utilisateur = id_utilisateur;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.mdp = mdp;
-        this.role = role;
-        this.fourni_com = fourni_com;
-
-    }
 
     public Utilisateur(int id_utilisateur, String nom, String prenom, String email, String mdp, String role){
         this.id_utilisateur = id_utilisateur;
@@ -76,16 +63,8 @@ public class Utilisateur {
         return role;
     }
 
-    public int getFourniCom() {
-        return fourni_com;
-    }
-
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public void setFourniCom(int fourni_com) {
-        this.fourni_com = fourni_com;
     }
 
     public int getId_utilisateur() {

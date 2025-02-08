@@ -24,6 +24,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `demandefourniture`
+--
+
+DROP TABLE IF EXISTS `demandefourniture`;
+CREATE TABLE IF NOT EXISTS `demandefourniture` (
+    `id_demandefourniture` int NOT NULL AUTO_INCREMENT,
+    `quantite` int NOT NULL,
+    `raison` varchar(100) NOT NULL,
+    `ref_fourniture` int NOT NULL,
+    `ref_utilisateur` int NOT NULL,
+    PRIMARY KEY (`id_demandefourniture`),
+    KEY `ref_fourniture` (`ref_fourniture`),
+    KEY `ref_utilisateur` (`ref_utilisateur`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table des demandes de fournitures';
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `dossier`
 --
 
@@ -134,9 +152,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `email` varchar(40) NOT NULL,
   `mdp` varchar(100) NOT NULL,
   `role` varchar(20) NOT NULL,
-  `fourni_com` int DEFAULT NULL,
-  PRIMARY KEY (`id_utilisateur`),
-  KEY `fourni_com` (`fourni_com`)
+  PRIMARY KEY (`id_utilisateur`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table de l''utilisateur';
 
 --
@@ -149,6 +165,13 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `nom`, `prenom`, `email`, `mdp`, `r
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `demandefourniture`
+--
+ALTER TABLE `demandefourniture`
+  ADD CONSTRAINT `fourniture_on_demandefourniture` FOREIGN KEY (`ref_fourniture`) REFERENCES `fourniture` (`id_fourniture`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `utilisateur_on_demandefourniture` FOREIGN KEY (`ref_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `dossier`
@@ -168,13 +191,6 @@ ALTER TABLE `rendezvous`
 --
 ALTER TABLE `salle`
   ADD CONSTRAINT `salle_on_prof` FOREIGN KEY (`professeur_present`) REFERENCES `utilisateur` (`id_utilisateur`);
-
---
--- Contraintes pour la table `utilisateur`
---
-ALTER TABLE `utilisateur`
-  ADD CONSTRAINT `util_on_fourn` FOREIGN KEY (`fourni_com`) REFERENCES `fourniture` (`id_fourniture`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
   `nomEtudiant` varchar(50) NOT NULL,
   `prenomEtudiant` varchar(50) NOT NULL,
   `diplome` varchar(25) NOT NULL,
-  `emailEtudiant` varchar(50) NOT NULL,
+  `emailEtudiant` varchar(100) NOT NULL,
   `telephone` varchar(10) NOT NULL,
   PRIMARY KEY (`id_etudiant`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table des étudiants';
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `fourniture` (
   `id_fourniture` int NOT NULL AUTO_INCREMENT,
   `libelle` varchar(20) NOT NULL,
   `description` varchar(100) NOT NULL,
-  `prix` int NOT NULL,
+  `prix` float NOT NULL,
   `fournisseur` varchar(50) NOT NULL,
   PRIMARY KEY (`id_fourniture`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table des four';
@@ -147,11 +147,11 @@ CREATE TABLE IF NOT EXISTS `salle` (
 DROP TABLE IF EXISTS `utilisateur`;
 CREATE TABLE IF NOT EXISTS `utilisateur` (
   `id_utilisateur` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(30) NOT NULL,
-  `prenom` varchar(30) NOT NULL,
-  `email` varchar(40) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `mdp` varchar(100) NOT NULL,
-  `role` varchar(20) NOT NULL,
+  `role` varchar(30) NOT NULL,
   PRIMARY KEY (`id_utilisateur`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table de l''utilisateur';
 

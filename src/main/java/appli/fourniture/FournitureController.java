@@ -13,6 +13,7 @@ import repository.FournitureRepository;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class FournitureController implements Initializable {
@@ -53,7 +54,7 @@ public class FournitureController implements Initializable {
     }
 
     @FXML
-    protected void ajoutFourniture() throws IOException {
+    protected void ajoutFourniture() throws IOException, SQLException {
         String libelle = this.nomField.getText();
         String description = this.prenomField.getText();
         int prix;
@@ -81,20 +82,7 @@ public class FournitureController implements Initializable {
         Fourniture fourniture = new Fourniture(libelle, description, prix, fournisseur);
 
         FournitureRepository fournitureRepository = new FournitureRepository();
-        boolean check = FournitureRepository.addFourniture(fourniture);
-
-        if (check) {
-            this.erreur.setVisible(false);
-            this.nomField.clear();
-            this.prenomField.clear();
-            this.emailField.clear();
-            this.passwordField.clear();
-            this.confirmPasswordField.clear();
-            StartApplication.changeScene("accueil/loginView.fxml");
-        } else {
-            this.erreur.setText("Erreur lors de l'ajout.");
-            this.erreur.setVisible(true);
-        }
+        fournitureRepository.addFourniture(fourniture);
     }
 
     @FXML

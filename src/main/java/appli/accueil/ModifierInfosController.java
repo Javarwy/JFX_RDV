@@ -101,5 +101,4 @@ public class ModifierInfosController implements Initializable {
     protected void retour() throws IOException {
         redirection();
     }
-
 }

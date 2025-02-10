@@ -17,7 +17,7 @@ public class Fourniture {
         this.fournisseur = fournisseur;
     }
 
-    public Fourniture(String libelle, String description, int prix, String fournisseur) {
+    public  Fourniture() {String libelle, String description, int prix, String fournisseur} {
         this.libelle = libelle;
         this.description = description;
         this.prix = prix;

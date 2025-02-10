@@ -81,7 +81,7 @@ public class FournitureController implements Initializable {
         Fourniture fourniture = new Fourniture(libelle, description, prix, fournisseur);
 
         FournitureRepository fournitureRepository = new FournitureRepository();
-        boolean check = FournitureRepository.addFourniture(fourniture);
+        boolean check = fournitureRepository.addFourniture(fourniture);
 
         if (check) {
             this.erreur.setVisible(false);

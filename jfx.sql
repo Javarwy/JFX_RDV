@@ -159,8 +159,8 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`id_utilisateur`, `nom`, `prenom`, `email`, `mdp`, `role`, `fourni_com`) VALUES
-(1, 'a', 'a', 'a', '$2a$10$1ScMjQ21fUgXibYYIdMPf.zBdRIrGYkYVj5j..HpSKvZcUq1MWcbS', 'Professeur', NULL);
+INSERT INTO `utilisateur` (`id_utilisateur`, `nom`, `prenom`, `email`, `mdp`, `role`) VALUES
+(1, 'a', 'a', 'a', '$2a$10$1ScMjQ21fUgXibYYIdMPf.zBdRIrGYkYVj5j..HpSKvZcUq1MWcbS', 'Professeur');
 
 --
 -- Contraintes pour les tables déchargées

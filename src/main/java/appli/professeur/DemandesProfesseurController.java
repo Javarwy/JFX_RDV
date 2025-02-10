@@ -68,7 +68,7 @@ public class DemandesProfesseurController implements Initializable {
     }
     @FXML
     protected void nouvelleDemande() throws IOException {
-
+        StartApplication.changeScene("professeur/nouvelleDemandeProfesseurView.fxml");
     }
 
     @FXML

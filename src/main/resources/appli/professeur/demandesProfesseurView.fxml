@@ -21,7 +21,7 @@
         <children>
             <TableView fx:id="tableauDemandes" onMouseClicked="#onDemandeSelection" prefHeight="400.0" prefWidth="600.0" />
             <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
-            <Button fx:id="nouvelleDemande" disable="true" onAction="#nouvelleDemande" text="Nouvelle demande de fournitures">
+            <Button fx:id="nouvelleDemande" onAction="#nouvelleDemande" text="Nouvelle demande de fournitures">
                 <VBox.margin>
                     <Insets top="10.0" />
                 </VBox.margin>

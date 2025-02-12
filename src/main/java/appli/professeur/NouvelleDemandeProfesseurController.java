@@ -18,11 +18,11 @@ import java.util.ResourceBundle;
 
 public class NouvelleDemandeProfesseurController implements Initializable {
     @FXML
+    private ComboBox<Fourniture> fourniture;
+    @FXML
     private Spinner<Integer> quantite;
     @FXML
     private TextField raison;
-    @FXML
-    private ComboBox<Fourniture> fourniture;
     @FXML
     private Label erreur;
 
@@ -42,7 +42,23 @@ public class NouvelleDemandeProfesseurController implements Initializable {
 
     @FXML
     protected void confirmer() throws IOException, SQLException {
-
+        if (this.fourniture.getValue() == null || this.quantite.getValue() == null || this.raison.getText() == null) {
+            this.erreur.setText("Veuillez remplir tous les champs.");
+            this.erreur.setVisible(true);
+        } else {
+            Fourniture fourniture = this.fourniture.getValue();
+            int quantite = this.quantite.getValue();
+            String raison = this.raison.getText();
+            DemandeFournitureRepository demandeFournitureRepository = new DemandeFournitureRepository();
+            boolean check = false;
+            check = demandeFournitureRepository.ajout(new DemandeFourniture(quantite, raison, fourniture, UtilisateurConnecte.getInstance()));
+            if (check == true){
+                StartApplication.changeScene("professeur/demandesProfesseurView.fxml");
+            } else {
+                this.erreur.setText("Une erreur est survenue. Veuillez réessayer. Si l'erreur persiste, veuillez contacter le support.");
+                this.erreur.setVisible(true);
+            }
+        }
     }
 
     @FXML

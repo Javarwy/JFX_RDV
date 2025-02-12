@@ -24,6 +24,11 @@ public class Fourniture {
         this.fournisseur = fournisseur;
     }
 
+    @Override
+    public String toString() {
+        return libelle + " : " + description + " par " + fournisseur + "\t\t"+ String.format("%.2f €", prix);
+    }
+
     public int getId_fourniture() {
         return id_fourniture;
     }

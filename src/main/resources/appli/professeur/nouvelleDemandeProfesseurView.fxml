@@ -22,12 +22,12 @@
   </Label>
   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="500.0" spacing="5">
     <children>
+      <Label text="Fourniture :" />
+      <ComboBox fx:id="fourniture" />
       <Label text="Quantité :" />
       <Spinner fx:id="quantite" min="1" max="100" />
       <Label text="Raison :" />
       <TextField fx:id="raison" />
-      <Label text="Fourniture :" />
-      <ComboBox fx:id="fourniture" />
       <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
       <Button onAction="#confirmer" text="Envoyer la demande" />
     </children>

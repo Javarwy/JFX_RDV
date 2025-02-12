@@ -5,11 +5,11 @@ public class Fourniture {
     public int id_fourniture;
     public String libelle;
     public String description;
-    public int prix;
+    public double prix;
     public String fournisseur;
 
 
-    public Fourniture(int id_fourniture, String libelle, String description, int prix, String fournisseur) {
+    public Fourniture(int id_fourniture, String libelle, String description, double prix, String fournisseur) {
         this.id_fourniture = id_fourniture;
         this.libelle = libelle;
         this.description = description;
@@ -17,7 +17,7 @@ public class Fourniture {
         this.fournisseur = fournisseur;
     }
 
-    public Fourniture(String libelle, String description, int prix, String fournisseur) {
+    public Fourniture(String libelle, String description, double prix, String fournisseur) {
         this.libelle = libelle;
         this.description = description;
         this.prix = prix;
@@ -48,11 +48,11 @@ public class Fourniture {
         this.description = description;
     }
 
-    public int getPrix() {
+    public double getPrix() {
         return prix;
     }
 
-    public void setPrix(int prix) {
+    public void setPrix(double prix) {
         this.prix = prix;
     }
 

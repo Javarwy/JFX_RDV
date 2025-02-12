@@ -57,9 +57,9 @@ public class FournitureController implements Initializable {
     protected void ajoutFourniture() throws IOException, SQLException {
         String libelle = this.nomField.getText();
         String description = this.prenomField.getText();
-        int prix;
+        double prix;
         try {
-            prix = Integer.parseInt(this.emailField.getText());
+            prix = Double.parseDouble(this.emailField.getText());
         } catch (NumberFormatException e) {
             this.erreur.setText("Le prix doit être un nombre.");
             this.erreur.setVisible(true);

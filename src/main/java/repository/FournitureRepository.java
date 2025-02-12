@@ -24,7 +24,7 @@ public class FournitureRepository {
                         resultSet.getInt("id_fourniture"),
                         resultSet.getString("libelle"),
                         resultSet.getString("description"),
-                        resultSet.getInt("prix"),
+                        resultSet.getDouble("prix"),
                         resultSet.getString("fournisseur")
                 );
                 fournitures.add(fourniture);
@@ -45,7 +45,7 @@ public class FournitureRepository {
             preparedStatement.setInt(1, fourniture.getId_fourniture());
             preparedStatement.setString(2, fourniture.getLibelle());
             preparedStatement.setString(3, fourniture.getDescription());
-            preparedStatement.setInt(4, fourniture.getPrix());
+            preparedStatement.setDouble(4, fourniture.getPrix());
             preparedStatement.setString(5, fourniture.getFournisseur());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -76,7 +76,7 @@ public class FournitureRepository {
                 try (PreparedStatement preparedStatement = connection.prepareStatement(SQLReqFurnUpdate)) {
                     preparedStatement.setString(1, fourniture.getLibelle());
                     preparedStatement.setString(2, fourniture.getDescription());
-                    preparedStatement.setInt(3, fourniture.getPrix());
+                    preparedStatement.setDouble(3, fourniture.getPrix());
                     preparedStatement.setString(4, fourniture.getFournisseur());
                     preparedStatement.setInt(5, fourniture.getId_fourniture());
                     preparedStatement.executeUpdate();

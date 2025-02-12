@@ -99,10 +99,17 @@ CREATE TABLE IF NOT EXISTS `fourniture` (
   `id_fourniture` int NOT NULL AUTO_INCREMENT,
   `libelle` varchar(20) NOT NULL,
   `description` varchar(100) NOT NULL,
-  `prix` float NOT NULL,
+  `prix` double(10,2) NOT NULL,
   `fournisseur` varchar(50) NOT NULL,
   PRIMARY KEY (`id_fourniture`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table des four';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table des fournitures';
+
+--
+-- Déchargement des données de la table `fourniture`
+--
+
+INSERT INTO `fourniture` (`id_fourniture`, `libelle`, `description`, `prix`, `fournisseur`) VALUES
+(1, 'Colle', 'Bâton de colle 8,2 g', 5.00, 'UHU');
 
 -- --------------------------------------------------------
 
@@ -122,6 +129,13 @@ CREATE TABLE IF NOT EXISTS `rendezvous` (
   KEY `ref_salle` (`ref_salle`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table Rendez Vous';
 
+--
+-- Déchargement des données de la table `rendezvous`
+--
+
+INSERT INTO `rendezvous` (`id_rendezvous`, `date_rendezvous`, `heure_rendezvous`, `ref_dossier`, `ref_salle`) VALUES
+(1, '2025-02-05', '10:00:00', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -137,6 +151,14 @@ CREATE TABLE IF NOT EXISTS `salle` (
   PRIMARY KEY (`id_salle`),
   KEY `professeur_present` (`professeur_present`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table des salles';
+
+--
+-- Déchargement des données de la table `salle`
+--
+
+INSERT INTO `salle` (`id_salle`, `nom_salle`, `occupe`, `professeur_present`) VALUES
+(1, 'A1', 1, 1),
+(2, 'A2', 0, null);
 
 -- --------------------------------------------------------
 

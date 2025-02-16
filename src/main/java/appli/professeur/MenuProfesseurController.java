@@ -19,18 +19,22 @@ public class MenuProfesseurController implements Initializable {
         StartApplication.changeTitle("Accueil");
         this.welcomeText.setText("Bienvenue, "+UtilisateurConnecte.getInstance().getNom()+" "+UtilisateurConnecte.getInstance().getPrenom()+" !");
     }
+    // Redirection vers la page des dossiers d'inscription
     @FXML
     protected void dossiers() throws IOException {
         StartApplication.changeScene("professeur/dossiersProfesseurView.fxml");
     }
+    // Redirection vers la page des rendez-vous
     @FXML
     protected void rendezVous() throws IOException {
         StartApplication.changeScene("professeur/RdvProfesseurView.fxml");
     }
+    // Redirection vers la page des demandes de fournitures
     @FXML
     protected void demandeFourniture() throws IOException {
         StartApplication.changeScene("professeur/demandesProfesseurView.fxml");
     }
+    // Redirection vers la page de modification des informations du compte
     @FXML
     protected void modifierInfos() throws IOException {
         StartApplication.changeScene("accueil/modifierInfosView.fxml");

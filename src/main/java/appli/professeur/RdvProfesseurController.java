@@ -30,6 +30,7 @@ public class RdvProfesseurController implements Initializable {
     @FXML
     private Label erreur;
 
+    // Données de la colonne sélectionnée depuis le TableView
     private RendezVous rdvSel;
 
     @Override
@@ -47,42 +48,50 @@ public class RdvProfesseurController implements Initializable {
                 {"E-mail", "emailEtudiant"},
                 {"Téléphone", "telephone"}
         };
+        // Parcours de l'ensemble des colonnes
         for (int i = 0; i < colonnes.length; i++) {
             TableColumn<RendezVous, String> maColonne = new TableColumn<>(colonnes[i][0]);
             maColonne.setCellValueFactory(new PropertyValueFactory<RendezVous,String>(colonnes[i][1]));
             switch(colonnes[i][1]){
+                // Pour la colonne "refDossier", cache la colonne et insère l'id du dossier dedans
                 case "refDossier":
                     maColonne.setVisible(false);
                     maColonne.setCellValueFactory(cellData ->
                             new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getId_dossier()))
                     );
                     break;
+                // Pour la colonne "refSalle", cache la colonne et insère l'id de la salle dedans
                 case "refSalle":
                     maColonne.setVisible(false);
                     maColonne.setCellValueFactory(cellData ->
                             new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefSalle().getId_salle()))
                     );
                     break;
+                // Pour la colonne "refDossier", insère le nom de la salle
                 case "nom_salle":
                     maColonne.setCellValueFactory(cellData ->
                             new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefSalle().getNom_salle()))
                     );
                     break;
+                // Pour la colonne "nomEtudiant", insère le nom de l'étudiant
                 case "nomEtudiant":
                     maColonne.setCellValueFactory(cellData ->
                             new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getNomEtudiant()))
                     );
                     break;
+                // Pour la colonne "prenomEtudiant", insère le prénom de l'étudiant
                 case "prenomEtudiant":
                     maColonne.setCellValueFactory(cellData ->
                             new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getPrenomEtudiant()))
                     );
                     break;
+                // Pour la colonne "emailEtudiant", insère l'email de l'étudiant
                 case "emailEtudiant":
                     maColonne.setCellValueFactory(cellData ->
                             new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getEmailEtudiant()))
                     );
                     break;
+                // Pour la colonne "telephone", insère le téléphone de l'étudiant
                 case "telephone":
                     maColonne.setCellValueFactory(cellData ->
                             new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getTelephone()))
@@ -100,11 +109,13 @@ public class RdvProfesseurController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<RendezVous> observableList = tableauRdv.getItems();
         observableList.setAll(rendezVous);
     }
     @FXML
     protected void onRdvSelection(MouseEvent event) {
+        // Un clic gauche = Enregistre les données de la colonne sélectionnée et active les boutons
         if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1){
             TablePosition cell = tableauRdv.getSelectionModel().getSelectedCells().get(0);
             int indexLigne = cell.getRow();
@@ -112,6 +123,7 @@ public class RdvProfesseurController implements Initializable {
             this.rdvSel = tableauRdv.getItems().get(indexLigne);
             modifRdv.setDisable(false);
             annulerRdv.setDisable(false);
+        // Double-clic gauche = Affiche les informations du dossier d'inscription concerné par le rendez-vous
         } else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2){
             TablePosition cell = tableauRdv.getSelectionModel().getSelectedCells().get(0);
             int indexLigne = cell.getRow();
@@ -143,6 +155,7 @@ public class RdvProfesseurController implements Initializable {
         alert.setHeaderText("Souhaitez-vous annuler ce rendez-vous ?");
         alert.setContentText("Cette action est irréversible !");
         alert.showAndWait().ifPresent(reponse -> {
+            // Si OK cliqué, annule (supprime) le rendez-vous
             if (reponse == ButtonType.OK){
                 RendezVousRepository rendezVousRepository = new RendezVousRepository();
                 boolean check = false;

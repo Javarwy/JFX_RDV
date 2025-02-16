@@ -31,6 +31,7 @@ public class ModifierRdvController implements Initializable {
     @FXML
     private Label erreur;
 
+    // Données de la colonne sélectionnée depuis le TableView de la page de rendez-vous
     private RendezVous rdvSel;
 
     public ModifierRdvController(RendezVous rdvSel) {
@@ -59,9 +60,11 @@ public class ModifierRdvController implements Initializable {
 
     @FXML
     protected void confirmer() throws IOException, SQLException {
+        // Si les champs n'ont pas tous été remplis, afficher l'erreur suivante
         if (this.date.getValue() == null || this.heure.getValue() == null || this.minute.getValue() == null || this.salle.getValue() == null) {
             this.erreur.setText("Veuillez mettre une date, une heure et une salle.");
             this.erreur.setVisible(true);
+        // Si aucun des champs n'a été modifié, afficher l'erreur suivante
         } else if (String.valueOf(this.date.getValue()).equals(this.rdvSel.getDate_rendezvous()) && (String.format("%02d:%02d:%02d", this.heure.getValue(), this.minute.getValue(), 0)).equals(this.rdvSel.getHeure_rendez()) && salle.getValue().equals(this.rdvSel.getRefSalle())) {
             this.erreur.setText("Veuillez modifier au moins une information.");
             this.erreur.setVisible(true);
@@ -69,6 +72,7 @@ public class ModifierRdvController implements Initializable {
             String date = this.date.getValue().toString();
             int heure = this.heure.getValue();
             int minute = this.minute.getValue();
+            // Mélange heure et minute et le met en format HH:MM:SS
             String time = String.format("%02d:%02d:%02d", heure, minute, 0);
             Salle salle = this.salle.getValue();
             RendezVousRepository rendezVousRepository = new RendezVousRepository();

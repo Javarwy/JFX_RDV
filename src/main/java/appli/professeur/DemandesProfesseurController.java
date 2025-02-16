@@ -27,6 +27,7 @@ public class DemandesProfesseurController implements Initializable {
     @FXML
     private Button nouvelleDemande;
 
+    // Données de la colonne sélectionnée depuis le TableView
     private DemandeFourniture demandeSel;
 
     @Override
@@ -38,6 +39,7 @@ public class DemandesProfesseurController implements Initializable {
                 {"Raison", "raison"},
                 {"Fourniture", "refFourniture"}
         };
+        // Parcours de l'ensemble des colonnes
         for (int i = 0; i < colonnes.length; i++) {
             TableColumn<DemandeFourniture,String> maColonne = new TableColumn<>(colonnes[i][0]);
             maColonne.setCellValueFactory(new PropertyValueFactory<DemandeFourniture,String>(colonnes[i][1]));
@@ -50,11 +52,13 @@ public class DemandesProfesseurController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<DemandeFourniture> observableList = tableauDemandes.getItems();
         observableList.setAll(demandes);
     }
     @FXML
     protected void onDemandeSelection(MouseEvent event) {
+        // Un clic gauche = Enregistre les données de la colonne sélectionnée
         if (event.getButton() == MouseButton.PRIMARY  && event.getClickCount() == 1){
             TablePosition cell = tableauDemandes.getSelectionModel().getSelectedCells().get(0);
             int indexLigne = cell.getRow();

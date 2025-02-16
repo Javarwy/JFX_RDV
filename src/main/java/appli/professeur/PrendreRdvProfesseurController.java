@@ -44,7 +44,10 @@ public class PrendreRdvProfesseurController implements Initializable {
     @FXML
     private Spinner<Integer> minute;
 
+    // Données de la colonne sélectionnée depuis le TableView de la page des dossiers d'inscription
     private Dossier dossierSel;
+
+    // Données de la colonne sélectionnée depuis le TableView de cette page
     private Salle salleSel;
 
     public PrendreRdvProfesseurController(Dossier dossierSel){
@@ -59,6 +62,7 @@ public class PrendreRdvProfesseurController implements Initializable {
                 {"Id. salle", "id_salle"},
                 {"Nom", "nom_salle"}
         };
+        // Parcours de l'ensemble des colonnes
         for (int i = 0; i < colonnes.length; i++) {
             TableColumn<Salle,String> maColonne = new TableColumn<>(colonnes[i][0]);
             maColonne.setCellValueFactory(new PropertyValueFactory<Salle,String>(colonnes[i][1]));
@@ -71,11 +75,13 @@ public class PrendreRdvProfesseurController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<Salle> observableList = tableauSalle.getItems();
         observableList.setAll(salles);
     }
     @FXML
     protected void onSalleSelection(MouseEvent event) throws IOException {
+        // Un clic gauche = Enregistre les données de la colonne sélectionnée et active le formulaire
         if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
             confirmerRdv.setDisable(false);
             TablePosition cell = tableauSalle.getSelectionModel().getSelectedCells().get(0);
@@ -96,7 +102,9 @@ public class PrendreRdvProfesseurController implements Initializable {
         alert.setTitle("Confirmer rendez-vous");
         alert.setHeaderText("Souhaitez-vous confirmer votre rendez-vous dans la salle n°" + this.salleSel.getId_salle() + " (" + this.salleSel.getNom_salle() + ") ?");
         alert.showAndWait().ifPresent(reponse -> {
+            // Si OK cliqué, confirme (ajoute) le rendez-vous
             if (reponse == ButtonType.OK){
+                // Si les champs n'ont pas tous été remplis, afficher l'erreur suivante
                 if (this.date.getValue() == null || this.heure.getValue() == null || this.minute.getValue() == null){
                     this.erreur.setText("Veuillez mettre une date et une heure.");
                     this.erreur.setVisible(true);
@@ -104,6 +112,7 @@ public class PrendreRdvProfesseurController implements Initializable {
                     String date = this.date.getValue().toString();
                     int heure = this.heure.getValue();
                     int minute = this.minute.getValue();
+                    // Mélange heure et minute et le met en format HH:MM:SS
                     String time = String.format("%02d:%02d:%02d", heure, minute, 0);
                     RendezVousRepository rendezVousRepository = new RendezVousRepository();
                     boolean check = false;

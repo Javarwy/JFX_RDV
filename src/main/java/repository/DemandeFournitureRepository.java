@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DemandeFournitureRepository {
+    // Ajoute une demande de fourniture dans la base de données
     public boolean ajout(DemandeFourniture demandeFourniture) throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement(
@@ -40,6 +41,7 @@ public class DemandeFournitureRepository {
         }
     }
 
+    // Récupère la liste de toutes les demandes de fournitures faites par l'utilisateur
     public ArrayList<DemandeFourniture> getDemandeFournituresByUtilisateur(Utilisateur utilisateur) throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement("SELECT df.id_demandefourniture, df.quantite, df.raison, df.ref_fourniture, f.libelle, f.description, f.prix, f.fournisseur FROM demandefourniture as df INNER JOIN fourniture as f ON f.id_fourniture = df.ref_fourniture WHERE df.ref_utilisateur = ?;");

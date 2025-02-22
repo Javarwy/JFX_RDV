@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class LogsRepository {
+    // Ajoute un log dans la base de données
     public void ajout(Logs logs) throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement(

@@ -8,6 +8,7 @@ import modeles.Dossier;
 import modeles.Etudiant;
 
 public class DossierRepository {
+    // Récupère une liste de tous les dossiers (avec informations de l'étudiant)
     public ArrayList<Dossier> getDossiers() throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement("SELECT d.id_dossier, d.date, d.heure, d.filliere, d.motivation, e.id_etudiant, e.prenomEtudiant, e.nomEtudiant, e.diplome, e.emailEtudiant, e.telephone FROM dossier as d INNER JOIN etudiant as e ON d.ref_etudiant = e.id_etudiant;");
@@ -20,6 +21,7 @@ public class DossierRepository {
         return dossiers;
     }
 
+    // Vérifie si un dosiser est déjà pris en charge (rendez-vous déjà créé) ou non
     public boolean estPrisEnCharge(int refDossier) throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement(

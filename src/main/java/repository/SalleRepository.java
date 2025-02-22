@@ -7,6 +7,7 @@ import database.Database;
 import modeles.Salle;
 
 public class SalleRepository {
+    // Modifie les propriétés de la salle dans la base de données pour la mettre "occupée"
     public boolean reserver(Salle salle) throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement(
@@ -31,6 +32,7 @@ public class SalleRepository {
         }
     }
 
+    // Modifie les propriétés de la salle dans la base de données pour la mettre "libre"
     public boolean liberer(Salle salle) throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement(
@@ -54,6 +56,7 @@ public class SalleRepository {
         }
     }
 
+    // Récupère la liste de toutes les salles libres
     public ArrayList<Salle> getSallesLibres() throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement("SELECT id_salle, nom_salle FROM salle WHERE occupe = 0;");

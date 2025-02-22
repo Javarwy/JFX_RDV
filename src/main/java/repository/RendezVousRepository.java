@@ -10,6 +10,7 @@ import modeles.Salle;
 import modeles.Etudiant;
 
 public class RendezVousRepository {
+    // Ajoute un rendez-vous dans la base de données
     public boolean ajout(RendezVous rendezVous) throws SQLException {
         Database db = new Database();
         PreparedStatement deja = db.getConnection().prepareStatement(
@@ -41,6 +42,7 @@ public class RendezVousRepository {
         }
     }
 
+    // Modifie un rendez-vous dans la base de données
     public boolean modifier(RendezVous rendezVous) throws SQLException {
         Database db = new Database();
         PreparedStatement ps2 = db.getConnection().prepareStatement(
@@ -67,6 +69,7 @@ public class RendezVousRepository {
         }
     }
 
+    // Supprime un rendez-vous de la base de données
     public boolean annuler(RendezVous rendezVous) throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement(
@@ -90,6 +93,7 @@ public class RendezVousRepository {
         }
     }
 
+    // Récupère la liste de tous les rendez-vous concernés par l'utilisateur
     public ArrayList<RendezVous> getMesRendezVous(int idUtilisateur) throws SQLException {
         Database db = new Database();
         PreparedStatement ps = db.getConnection().prepareStatement(

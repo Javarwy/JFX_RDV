@@ -11,7 +11,7 @@ public class Database {
     private String motDePasse = "";
 
     private String getUrl() {
-        return "jdbc:mysql://"+this.serveur+"/"+this.nomDeLaBase+"?serverTimezone=UTC";
+        return "jdbc:mysql://"+this.serveur+"/"+this.nomDeLaBase+"?serverTimezone=Europe/Paris";
     }
 
     public Connection getConnection() {

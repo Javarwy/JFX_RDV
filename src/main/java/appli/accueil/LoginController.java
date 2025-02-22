@@ -6,14 +6,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
+import modeles.Logs;
 import modeles.Utilisateur;
 import modeles.UtilisateurConnecte;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import repository.LogsRepository;
 import repository.UtilisateurRepository;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -46,6 +49,7 @@ public class LoginController implements Initializable {
                     this.erreur.setVisible(true);
                 } else {
                     UtilisateurConnecte.initInstance(check);
+                    new LogsRepository().ajout(new Logs("Connexion au compte", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                     redirection();
                 }
             } else {

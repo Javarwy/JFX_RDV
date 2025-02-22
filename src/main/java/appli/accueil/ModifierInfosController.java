@@ -6,14 +6,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import modeles.Logs;
 import modeles.Utilisateur;
 import modeles.UtilisateurConnecte;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import repository.LogsRepository;
 import repository.UtilisateurRepository;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class ModifierInfosController implements Initializable {
@@ -68,6 +71,7 @@ public class ModifierInfosController implements Initializable {
                 if (check == true){
                     UtilisateurConnecte.clearInstance();
                     UtilisateurConnecte.initInstance(utilisateur);
+                    new LogsRepository().ajout(new Logs("Modification des informations utilisateur", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                     redirection();
                 } else {
                     this.erreur.setText("Erreur lors de la modification. Si le problème persiste, veuillez contacter le support.");

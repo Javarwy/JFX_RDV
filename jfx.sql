@@ -114,6 +114,22 @@ INSERT INTO `fourniture` (`id_fourniture`, `libelle`, `description`, `prix`, `fo
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `logs`
+--
+
+DROP TABLE IF EXISTS `logs`;
+CREATE TABLE IF NOT EXISTS `logs` (
+    `id_logs` int NOT NULL AUTO_INCREMENT,
+    `action` varchar(255) NOT NULL,
+    `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `ref_utilisateur` int NOT NULL,
+    PRIMARY KEY (`id_logs`),
+    KEY `ref_utilisateur` (`ref_utilisateur`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table des logs';
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `rendezvous`
 --
 
@@ -200,6 +216,12 @@ ALTER TABLE `demandefourniture`
 --
 ALTER TABLE `dossier`
   ADD CONSTRAINT `etudiant_on_dossier` FOREIGN KEY (`ref_etudiant`) REFERENCES `etudiant` (`id_etudiant`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Contraintes pour la table `logs`
+--
+ALTER TABLE `logs`
+  ADD CONSTRAINT `utilisateur_on_logs` FOREIGN KEY (`ref_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `rendezvous`

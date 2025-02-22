@@ -18,6 +18,8 @@ import repository.SalleRepository;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -109,11 +111,11 @@ public class PrendreRdvProfesseurController implements Initializable {
                     this.erreur.setText("Veuillez mettre une date et une heure.");
                     this.erreur.setVisible(true);
                 } else {
-                    String date = this.date.getValue().toString();
+                    LocalDate date = this.date.getValue();
                     int heure = this.heure.getValue();
                     int minute = this.minute.getValue();
                     // Mélange heure et minute et le met en format HH:MM:SS
-                    String time = String.format("%02d:%02d:%02d", heure, minute, 0);
+                    LocalTime time = LocalTime.of(heure, minute, 0);
                     RendezVousRepository rendezVousRepository = new RendezVousRepository();
                     boolean check = false;
                     try {

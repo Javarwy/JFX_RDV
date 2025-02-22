@@ -1,14 +1,17 @@
 package modeles;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class RendezVous {
 
     public int id_rendezvous;
-    public String date_rendezvous;
-    public String heure_rendez;
+    public LocalDate date_rendezvous;
+    public LocalTime heure_rendez;
     public Dossier refDossier;
     public Salle refSalle;
 
-    public RendezVous (int id_rendezvous, String date_rendezvous, String heure_rendez, Dossier refDossier, Salle refSalle) {
+    public RendezVous (int id_rendezvous, LocalDate date_rendezvous, LocalTime heure_rendez, Dossier refDossier, Salle refSalle) {
 
         this.id_rendezvous = id_rendezvous;
         this.date_rendezvous = date_rendezvous;
@@ -16,7 +19,7 @@ public class RendezVous {
         this.refDossier = refDossier;
         this.refSalle = refSalle;
     }
-    public RendezVous (String date_rendezvous, String heure_rendez, Dossier refDossier, Salle refSalle) {
+    public RendezVous (LocalDate date_rendezvous, LocalTime heure_rendez, Dossier refDossier, Salle refSalle) {
 
         this.date_rendezvous = date_rendezvous;
         this.heure_rendez = heure_rendez;
@@ -32,19 +35,19 @@ public class RendezVous {
         this.id_rendezvous = id_rendezvous;
     }
 
-    public String getDate_rendezvous() {
+    public LocalDate getDate_rendezvous() {
         return date_rendezvous;
     }
 
-    public void setDate_rendezvous(String date_rendezvous) {
+    public void setDate_rendezvous(LocalDate date_rendezvous) {
         this.date_rendezvous = date_rendezvous;
     }
 
-    public String getHeure_rendez() {
+    public LocalTime getHeure_rendez() {
         return heure_rendez;
     }
 
-    public void setHeure_rendez(String heure_rendez) {
+    public void setHeure_rendez(LocalTime heure_rendez) {
         this.heure_rendez = heure_rendez;
     }
 

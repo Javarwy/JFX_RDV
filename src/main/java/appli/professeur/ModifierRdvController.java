@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -42,9 +43,9 @@ public class ModifierRdvController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         StartApplication.changeTitle("Modifier rendez-vous");
         this.idRdv.setText("Id. rendez-vous : " + this.rdvSel.getId_rendezvous() + "\n(dossier de " + this.rdvSel.getRefDossier().getRefEtudiant().getNomEtudiant() + " " + this.rdvSel.getRefDossier().getRefEtudiant().getPrenomEtudiant() + ")");
-        this.date.setValue(LocalDate.parse(this.rdvSel.getDate_rendezvous()));
-        this.heure.getValueFactory().setValue(Integer.parseInt(this.rdvSel.getHeure_rendez().split(":")[0]));
-        this.minute.getValueFactory().setValue(Integer.parseInt(this.rdvSel.getHeure_rendez().split(":")[1]));
+        this.date.setValue(this.rdvSel.getDate_rendezvous());
+        this.heure.getValueFactory().setValue(this.rdvSel.getHeure_rendez().getHour());
+        this.minute.getValueFactory().setValue(this.rdvSel.getHeure_rendez().getMinute());
         this.salle.setValue(this.rdvSel.getRefSalle());
         this.salle.getItems().add(this.rdvSel.getRefSalle());
         ArrayList<Salle> salles;
@@ -65,15 +66,15 @@ public class ModifierRdvController implements Initializable {
             this.erreur.setText("Veuillez mettre une date, une heure et une salle.");
             this.erreur.setVisible(true);
         // Si aucun des champs n'a été modifié, afficher l'erreur suivante
-        } else if (String.valueOf(this.date.getValue()).equals(this.rdvSel.getDate_rendezvous()) && (String.format("%02d:%02d:%02d", this.heure.getValue(), this.minute.getValue(), 0)).equals(this.rdvSel.getHeure_rendez()) && salle.getValue().equals(this.rdvSel.getRefSalle())) {
+        } else if ((this.date.getValue()).equals(this.rdvSel.getDate_rendezvous()) && (LocalTime.of(this.heure.getValue(), this.minute.getValue(), 0)).equals(this.rdvSel.getHeure_rendez()) && salle.getValue().equals(this.rdvSel.getRefSalle())) {
             this.erreur.setText("Veuillez modifier au moins une information.");
             this.erreur.setVisible(true);
         } else {
-            String date = this.date.getValue().toString();
+            LocalDate date = this.date.getValue();
             int heure = this.heure.getValue();
             int minute = this.minute.getValue();
             // Mélange heure et minute et le met en format HH:MM:SS
-            String time = String.format("%02d:%02d:%02d", heure, minute, 0);
+            LocalTime time = LocalTime.of(heure, minute, 0);
             Salle salle = this.salle.getValue();
             RendezVousRepository rendezVousRepository = new RendezVousRepository();
             boolean check = false;

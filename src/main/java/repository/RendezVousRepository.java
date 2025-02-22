@@ -22,8 +22,8 @@ public class RendezVousRepository {
                 PreparedStatement ps = db.getConnection().prepareStatement(
                         "INSERT INTO rendezvous (date_rendezvous, heure_rendezvous, ref_dossier, ref_salle) VALUES (?, ?, ?, ?)"
                 );
-                ps.setString(1, rendezVous.getDate_rendezvous());
-                ps.setString(2, rendezVous.getHeure_rendez());
+                ps.setDate(1, Date.valueOf(rendezVous.getDate_rendezvous()));
+                ps.setTime(2, Time.valueOf(rendezVous.getHeure_rendez()));
                 ps.setInt(3, rendezVous.getRefDossier().getId_dossier());
                 ps.setInt(4, rendezVous.getRefSalle().getId_salle());
                 ps.executeUpdate();
@@ -46,8 +46,8 @@ public class RendezVousRepository {
         PreparedStatement ps2 = db.getConnection().prepareStatement(
                 "UPDATE rendezvous SET date_rendezvous = ?, heure_rendezvous = ?, ref_salle = ? WHERE id_rendezvous = ?"
         );
-        ps2.setString(1, rendezVous.getDate_rendezvous());
-        ps2.setString(2, rendezVous.getHeure_rendez());
+        ps2.setDate(1, Date.valueOf(rendezVous.getDate_rendezvous()));
+        ps2.setTime(2, Time.valueOf(rendezVous.getHeure_rendez()));
         ps2.setInt(3, rendezVous.getRefSalle().getId_salle());
         ps2.setInt(4, rendezVous.getId_rendezvous());
         ps2.executeUpdate();
@@ -57,7 +57,7 @@ public class RendezVousRepository {
         ps.setInt(1, rendezVous.getId_rendezvous());
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
-            if (rs.getString("date_rendezvous").equals(rendezVous.getDate_rendezvous()) && rs.getString("heure_rendezvous").equals((rendezVous.getHeure_rendez())) && rs.getInt("ref_salle") == rendezVous.getRefSalle().getId_salle()) {
+            if (rs.getDate("date_rendezvous").toLocalDate().equals(rendezVous.getDate_rendezvous()) && rs.getTime("heure_rendezvous").toLocalTime().equals((rendezVous.getHeure_rendez())) && rs.getInt("ref_salle") == rendezVous.getRefSalle().getId_salle()) {
                 return true;
             } else {
                 return false;
@@ -102,7 +102,7 @@ public class RendezVousRepository {
             Salle salle = new Salle(rs.getInt("ref_salle"), rs.getString("nom_salle"), rs.getBoolean("occupe"), rs.getInt("professeur_present"));
             Etudiant etudiant = new Etudiant(rs.getInt("ref_etudiant"), rs.getString("nomEtudiant"), rs.getString("prenomEtudiant"), rs.getString("diplome"), rs.getString("emailEtudiant"), rs.getString("telephone"));
             Dossier dossier = new Dossier(rs.getInt("ref_dossier"), rs.getString("date"), rs.getString("heure"), rs.getString("filliere"), rs.getString("motivation"), etudiant);
-            rendezVous.add(new RendezVous(rs.getInt("id_rendezvous"), rs.getString("date_rendezvous"), rs.getString("heure_rendezvous"), dossier, salle));
+            rendezVous.add(new RendezVous(rs.getInt("id_rendezvous"), rs.getDate("date_rendezvous").toLocalDate(), rs.getTime("heure_rendezvous").toLocalTime(), dossier, salle));
         }
         return rendezVous;
     }

@@ -9,13 +9,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import modeles.DemandeFourniture;
 import modeles.Fourniture;
+import modeles.Logs;
 import modeles.UtilisateurConnecte;
 import repository.DemandeFournitureRepository;
 import repository.FournitureRepository;
+import repository.LogsRepository;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -97,6 +100,7 @@ public class NouvelleDemandeProfesseurController implements Initializable {
                 boolean check = false;
                 check = demandeFournitureRepository.ajout(new DemandeFourniture(quantite, raison, fourniture, UtilisateurConnecte.getInstance()));
                 if (check == true){
+                    new LogsRepository().ajout(new Logs("Création d'une demande de fournitures", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                     StartApplication.changeScene("professeur/demandesProfesseurView.fxml");
                 } else {
                     this.erreur.setText("Une erreur est survenue. Veuillez réessayer. Si l'erreur persiste, veuillez contacter le support.");

@@ -8,14 +8,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import modeles.Logs;
 import modeles.RendezVous;
 import modeles.UtilisateurConnecte;
+import repository.LogsRepository;
 import repository.RendezVousRepository;
 import repository.SalleRepository;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -167,14 +170,16 @@ public class RdvProfesseurController implements Initializable {
                 if (check == true){
                     SalleRepository salleRepository = new SalleRepository();
                     try {
+                        new LogsRepository().ajout(new Logs("Modification de la salle id. "+this.rdvSel.getRefSalle().getId_salle(), LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                         check = salleRepository.liberer(this.rdvSel.getRefSalle());
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
                     if (check == true){
                         try {
+                            new LogsRepository().ajout(new Logs("Suppression du rendez-vous pour le dossier id. "+this.rdvSel.getRefDossier().getId_dossier(), LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                             StartApplication.changeScene("professeur/rdvProfesseurView.fxml");
-                        } catch (IOException e) {
+                        } catch (IOException | SQLException e) {
                             throw new RuntimeException(e);
                         }
                     } else {

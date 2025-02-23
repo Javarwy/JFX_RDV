@@ -4,9 +4,11 @@ import appli.StartApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import modeles.Logs;
 import modeles.RendezVous;
 import modeles.Salle;
 import modeles.UtilisateurConnecte;
+import repository.LogsRepository;
 import repository.RendezVousRepository;
 import repository.SalleRepository;
 
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -83,8 +86,11 @@ public class ModifierRdvController implements Initializable {
                 if (this.rdvSel.getRefSalle().getId_salle() != salle.getId_salle()) {
                     SalleRepository salleRepository = new SalleRepository();
                     salleRepository.reserver(new Salle(salle.getId_salle(), salle.getNom_salle(), true, UtilisateurConnecte.getInstance().getId_utilisateur()));
+                    new LogsRepository().ajout(new Logs("Modification de la salle id. "+salle.getId_salle()+" (occupe = 1 | professeur_present = "+UtilisateurConnecte.getInstance().getId_utilisateur()+")", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                     salleRepository.liberer(this.rdvSel.getRefSalle());
+                    new LogsRepository().ajout(new Logs("Modification de la salle id. "+this.rdvSel.getRefSalle().getId_salle()+" (occupe = 0 | professeur_present = null)", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                 }
+                new LogsRepository().ajout(new Logs("Modification du rendez-vous id. "+this.rdvSel.getId_rendezvous(), LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                 StartApplication.changeScene("professeur/rdvProfesseurView.fxml");
             } else {
                 this.erreur.setText("Erreur lors de la modification. Si le problème persiste, veuillez contacter le support.");

@@ -8,10 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import modeles.Dossier;
-import modeles.RendezVous;
-import modeles.Salle;
-import modeles.UtilisateurConnecte;
+import modeles.*;
+import repository.LogsRepository;
 import repository.RendezVousRepository;
 import repository.SalleRepository;
 
@@ -19,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -127,13 +126,15 @@ public class PrendreRdvProfesseurController implements Initializable {
                         SalleRepository salleRepository = new SalleRepository();
                         try {
                             check = salleRepository.reserver(new Salle(this.salleSel.getId_salle(), this.salleSel.getNom_salle(), true, UtilisateurConnecte.getInstance().getId_utilisateur()));
+                            new LogsRepository().ajout(new Logs("Modification de la salle id. "+this.salleSel.getId_salle()+" (occupe = 1 | professeur_present = "+UtilisateurConnecte.getInstance().getId_utilisateur()+")", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
                         if (check == true){
                             try {
+                                new LogsRepository().ajout(new Logs("Création d'un rendez-vous pour le dossier id. "+this.dossierSel.getId_dossier(), LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                                 StartApplication.changeScene("professeur/menuProfesseurView.fxml");
-                            } catch (IOException e) {
+                            } catch (IOException | SQLException e) {
                                 throw new RuntimeException(e);
                             }
                         } else {

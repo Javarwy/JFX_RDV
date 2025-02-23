@@ -41,7 +41,7 @@
                     <Insets top="10.0" />
                 </VBox.margin>
                 <Label fx:id="labelHeure" text="Heure :" visible="false" />
-                <Spinner fx:id="heure" visible="false" max="23" />
+                <Spinner fx:id="heure" visible="false" min="8" max="18" />
                 <Label fx:id="labelMinute" text="Minutes :" visible="false" />
                 <Spinner fx:id="minute" visible="false" max="59" />
             </HBox>

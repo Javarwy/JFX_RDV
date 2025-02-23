@@ -116,34 +116,51 @@ public class PrendreRdvProfesseurController implements Initializable {
                     // Mélange heure et minute et le met en format HH:MM:SS
                     LocalTime time = LocalTime.of(heure, minute, 0);
                     RendezVousRepository rendezVousRepository = new RendezVousRepository();
-                    boolean check = false;
+                    boolean check = true;
+                    // Liste comportant les horaires des rendez-vous de l'utilisateur de la date sélectionnée
+                    ArrayList<LocalTime> horaires;
                     try {
-                        check = rendezVousRepository.ajout(new RendezVous(date, time, this.dossierSel, this.salleSel));
+                        horaires = rendezVousRepository.creneauxDisponibles(date, UtilisateurConnecte.getInstance().getId_utilisateur());
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
+                    for (LocalTime horaire : horaires) {
+                        // Si l'un des rendez-vous du jour se tient déjà entre 8h et 12h ou entre 14h et 18h, empêcher le processus de création
+                        if ((horaire.isBefore(LocalTime.of(12, 31)) && time.isBefore(LocalTime.of(12, 31))) || (horaire.isAfter(LocalTime.of(13, 59)) && time.isAfter(LocalTime.of(13, 59)))) {
+                            check = false;
+                            this.erreur.setText("Cette demi-journée n'est pas disponible à cette date.");
+                            this.erreur.setVisible(true);
+                        }
+                    }
                     if (check == true){
-                        SalleRepository salleRepository = new SalleRepository();
                         try {
-                            check = salleRepository.reserver(new Salle(this.salleSel.getId_salle(), this.salleSel.getNom_salle(), true, UtilisateurConnecte.getInstance().getId_utilisateur()));
-                            new LogsRepository().ajout(new Logs("Modification de la salle id. "+this.salleSel.getId_salle()+" (occupe = 1 | professeur_present = "+UtilisateurConnecte.getInstance().getId_utilisateur()+")", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
+                            check = rendezVousRepository.ajout(new RendezVous(date, time, this.dossierSel, this.salleSel));
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
                         if (check == true){
+                            SalleRepository salleRepository = new SalleRepository();
                             try {
-                                new LogsRepository().ajout(new Logs("Création d'un rendez-vous pour le dossier id. "+this.dossierSel.getId_dossier(), LocalDateTime.now(), UtilisateurConnecte.getInstance()));
-                                StartApplication.changeScene("professeur/menuProfesseurView.fxml");
-                            } catch (IOException | SQLException e) {
+                                check = salleRepository.reserver(new Salle(this.salleSel.getId_salle(), this.salleSel.getNom_salle(), true, UtilisateurConnecte.getInstance().getId_utilisateur()));
+                                new LogsRepository().ajout(new Logs("Modification de la salle id. "+this.salleSel.getId_salle()+" (occupe = 1 | professeur_present = "+UtilisateurConnecte.getInstance().getId_utilisateur()+")", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
+                            } catch (SQLException e) {
                                 throw new RuntimeException(e);
                             }
+                            if (check == true){
+                                try {
+                                    new LogsRepository().ajout(new Logs("Création d'un rendez-vous pour le dossier id. "+this.dossierSel.getId_dossier(), LocalDateTime.now(), UtilisateurConnecte.getInstance()));
+                                    StartApplication.changeScene("professeur/menuProfesseurView.fxml");
+                                } catch (IOException | SQLException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            } else {
+                                this.erreur.setText("Une erreur est survenue.");
+                                this.erreur.setVisible(true);
+                            }
                         } else {
-                            this.erreur.setText("Une erreur est survenue.");
+                            this.erreur.setText("Un rendez-vous est déjà pris avec ce dossier.");
                             this.erreur.setVisible(true);
                         }
-                    } else {
-                        this.erreur.setText("Un rendez-vous est déjà pris avec ce dossier.");
-                        this.erreur.setVisible(true);
                     }
                 }
             } else if (reponse == ButtonType.CANCEL){

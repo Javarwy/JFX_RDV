@@ -1,6 +1,8 @@
 package repository;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import database.Database;
@@ -109,5 +111,20 @@ public class RendezVousRepository {
             rendezVous.add(new RendezVous(rs.getInt("id_rendezvous"), rs.getDate("date_rendezvous").toLocalDate(), rs.getTime("heure_rendezvous").toLocalTime(), dossier, salle));
         }
         return rendezVous;
+    }
+
+    public ArrayList<LocalTime> creneauxDisponibles(LocalDate localDate, int idUtilisateur) throws SQLException {
+        Database db = new Database();
+        PreparedStatement ps = db.getConnection().prepareStatement(
+                "SELECT rdv.heure_rendezvous FROM rendezvous as rdv INNER JOIN salle as s ON s.id_salle = rdv.ref_salle WHERE rdv.date_rendezvous = ? AND s.professeur_present = ?;"
+        );
+        ps.setDate(1, Date.valueOf(localDate));
+        ps.setInt(2, idUtilisateur);
+        ResultSet rs = ps.executeQuery();
+        ArrayList<LocalTime> horaires = new ArrayList<>();
+        while (rs.next()) {
+            horaires.add(rs.getTime("heure_rendezvous").toLocalTime());
+        }
+        return horaires;
     }
 }

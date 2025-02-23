@@ -80,21 +80,37 @@ public class ModifierRdvController implements Initializable {
             LocalTime time = LocalTime.of(heure, minute, 0);
             Salle salle = this.salle.getValue();
             RendezVousRepository rendezVousRepository = new RendezVousRepository();
-            boolean check = false;
-            check = rendezVousRepository.modifier(new RendezVous(this.rdvSel.getId_rendezvous(), date, time, this.rdvSel.getRefDossier(), this.salle.getValue()));
-            if (check == true){
-                if (this.rdvSel.getRefSalle().getId_salle() != salle.getId_salle()) {
-                    SalleRepository salleRepository = new SalleRepository();
-                    salleRepository.reserver(new Salle(salle.getId_salle(), salle.getNom_salle(), true, UtilisateurConnecte.getInstance().getId_utilisateur()));
-                    new LogsRepository().ajout(new Logs("Modification de la salle id. "+salle.getId_salle()+" (occupe = 1 | professeur_present = "+UtilisateurConnecte.getInstance().getId_utilisateur()+")", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
-                    salleRepository.liberer(this.rdvSel.getRefSalle());
-                    new LogsRepository().ajout(new Logs("Modification de la salle id. "+this.rdvSel.getRefSalle().getId_salle()+" (occupe = 0 | professeur_present = null)", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
+            boolean check = true;
+            // Liste comportant les horaires des rendez-vous de l'utilisateur de la date sélectionnée
+            ArrayList<LocalTime> horaires;
+            horaires = rendezVousRepository.creneauxDisponibles(date, UtilisateurConnecte.getInstance().getId_utilisateur());
+            for (LocalTime horaire : horaires){
+                // Exclut l'horaire du rendez-vous sélectionné, celui-ci étant modifié
+                if (!horaire.equals(this.rdvSel.getHeure_rendez())) {
+                    // Si l'un des rendez-vous du jour se tient déjà entre 8h et 12h ou entre 14h et 18h, empêcher le processus de création
+                    if ((horaire.isBefore(LocalTime.of(12, 31)) && time.isBefore(LocalTime.of(12, 31))) || (horaire.isAfter(LocalTime.of(13, 59)) && time.isAfter(LocalTime.of(13, 59)))) {
+                        check = false;
+                        this.erreur.setText("Cette demi-journée n'est pas disponible à cette date.");
+                        this.erreur.setVisible(true);
+                    }
                 }
-                new LogsRepository().ajout(new Logs("Modification du rendez-vous id. "+this.rdvSel.getId_rendezvous(), LocalDateTime.now(), UtilisateurConnecte.getInstance()));
-                StartApplication.changeScene("professeur/rdvProfesseurView.fxml");
-            } else {
-                this.erreur.setText("Erreur lors de la modification. Si le problème persiste, veuillez contacter le support.");
-                this.erreur.setVisible(true);
+            }
+            if (check == true){
+                check = rendezVousRepository.modifier(new RendezVous(this.rdvSel.getId_rendezvous(), date, time, this.rdvSel.getRefDossier(), this.salle.getValue()));
+                if (check == true){
+                    if (this.rdvSel.getRefSalle().getId_salle() != salle.getId_salle()) {
+                        SalleRepository salleRepository = new SalleRepository();
+                        salleRepository.reserver(new Salle(salle.getId_salle(), salle.getNom_salle(), true, UtilisateurConnecte.getInstance().getId_utilisateur()));
+                        new LogsRepository().ajout(new Logs("Modification de la salle id. "+salle.getId_salle()+" (occupe = 1 | professeur_present = "+UtilisateurConnecte.getInstance().getId_utilisateur()+")", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
+                        salleRepository.liberer(this.rdvSel.getRefSalle());
+                        new LogsRepository().ajout(new Logs("Modification de la salle id. "+this.rdvSel.getRefSalle().getId_salle()+" (occupe = 0 | professeur_present = null)", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
+                    }
+                    new LogsRepository().ajout(new Logs("Modification du rendez-vous id. "+this.rdvSel.getId_rendezvous(), LocalDateTime.now(), UtilisateurConnecte.getInstance()));
+                    StartApplication.changeScene("professeur/rdvProfesseurView.fxml");
+                } else {
+                    this.erreur.setText("Erreur lors de la modification. Si le problème persiste, veuillez contacter le support.");
+                    this.erreur.setVisible(true);
+                }
             }
         }
     }

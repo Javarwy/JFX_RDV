@@ -31,7 +31,7 @@
       <DatePicker fx:id="date" />
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="50.0" spacing="5">
         <Label text="Heure :"/>
-        <Spinner fx:id="heure" max="23"/>
+        <Spinner fx:id="heure" min="8" max="18"/>
         <Label text="Minutes :"/>
         <Spinner fx:id="minute" max="59"/>
       </HBox>

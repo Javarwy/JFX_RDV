@@ -37,6 +37,7 @@ public class DemandesProfesseurController implements Initializable {
                 {"Id. demande", "idDemandeFourniture"},
                 {"Quantité", "quantite"},
                 {"Raison", "raison"},
+                {"Statut", "statut"},
                 {"Fourniture", "refFourniture"}
         };
         // Parcours de l'ensemble des colonnes
@@ -52,6 +53,16 @@ public class DemandesProfesseurController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        // Tri de la liste pour mettre les demandes au statut "En cours de validation" en premier dans la liste
+        demandes.sort((d1, d2) -> {
+            if (d1.getStatut().equals("En cours de validation") && !d2.getStatut().equals("En cours de validation")) {
+                return -1;
+            } else if (!d1.getStatut().equals("En cours de validation") && d2.getStatut().equals("En cours de validation")) {
+                return 1;
+            } else {
+                return d1.getStatut().compareTo(d2.getStatut());
+            }
+        });
         // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<DemandeFourniture> observableList = tableauDemandes.getItems();
         observableList.setAll(demandes);

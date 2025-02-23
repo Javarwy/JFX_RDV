@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `demandefourniture` (
     `id_demandefourniture` int NOT NULL AUTO_INCREMENT,
     `quantite` int NOT NULL,
     `raison` varchar(100) NOT NULL,
+    `statut` varchar(100) NOT NULL,
     `ref_fourniture` int NOT NULL,
     `ref_utilisateur` int NOT NULL,
     PRIMARY KEY (`id_demandefourniture`),
@@ -174,7 +175,8 @@ CREATE TABLE IF NOT EXISTS `salle` (
 
 INSERT INTO `salle` (`id_salle`, `nom_salle`, `occupe`, `professeur_present`) VALUES
 (1, 'A1', 1, 1),
-(2, 'A2', 0, null);
+(2, 'A2', 0, null),
+(3, 'A3', 0, null);
 
 -- --------------------------------------------------------
 

@@ -98,7 +98,7 @@ public class NouvelleDemandeProfesseurController implements Initializable {
             } else {
                 DemandeFournitureRepository demandeFournitureRepository = new DemandeFournitureRepository();
                 boolean check = false;
-                check = demandeFournitureRepository.ajout(new DemandeFourniture(quantite, raison, fourniture, UtilisateurConnecte.getInstance()));
+                check = demandeFournitureRepository.ajout(new DemandeFourniture(quantite, raison, "En cours de validation", fourniture, UtilisateurConnecte.getInstance()));
                 if (check == true){
                     new LogsRepository().ajout(new Logs("Création d'une demande de fournitures", LocalDateTime.now(), UtilisateurConnecte.getInstance()));
                     StartApplication.changeScene("professeur/demandesProfesseurView.fxml");

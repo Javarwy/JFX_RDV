@@ -1,6 +1,7 @@
 package appli.professeur;
 
 import appli.StartApplication;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -115,6 +117,27 @@ public class RdvProfesseurController implements Initializable {
         // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<RendezVous> observableList = tableauRdv.getItems();
         observableList.setAll(rendezVous);
+        // Si un rendez-vous se déroule le jour même, afficher une notification de rappel après chargement de la page
+        Platform.runLater(() -> {
+            ArrayList<RendezVous> mesRdv;
+            try {
+                mesRdv = rendezVousRepository.getMesRendezVous(UtilisateurConnecte.getInstance().getId_utilisateur());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            for (RendezVous rdv : mesRdv) {
+                if (rdv.getDate_rendezvous().isEqual(LocalDateTime.now().toLocalDate())){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Rendez-vous le " + rdv.getDate_rendezvous().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                    String informations = "Rendez-vous aujourd'hui à " + rdv.getHeure_rendez() +
+                            "\npour le dossier n°" + rdv.getRefDossier().getId_dossier() + " (" + rdv.getRefDossier().getRefEtudiant().getNomEtudiant() + " " + rdv.getRefDossier().getRefEtudiant().getPrenomEtudiant() +
+                            ") !"
+                            ;
+                    alert.setHeaderText(informations);
+                    alert.showAndWait();
+                }
+            }
+        });
     }
     @FXML
     protected void onRdvSelection(MouseEvent event) {

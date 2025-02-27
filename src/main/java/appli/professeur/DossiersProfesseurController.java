@@ -65,6 +65,9 @@ public class DossiersProfesseurController implements Initializable {
     // Données de la colonne sélectionnée depuis le TableView
     private Dossier dossierSel;
 
+    // Liste des dossiers d'inscription
+    private ArrayList<Dossier> dossiers;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         StartApplication.changeTitle("Dossiers d'inscription");
@@ -129,17 +132,16 @@ public class DossiersProfesseurController implements Initializable {
             tableauDossier.getColumns().add(maColonne);
         }
         DossierRepository dossierRepository = new DossierRepository();
-        ArrayList<Dossier> dossiers;
         ArrayList<String> filieres;
         try {
-            dossiers = dossierRepository.getDossiers();
+            this.dossiers = dossierRepository.getDossiers();
             filieres = dossierRepository.getFilieres();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<Dossier> observableList = tableauDossier.getItems();
-        observableList.setAll(dossiers);
+        observableList.setAll(this.dossiers);
         this.filiereRecherche.getItems().add(null);
         this.diplomeRecherche.getItems().add(null);
         for (String s : filieres){
@@ -243,6 +245,8 @@ public class DossiersProfesseurController implements Initializable {
         this.diplomeRecherche.getSelectionModel().clearSelection();
         this.emailRecherche.clear();
         this.telRecherche.clear();
+        ObservableList<Dossier> observableList = tableauDossier.getItems();
+        observableList.setAll(this.dossiers);
     }
 
     @FXML

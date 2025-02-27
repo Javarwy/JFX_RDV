@@ -71,6 +71,9 @@ public class RdvProfesseurController implements Initializable {
     // Données de la colonne sélectionnée depuis le TableView
     private RendezVous rdvSel;
 
+    // Liste des rendez-vous
+    private ArrayList<RendezVous> rendezVous;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         StartApplication.changeTitle("Rendez-vous");
@@ -142,20 +145,19 @@ public class RdvProfesseurController implements Initializable {
         }
         RendezVousRepository rendezVousRepository = new RendezVousRepository();
         SalleRepository salleRepository = new SalleRepository();
-        ArrayList<RendezVous> rendezVous;
         ArrayList<Salle> salles;
         try {
-            rendezVous = rendezVousRepository.getMesRendezVous(UtilisateurConnecte.getInstance().getId_utilisateur());
+            this.rendezVous = rendezVousRepository.getMesRendezVous(UtilisateurConnecte.getInstance().getId_utilisateur());
             salles = salleRepository.getSalles();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<RendezVous> observableList = tableauRdv.getItems();
-        observableList.setAll(rendezVous);
+        observableList.setAll(this.rendezVous);
         // Si un rendez-vous se déroule le jour même, afficher une notification de rappel après chargement de la page
         Platform.runLater(() -> {
-            for (RendezVous rdv : rendezVous) {
+            for (RendezVous rdv : this.rendezVous) {
                 if (rdv.getDate_rendezvous().isEqual(LocalDateTime.now().toLocalDate())){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Rendez-vous le " + rdv.getDate_rendezvous().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -306,6 +308,8 @@ public class RdvProfesseurController implements Initializable {
         this.prenomRecherche.clear();
         this.emailRecherche.clear();
         this.telRecherche.clear();
+        ObservableList<RendezVous> observableList = tableauRdv.getItems();
+        observableList.setAll(this.rendezVous);
     }
 
     @FXML

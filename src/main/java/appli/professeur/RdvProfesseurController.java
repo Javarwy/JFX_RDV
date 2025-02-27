@@ -2,6 +2,7 @@ package appli.professeur;
 
 import appli.StartApplication;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,8 +10,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import modeles.Logs;
 import modeles.RendezVous;
+import modeles.Salle;
 import modeles.UtilisateurConnecte;
 import repository.LogsRepository;
 import repository.RendezVousRepository;
@@ -19,6 +22,8 @@ import repository.SalleRepository;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -34,6 +39,34 @@ public class RdvProfesseurController implements Initializable {
     private Button annulerRdv;
     @FXML
     private Label erreur;
+    @FXML
+    private VBox rechercheAvancee;
+    @FXML
+    private DatePicker dateDebut;
+    @FXML
+    private DatePicker dateFin;
+    @FXML
+    private Spinner<Integer> heureDebut;
+    @FXML
+    private Spinner<Integer> minuteDebut;
+    @FXML
+    private Spinner<Integer> heureFin;
+    @FXML
+    private Spinner<Integer> minuteFin;
+    @FXML
+    private ComboBox<Salle> salleFiltre;
+    @FXML
+    private TextField nomRecherche;
+    @FXML
+    private TextField prenomRecherche;
+    @FXML
+    private TextField emailRecherche;
+    @FXML
+    private TextField telRecherche;
+    @FXML
+    private Button filtrer;
+    @FXML
+    private Button reset;
 
     // Données de la colonne sélectionnée depuis le TableView
     private RendezVous rdvSel;
@@ -62,44 +95,44 @@ public class RdvProfesseurController implements Initializable {
                 case "refDossier":
                     maColonne.setVisible(false);
                     maColonne.setCellValueFactory(cellData ->
-                            new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getId_dossier()))
+                            new SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getId_dossier()))
                     );
                     break;
                 // Pour la colonne "refSalle", cache la colonne et insère l'id de la salle dedans
                 case "refSalle":
                     maColonne.setVisible(false);
                     maColonne.setCellValueFactory(cellData ->
-                            new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefSalle().getId_salle()))
+                            new SimpleStringProperty(String.valueOf(cellData.getValue().getRefSalle().getId_salle()))
                     );
                     break;
                 // Pour la colonne "refDossier", insère le nom de la salle
                 case "nom_salle":
                     maColonne.setCellValueFactory(cellData ->
-                            new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefSalle().getNom_salle()))
+                            new SimpleStringProperty(String.valueOf(cellData.getValue().getRefSalle().getNom_salle()))
                     );
                     break;
                 // Pour la colonne "nomEtudiant", insère le nom de l'étudiant
                 case "nomEtudiant":
                     maColonne.setCellValueFactory(cellData ->
-                            new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getNomEtudiant()))
+                            new SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getNomEtudiant()))
                     );
                     break;
                 // Pour la colonne "prenomEtudiant", insère le prénom de l'étudiant
                 case "prenomEtudiant":
                     maColonne.setCellValueFactory(cellData ->
-                            new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getPrenomEtudiant()))
+                            new SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getPrenomEtudiant()))
                     );
                     break;
                 // Pour la colonne "emailEtudiant", insère l'email de l'étudiant
                 case "emailEtudiant":
                     maColonne.setCellValueFactory(cellData ->
-                            new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getEmailEtudiant()))
+                            new SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getEmailEtudiant()))
                     );
                     break;
                 // Pour la colonne "telephone", insère le téléphone de l'étudiant
                 case "telephone":
                     maColonne.setCellValueFactory(cellData ->
-                            new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getTelephone()))
+                            new SimpleStringProperty(String.valueOf(cellData.getValue().getRefDossier().getRefEtudiant().getTelephone()))
                     );
                     break;
                 default:
@@ -108,9 +141,12 @@ public class RdvProfesseurController implements Initializable {
             tableauRdv.getColumns().add(maColonne);
         }
         RendezVousRepository rendezVousRepository = new RendezVousRepository();
+        SalleRepository salleRepository = new SalleRepository();
         ArrayList<RendezVous> rendezVous;
+        ArrayList<Salle> salles;
         try {
             rendezVous = rendezVousRepository.getMesRendezVous(UtilisateurConnecte.getInstance().getId_utilisateur());
+            salles = salleRepository.getSalles();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -119,13 +155,7 @@ public class RdvProfesseurController implements Initializable {
         observableList.setAll(rendezVous);
         // Si un rendez-vous se déroule le jour même, afficher une notification de rappel après chargement de la page
         Platform.runLater(() -> {
-            ArrayList<RendezVous> mesRdv;
-            try {
-                mesRdv = rendezVousRepository.getMesRendezVous(UtilisateurConnecte.getInstance().getId_utilisateur());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            for (RendezVous rdv : mesRdv) {
+            for (RendezVous rdv : rendezVous) {
                 if (rdv.getDate_rendezvous().isEqual(LocalDateTime.now().toLocalDate())){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Rendez-vous le " + rdv.getDate_rendezvous().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -138,6 +168,13 @@ public class RdvProfesseurController implements Initializable {
                 }
             }
         });
+        this.salleFiltre.getItems().add(null);
+        for (Salle salle : salles) {
+            this.salleFiltre.getItems().add(salle);
+        }
+        this.dateDebut.setValue(LocalDate.now());
+        this.dateFin.setValue(LocalDate.now());
+        this.heureFin.getValueFactory().setValue(18);
     }
     @FXML
     protected void onRdvSelection(MouseEvent event) {
@@ -217,6 +254,58 @@ public class RdvProfesseurController implements Initializable {
                 System.out.println("CANCEL");
             }
         });
+    }
+
+    @FXML
+    protected void activerRecherche() {
+        if (this.rechercheAvancee.isVisible()) {
+            this.rechercheAvancee.setVisible(false);
+            this.rechercheAvancee.setManaged(false);
+        } else {
+            this.rechercheAvancee.setVisible(true);
+            this.rechercheAvancee.setManaged(true);
+        }
+    }
+
+    @FXML
+    protected void filtrage() throws SQLException {
+        if (this.dateDebut == null && this.dateFin == null && this.heureDebut == null && this.heureFin == null && this.nomRecherche == null && this.prenomRecherche == null && this.emailRecherche == null && this.telRecherche == null) {
+            System.out.println("Aucun filtre.");
+        } else {
+            String dateDebut = this.dateDebut.getValue() != null ? this.dateDebut.getValue().toString() : "";
+            String dateFin = this.dateFin.getValue() != null ? this.dateFin.getValue().toString() : "";
+            String heureDebut = this.heureDebut.getValue() != null ? this.heureDebut.getValue().toString() : "";
+            String minuteDebut = this.minuteDebut.getValue() != null ? this.minuteDebut.getValue().toString() : "";
+            LocalTime timeDebut = LocalTime.of(Integer.parseInt(heureDebut), Integer.parseInt(minuteDebut), 0);
+            String heureFin = this.heureFin.getValue() != null ? this.heureFin.getValue().toString() : "";
+            String minuteFin = this.minuteFin.getValue() != null ? this.minuteFin.getValue().toString() : "";
+            LocalTime timeFin = LocalTime.of(Integer.parseInt(heureFin), Integer.parseInt(minuteFin), 0);
+            String salle = this.salleFiltre.getValue() != null ? this.salleFiltre.getValue().toString() : "";
+            String nom = this.nomRecherche.getText();
+            String prenom = this.prenomRecherche.getText();
+            String email = this.emailRecherche.getText();
+            String tel = this.telRecherche.getText();
+            ArrayList<RendezVous> mesRdv;
+            mesRdv = new RendezVousRepository().getMesRendezVousFiltres(dateDebut, dateFin, timeDebut.toString(), timeFin.toString(), salle, nom, prenom, email, tel, UtilisateurConnecte.getInstance().getId_utilisateur());
+            ObservableList<RendezVous> observableList = tableauRdv.getItems();
+            // Appliquer sur le tableau les résultats filtrés par la requête
+            observableList.setAll(mesRdv);
+        }
+    }
+
+    @FXML
+    protected void resetFiltres() {
+        this.dateDebut.setValue(LocalDate.now());
+        this.dateFin.setValue(LocalDate.now());
+        this.heureDebut.getValueFactory().setValue(8);
+        this.minuteDebut.getValueFactory().setValue(0);
+        this.heureFin.getValueFactory().setValue(18);
+        this.minuteFin.getValueFactory().setValue(0);
+        this.salleFiltre.getSelectionModel().clearSelection();
+        this.nomRecherche.clear();
+        this.prenomRecherche.clear();
+        this.emailRecherche.clear();
+        this.telRecherche.clear();
     }
 
     @FXML

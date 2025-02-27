@@ -67,4 +67,16 @@ public class SalleRepository {
         }
         return salles;
     }
+
+    public ArrayList<Salle> getSalles() throws SQLException {
+        Database db = new Database();
+        PreparedStatement ps = db.getConnection().prepareStatement("SELECT * FROM salle");
+        ResultSet rs = ps.executeQuery();
+        ArrayList<Salle> salles = new ArrayList<>();
+        while (rs.next()) {
+            salles.add(new Salle(rs.getInt(1), rs.getString(2), rs.getBoolean(3), rs.getInt(4)));
+        }
+        rs.close();
+        return salles;
+    }
 }

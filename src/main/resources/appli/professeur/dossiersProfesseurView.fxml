@@ -2,11 +2,16 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.HBox?>
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.professeur.DossiersProfesseurController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -17,8 +22,56 @@
         <Font size="18.0" />
     </font>
   </Label>
-    <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
+    <VBox alignment="CENTER" prefHeight="800.0" prefWidth="600.0">
         <children>
+            <Button text="Recherche par filtre" onAction="#activerRecherche" />
+            <VBox fx:id="rechercheAvancee" spacing="10" visible="false" managed="false">
+                <VBox.margin>
+                    <Insets top="10" bottom="10" />
+                </VBox.margin>
+                <children>
+                    <HBox alignment="CENTER">
+                        <Label text="Date : " />
+                        <DatePicker fx:id="dateDebut" editable="false" />
+                        <Label text=" à " />
+                        <DatePicker fx:id="dateFin" editable="false" />
+                    </HBox>
+                    <HBox alignment="CENTER">
+                        <Label text="Heure : " />
+                        <Spinner fx:id="heureDebut" max="23" maxWidth="55" />
+                        <Spinner fx:id="minuteDebut" max="59" maxWidth="55" />
+                        <Label text=" à " />
+                        <Spinner fx:id="heureFin" max="23" maxWidth="55" />
+                        <Spinner fx:id="minuteFin" max="59" maxWidth="55" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="Filière : " />
+                        <ComboBox fx:id="filiereRecherche" />
+                        <Label text="Motivation : " />
+                        <TextField fx:id="motivationRecherche" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="Nom : " />
+                        <TextField fx:id="nomRecherche" />
+                        <Label text="Prénom : " />
+                        <TextField fx:id="prenomRecherche" />
+                    </HBox>
+                    <HBox alignment="CENTER">
+                        <Label text="Diplôme : " />
+                        <ComboBox fx:id="diplomeRecherche" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="E-mail : " />
+                        <TextField fx:id="emailRecherche" />
+                        <Label text="Téléphone : " />
+                        <TextField fx:id="telRecherche" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Button fx:id="filtrer" text="Filtrer" onAction="#filtrage" />
+                        <Button fx:id="reset" text="Réinitialiser" onAction="#resetFiltres" />
+                    </HBox>
+                </children>
+            </VBox>
             <TableView fx:id="tableauDossier" onMouseClicked="#onDossierSelection" prefHeight="400.0" prefWidth="600.0" />
             <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
             <Button fx:id="rdv" disable="true" onAction="#prendreRdv" text="Prendre rendez-vous">

@@ -2,8 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -17,8 +21,48 @@
         <Font size="18.0" />
     </font>
   </Label>
-    <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
+    <VBox alignment="CENTER" prefHeight="800.0" prefWidth="600.0">
         <children>
+            <Button text="Recherche par filtre" onAction="#activerRecherche" />
+            <VBox fx:id="rechercheAvancee" spacing="10" visible="false" managed="false">
+                <VBox.margin>
+                    <Insets top="10" bottom="10" />
+                </VBox.margin>
+                <children>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="Libellé : " />
+                        <TextField fx:id="libelleRecherche" />
+                        <Label text="Description : " />
+                        <TextField fx:id="descriptionRecherche" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="Prix entre : " />
+                        <Spinner fx:id="prixDebutRecherche" min="0.0" max="99999.99" editable="true" />
+                        <Label text=" et : " />
+                        <Spinner fx:id="prixFinRecherche" min="0.0" max="99999.99" editable="true" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="Quantité entre : " />
+                        <Spinner fx:id="quantiteDebutRecherche" min="0" max="9999" />
+                        <Label text=" et : " />
+                        <Spinner fx:id="quantiteFinRecherche" min="0" max="9999" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="Fournisseur : " />
+                        <TextField fx:id="fournisseurRecherche" />
+                        <Label text="Raison : " />
+                        <TextField fx:id="raisonRecherche" />
+                    </HBox>
+                    <HBox alignment="CENTER">
+                        <Label text="Statut : " />
+                        <ComboBox fx:id="statutRecherche" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Button fx:id="filtrer" text="Filtrer" onAction="#filtrage" />
+                        <Button fx:id="reset" text="Réinitialiser" onAction="#resetFiltres" />
+                    </HBox>
+                </children>
+            </VBox>
             <TableView fx:id="tableauDemandes" onMouseClicked="#onDemandeSelection" prefHeight="400.0" prefWidth="600.0" />
             <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
             <Button fx:id="nouvelleDemande" onAction="#nouvelleDemande" text="Nouvelle demande de fournitures">

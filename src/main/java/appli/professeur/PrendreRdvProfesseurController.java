@@ -79,6 +79,7 @@ public class PrendreRdvProfesseurController implements Initializable {
         // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<Salle> observableList = tableauSalle.getItems();
         observableList.setAll(salles);
+        this.date.setValue(LocalDate.now());
     }
     @FXML
     protected void onSalleSelection(MouseEvent event) throws IOException {
@@ -124,14 +125,42 @@ public class PrendreRdvProfesseurController implements Initializable {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
+                    boolean matinOccupe = false;
+                    boolean apremOccupe = false;
                     for (LocalTime horaire : horaires) {
-                        // Si l'un des rendez-vous du jour se tient déjà entre 8h et 12h ou entre 14h et 18h, empêcher le processus de création
-                        if ((horaire.isBefore(LocalTime.of(12, 31)) && time.isBefore(LocalTime.of(12, 31))) || (horaire.isAfter(LocalTime.of(13, 59)) && time.isAfter(LocalTime.of(13, 59)))) {
+                        // Vérifie si un rendez-vous est déjà pris entre 8:00 et 13:00
+                        if ((horaire.isAfter(LocalTime.of(8, 0)) && horaire.isBefore(LocalTime.of(13, 1)))) {
+                            matinOccupe = true;
+                        }
+                        // Vérifie si un rendez-vous est déjà pris entre 13:00 et 18:00
+                        if ((horaire.isAfter(LocalTime.of(13, 0))) && horaire.isBefore(LocalTime.of(18, 1))) {
+                            apremOccupe = true;
+                        }
+                        System.out.println(horaire + "(" + matinOccupe + " | " + apremOccupe + ")");
+                    }
+                    // Si l'un des rendez-vous du jour se tient déjà entre 8h et 13h ou entre 13h et 18h, empêcher le processus de création
+                    if ((time.isAfter(LocalTime.of(7, 59)) && time.isBefore(LocalTime.of(13, 1)))) {
+                        if (matinOccupe && apremOccupe) {
                             check = false;
-                            this.erreur.setText("Cette demi-journée n'est pas disponible à cette date.");
+                            this.erreur.setText("Vos demi-journées sont déjà occupées à cette date. Veuillez choisir une autre date.");
+                            this.erreur.setVisible(true);
+                        } else if (matinOccupe) {
+                            check = false;
+                            this.erreur.setText("Votre demi-journée 8:00-12:30 est déjà occupée à cette date. Veuillez choisir entre 14:00 et 18:00.");
+                            this.erreur.setVisible(true);
+                        }
+                    } else if ((time.isAfter(LocalTime.of(12, 59)) && time.isBefore(LocalTime.of(18, 1)))){
+                        if (apremOccupe && matinOccupe) {
+                            check = false;
+                            this.erreur.setText("Vos demi-journées sont déjà occupées à cette date. Veuillez choisir une autre date.");
+                            this.erreur.setVisible(true);
+                        } else if (apremOccupe) {
+                            check = false;
+                            this.erreur.setText("Votre demi-journée 14:00-18:00 est déjà occupée à cette date. Veuillez choisir entre 08:00 et 12:30.");
                             this.erreur.setVisible(true);
                         }
                     }
+                    // Si le processus d'horaire est validé
                     if (check == true){
                         try {
                             check = rendezVousRepository.ajout(new RendezVous(date, time, this.dossierSel, this.salleSel));

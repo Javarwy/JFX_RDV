@@ -152,6 +152,10 @@ public class RdvProfesseurController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        // Si aucun rendez-vous prochainement, afficher ce message sur le tableau
+        if (this.rendezVous.isEmpty()) {
+            this.tableauRdv.setPlaceholder(new Label("Aucun rendez-vous prochainement."));
+        }
         // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<RendezVous> observableList = tableauRdv.getItems();
         observableList.setAll(this.rendezVous);

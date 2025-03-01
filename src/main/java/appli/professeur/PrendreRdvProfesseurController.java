@@ -79,6 +79,10 @@ public class PrendreRdvProfesseurController implements Initializable {
         // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<Salle> observableList = tableauSalle.getItems();
         observableList.setAll(salles);
+        // Si aucune salle n'est disponible, afficher ce message sur le tableau
+        if (salles.isEmpty()) {
+            this.tableauSalle.setPlaceholder(new Label("Aucune salle disponible. Veuillez prendre rendez-vous ultérieurement."));
+        }
         this.date.setValue(LocalDate.now());
     }
     @FXML

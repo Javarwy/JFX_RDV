@@ -139,6 +139,10 @@ public class DossiersProfesseurController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        // Si aucun dossier d'inscription disponible, afficher ce message sur le tableau
+        if (this.dossiers.isEmpty()){
+            this.tableauDossier.setPlaceholder(new Label("Aucun dossier d'inscription disponible."));
+        }
         // Ajoute les données de la liste dans les colonnes du TableView
         ObservableList<Dossier> observableList = tableauDossier.getItems();
         observableList.setAll(this.dossiers);

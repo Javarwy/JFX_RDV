@@ -40,6 +40,13 @@ CREATE TABLE IF NOT EXISTS `demandefourniture` (
     KEY `ref_utilisateur` (`ref_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table des demandes de fournitures';
 
+--
+-- Déchargement des données de la table `demandefourniture`
+--
+
+INSERT INTO `demandefourniture` (`id_demandefourniture`, `quantite`, `raison`, `statut`, `ref_fourniture`, `ref_utilisateur`) VALUES
+(1, 1, 'Imagine t\'oublies ta colle.', 'En cours de validation', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -87,7 +94,8 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
 --
 
 INSERT INTO `etudiant` (`id_etudiant`, `nomEtudiant`, `prenomEtudiant`, `diplome`, `emailEtudiant`, `telephone`) VALUES
-(1, 'Etudiant', 'Etudiant', 'STI2D', 'etudiant@etudiant.fr', '0600000000');
+(1, 'Etudiant', 'Etudiant', 'STI2D', 'etudiant@etudiant.fr', '0600000000'),
+(2, 'Zimmerman', 'Robert', 'Général', 'robertzimmerman@etudiant.fr', '0700000000');
 
 -- --------------------------------------------------------
 
@@ -110,7 +118,8 @@ CREATE TABLE IF NOT EXISTS `fourniture` (
 --
 
 INSERT INTO `fourniture` (`id_fourniture`, `libelle`, `description`, `prix`, `fournisseur`) VALUES
-(1, 'Colle', 'Bâton de colle 8,2 g', 5.00, 'UHU');
+(1, 'Colle', 'Bâton de colle 8,2 g', 5.00, 'UHU'),
+(2, 'Stylo', 'Pack de 10 stylos BIC Cristal (4 bleu, 2 rouge, 2 vert, 2 noir)', 5.99, 'BIC');
 
 -- --------------------------------------------------------
 
@@ -200,7 +209,9 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id_utilisateur`, `nom`, `prenom`, `email`, `mdp`, `role`) VALUES
-(1, 'a', 'a', 'a', '$2a$10$1ScMjQ21fUgXibYYIdMPf.zBdRIrGYkYVj5j..HpSKvZcUq1MWcbS', 'Professeur');
+(1, 'a', 'a', 'a', '$2a$10$k.UX5QBAC/xN/LBwd.e56eYxWl6sf0NBWU1R46zbxcBYbUEXdDkTG', 'Professeur'),
+(2, 'b', 'b', 'b', '$2a$10$cRSRWI.H3DVExLuSXzJN2eaYk/x1zkMSjdOhy/9VQUcHOhUBwpsaq', 'Secrétaire'),
+(3, 'c', 'c', 'c', '$2a$10$nsVwIHm44KYyxL7X0rnMDO2HhERIODZOk/4Yd6vDcbBmXUZ4vtMje', 'Gestionnaire de stock');
 
 --
 -- Contraintes pour les tables déchargées

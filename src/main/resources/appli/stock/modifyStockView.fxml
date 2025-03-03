@@ -24,22 +24,22 @@
         <font>
             <Font name="System Bold Italic" size="14.0" />
         </font></Label>
-    <TextField fx:id="nomField" text="Nom : ">
+    <TextField fx:id="nomField" promptText="Nom : ">
         <font>
             <Font name="System Italic" size="14.0" />
         </font>
     </TextField>
-    <TextField fx:id="prenomField" text="Description : ">
+    <TextField fx:id="prenomField" promptText="Description : ">
         <font>
             <Font name="System Italic" size="14.0" />
         </font>
     </TextField>
-    <TextField fx:id="emailField" text="Prix : ">
+    <TextField fx:id="emailField" promptText="Prix : ">
         <font>
             <Font name="System Italic" size="14.0" />
         </font>
     </TextField>
-    <TextField fx:id="passwordField" text="Fournisseur : ">
+    <TextField fx:id="passwordField" promptText="Fournisseur : ">
         <font>
             <Font name="System Italic" size="14.0" />
         </font>

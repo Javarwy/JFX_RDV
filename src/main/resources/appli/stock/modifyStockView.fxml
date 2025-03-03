@@ -46,5 +46,5 @@
     </TextField>
     <Text id = "erreurField" text="" visible="false" />
     <Button onAction="#deconnexion" text="Annuler" />
-    <Button onAction="#modifiFourniture" text="Confirmer l'ajout" />
+    <Button onAction="#modifierFourniture" text="Confirmer l'ajout" />
 </VBox>

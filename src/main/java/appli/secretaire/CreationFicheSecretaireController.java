@@ -39,8 +39,7 @@ public class CreationFicheSecretaireController {
         String diplome = this.diplomeField.getText();
         String emailEtudiant = this.emailEtudiantField.getText();
         String telephone = this.telephoneField.getText();
-            EtudiantRepository etudiantRepository= new EtudiantRepository();
-
+            new EtudiantRepository().createFiche(new Etudiant(prenomEtudiant,nomEtudiant,diplome,emailEtudiant,telephone));
 
 
     }

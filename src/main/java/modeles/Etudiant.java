@@ -18,6 +18,14 @@ public class Etudiant {
         this.telephone = telephone;
     }
 
+    public Etudiant ( String prenomEtudiant, String nomEtudiant, String diplome, String emailEtudiant, String telephone) {
+        this.prenomEtudiant = prenomEtudiant;
+        this.nomEtudiant = nomEtudiant;
+        this.diplome = diplome;
+        this.emailEtudiant = emailEtudiant;
+        this.telephone = telephone;
+    }
+
     public int getId_etudiant() {
         return id_etudiant;
     }
@@ -66,3 +74,4 @@ public class Etudiant {
         this.telephone = telephone;
     }
 }
+

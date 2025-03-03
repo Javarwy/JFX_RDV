@@ -27,7 +27,7 @@ public class FournitureController implements Initializable {
     @FXML
     private TextField emailField;
     @FXML
-    private PasswordField passwordField;
+    private TextField passwordField;
     @FXML
     private PasswordField confirmPasswordField;
     @FXML
@@ -85,10 +85,71 @@ public class FournitureController implements Initializable {
         fournitureRepository.addFourniture(fourniture);
     }
 
+    protected void modifierFourniture() throws IOException, SQLException {
+        String libelle = this.nomField.getText();
+        String description = this.prenomField.getText();
+        double prix;
+        try {
+            prix = Double.parseDouble(this.emailField.getText());
+        } catch (NumberFormatException e) {
+            this.erreur.setText("Le prix doit être un nombre.");
+            this.erreur.setVisible(true);
+            return;
+        }
+        String fournisseur = this.passwordField.getText();
+        String confirmation = this.confirmPasswordField.getText();
+
+        if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty() || confirmation.isEmpty()) {
+            this.erreur.setText("Veuillez remplir tous les champs.");
+            this.erreur.setVisible(true);
+            return;
+        }
+        if (!fournisseur.equals(confirmation)) {
+            this.erreur.setText("Erreur, les champs ne coïncident pas !");
+            this.erreur.setVisible(true);
+            return;
+        }
+
+        Fourniture fourniture = new Fourniture(libelle, description, prix, fournisseur);
+
+        FournitureRepository fournitureRepository = new FournitureRepository();
+        fournitureRepository.updateFourniture(fourniture);
+    }
+
+    protected void supprimerFourniture() throws IOException, SQLException {
+        String libelle = this.nomField.getText();
+        String description = this.prenomField.getText();
+        double prix;
+        try {
+            prix = Double.parseDouble(this.emailField.getText());
+        } catch (NumberFormatException e) {
+            this.erreur.setText("Le prix doit être un nombre.");
+            this.erreur.setVisible(true);
+            return;
+        }
+        String fournisseur = this.passwordField.getText();
+        String confirmation = this.confirmPasswordField.getText();
+
+        if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty() || confirmation.isEmpty()) {
+            this.erreur.setText("Veuillez remplir tous les champs.");
+            this.erreur.setVisible(true);
+            return;
+        }
+        if (!fournisseur.equals(confirmation)) {
+            this.erreur.setText("Erreur, les champs ne coïncident pas !");
+            this.erreur.setVisible(true);
+            return;
+        }        Fourniture fourniture = new Fourniture(libelle, description, prix, fournisseur);
+
+        FournitureRepository fournitureRepository = new FournitureRepository();
+        fournitureRepository.deleteFourniture(fourniture);
+    }
+
     @FXML
     protected void supprimerFournitureMenu() throws IOException {
         StartApplication.changeScene("stock/removeStockView.fxml");
     }
+
 
     @FXML
     protected void modifierFournitureMenu() throws IOException {

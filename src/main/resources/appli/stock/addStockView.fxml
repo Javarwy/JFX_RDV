@@ -7,6 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Text?>
 <VBox alignment="CENTER" prefHeight="563.0" prefWidth="716.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.fourniture.FournitureController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -19,34 +20,31 @@
       <opaqueInsets>
          <Insets />
       </opaqueInsets></Label>
-  <Label fx:id="emailText" text="Ajout d'un fourniture :">
+  <Label fx:id="" text="Ajout d'un fourniture :">
   <font>
     <Font name="System Bold Italic" size="14.0" />
   </font></Label>
-   <Label fx:id="emailText2" text="Nom : ">
+   <TextField fx:id="nomField" text="Nom : ">
       <font>
          <Font name="System Italic" size="14.0" />
       </font>
-   </Label>
-   <TextField />
-   <Label fx:id="emailText21" text="Description : ">
+   </TextField>
+   <TextField fx:id="prenomField" text="Description : ">
       <font>
          <Font name="System Italic" size="14.0" />
       </font>
-   </Label>
-   <TextField />
-   <Label fx:id="emailText22" text="Prix : ">
+   </TextField>
+   <TextField fx:id="emailField" text="Prix : ">
       <font>
          <Font name="System Italic" size="14.0" />
       </font>
-   </Label>
-   <TextField />
-   <Label fx:id="emailText221" text="Fournisseur : ">
+   </TextField>
+   <TextField fx:id="passwordField" text="Fournisseur : ">
       <font>
          <Font name="System Italic" size="14.0" />
       </font>
-   </Label>
-   <TextField />
+   </TextField>
+    <Text id = "erreurField" text="" visible="false" />
    <Button onAction="#deconnexion" text="Annuler" />
    <Button onAction="#ajoutFourniture" text="Confirmer l'ajout" />
 </VBox>

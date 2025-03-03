@@ -49,8 +49,21 @@ public class EtudiantRepository {
             }
 
         }
+    }
 
 
 
+    
+    public ArrayList<String> getDiplomes() throws SQLException {
+            Database db = new Database();
+            PreparedStatement ps = db.getConnection().prepareStatement(
+                    "SELECT DISTINCT diplome FROM etudiant ORDER BY diplome ASC;"
+            );
+            ResultSet rs = ps.executeQuery();
+            ArrayList<String> diplomes = new ArrayList<>();
+            while(rs.next()){
+                diplomes.add(rs.getString(1));
+            }
+            return diplomes;
     }
 }

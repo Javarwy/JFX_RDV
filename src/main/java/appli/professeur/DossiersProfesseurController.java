@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import modeles.Dossier;
 import repository.DossierRepository;
+import repository.EtudiantRepository;
 
 import java.io.IOException;
 import java.net.URL;
@@ -133,9 +134,12 @@ public class DossiersProfesseurController implements Initializable {
         }
         DossierRepository dossierRepository = new DossierRepository();
         ArrayList<String> filieres;
+        EtudiantRepository etudiantRepository = new EtudiantRepository();
+        ArrayList<String> diplomes;
         try {
             this.dossiers = dossierRepository.getDossiers();
             filieres = dossierRepository.getFilieres();
+            diplomes = etudiantRepository.getDiplomes();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -150,6 +154,9 @@ public class DossiersProfesseurController implements Initializable {
         this.diplomeRecherche.getItems().add(null);
         for (String s : filieres){
             this.filiereRecherche.getItems().add(s);
+        }
+        for (String s : diplomes){
+            this.diplomeRecherche.getItems().add(s);
         }
         this.dateDebut.setValue(LocalDate.now());
         this.dateFin.setValue(LocalDate.now());

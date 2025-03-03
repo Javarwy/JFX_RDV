@@ -16,7 +16,7 @@ public class MenusecretaireController {
 
     @FXML
     public void creationFiche(ActionEvent event) throws IOException {
-        StartApplication.changeScene("secretaire/creationFicheEtudiantView.fxml");
+        StartApplication.changeScene("secretaire/CreationFicheEtudiantView.fxml");
 
     }
 

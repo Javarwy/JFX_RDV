@@ -14,31 +14,34 @@ import repository.EtudiantRepository;
 
 public class CreationFicheSecretaireController {
 
-
+    @FXML
+    private Label erreur;
 
     @FXML
-    private TextField prenomField;
+    private TextField prenomEtudiantField;
 
     @FXML
-    private TextField nomField;
+    private TextField nomEtudiantField;
 
     @FXML
     private TextField diplomeField;
 
     @FXML
-    private TextField emailField;
+    private TextField emailEtudiantField;
 
     @FXML
     private TextField telephoneField;
 
     @FXML
     protected void createFiche() throws SQLException, IOException{
-        String prenom = this.prenomField.getText();
-        String nom = this.nomField.getText();
+        String prenomEtudiant = this.prenomEtudiantField.getText();
+        String nomEtudiant = this.nomEtudiantField.getText();
         String diplome = this.diplomeField.getText();
-        String email = this.emailField.getText();
+        String emailEtudiant = this.emailEtudiantField.getText();
         String telephone = this.telephoneField.getText();
-        EtudiantRepository etudiantRepository= new EtudiantRepository();
+            EtudiantRepository etudiantRepository= new EtudiantRepository();
+
+
 
     }
 

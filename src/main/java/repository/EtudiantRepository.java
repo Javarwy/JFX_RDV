@@ -40,6 +40,7 @@ public class EtudiantRepository {
             preparedStatement.setString(5, student.getTelephone());
             preparedStatement.executeUpdate();
 
+
         } catch (SQLException e){
             throw new RuntimeException("Inscription Impossible", e);
         }finally {

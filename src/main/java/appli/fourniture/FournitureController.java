@@ -85,6 +85,7 @@ public class FournitureController implements Initializable {
         fournitureRepository.addFourniture(fourniture);
     }
 
+    @FXML
     protected void modifierFourniture() throws IOException, SQLException {
         String libelle = this.nomField.getText();
         String description = this.prenomField.getText();
@@ -116,6 +117,7 @@ public class FournitureController implements Initializable {
         fournitureRepository.updateFourniture(fourniture);
     }
 
+    @FXML
     protected void supprimerFourniture() throws IOException, SQLException {
         String libelle = this.nomField.getText();
         String description = this.prenomField.getText();

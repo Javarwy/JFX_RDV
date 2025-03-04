@@ -11,12 +11,15 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import modeles.DemandeFourniture;
+import modeles.Logs;
 import modeles.UtilisateurConnecte;
 import repository.DemandeFournitureRepository;
+import repository.LogsRepository;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -28,6 +31,8 @@ public class DemandesProfesseurController implements Initializable {
     private Label erreur;
     @FXML
     private Button nouvelleDemande;
+    @FXML
+    private Button annulerDemande;
     @FXML
     private VBox rechercheAvancee;
     @FXML
@@ -141,6 +146,7 @@ public class DemandesProfesseurController implements Initializable {
             int indexLigne = cell.getRow();
             TableColumn colonne = cell.getTableColumn();
             this.demandeSel = tableauDemandes.getItems().get(indexLigne);
+            this.annulerDemande.setDisable(false);
         } else if (event.getButton() == MouseButton.PRIMARY  && event.getClickCount() == 2) {
             TablePosition cell = tableauDemandes.getSelectionModel().getSelectedCells().get(0);
             int indexLigne = cell.getRow();
@@ -150,6 +156,37 @@ public class DemandesProfesseurController implements Initializable {
     @FXML
     protected void nouvelleDemande() throws IOException {
         StartApplication.changeScene("professeur/nouvelleDemandeProfesseurView.fxml");
+    }
+
+    @FXML
+    protected void annulerDemande() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Annuler la demande de fournitures");
+        alert.setHeaderText("Souhaitez-vous annuler cette demande de fournitures ?");
+        alert.setContentText("Cette action est irréversible !");
+        alert.showAndWait().ifPresent(reponse -> {
+            // Si OK cliqué, annule (supprime) le rendez-vous
+            if (reponse == ButtonType.OK){
+                DemandeFournitureRepository demandeFournitureRepository = new DemandeFournitureRepository();
+                boolean check = false;
+                try {
+                    check = demandeFournitureRepository.annuler(this.demandeSel);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                if (check == true){
+                    try {
+                        new LogsRepository().ajout(new Logs("Suppression de la demande de fourniture id. "+this.demandeSel.getIdDemandeFourniture(), LocalDateTime.now(), UtilisateurConnecte.getInstance()));
+                        StartApplication.changeScene("professeur/demandesProfesseurView.fxml");
+                    } catch (IOException | SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    this.erreur.setText("Cette demande de fournitures n'existe déjà plus.");
+                    this.erreur.setVisible(true);
+                }
+            }
+        });
     }
 
     @FXML

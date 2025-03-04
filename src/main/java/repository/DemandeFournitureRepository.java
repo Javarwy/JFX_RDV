@@ -19,8 +19,9 @@ public class DemandeFournitureRepository {
         );
         ps.setInt(1, demandeFourniture.getQuantite());
         ps.setString(2, demandeFourniture.getRaison());
-        ps.setInt(3, demandeFourniture.getRefFourniture().getId_fourniture());
-        ps.setInt(4 ,demandeFourniture.getRefUtilisateur().getId_utilisateur());
+        ps.setString(3, demandeFourniture.getStatut());
+        ps.setInt(4, demandeFourniture.getRefFourniture().getId_fourniture());
+        ps.setInt(5 ,demandeFourniture.getRefUtilisateur().getId_utilisateur());
         ps.executeUpdate();
         PreparedStatement ps2 = db.getConnection().prepareStatement(
           "SELECT COUNT(*) FROM demandefourniture WHERE quantite = ? AND raison = ? AND statut = ? AND ref_fourniture = ? AND ref_utilisateur = ?"
@@ -33,6 +34,29 @@ public class DemandeFournitureRepository {
         ResultSet rs = ps2.executeQuery();
         if (rs.next()) {
             if (rs.getInt(1) == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean annuler(DemandeFourniture demandeFourniture) throws SQLException {
+        Database db = new Database();
+        PreparedStatement ps = db.getConnection().prepareStatement(
+                "DELETE FROM demandefourniture WHERE id_demandefourniture = ?"
+        );
+        ps.setInt(1, demandeFourniture.getIdDemandeFourniture());
+        ps.executeUpdate();
+        PreparedStatement ps2 = db.getConnection().prepareStatement(
+                "SELECT COUNT(*) FROM demandefourniture WHERE id_demandefourniture = ?"
+        );
+        ps2.setInt(1, demandeFourniture.getIdDemandeFourniture());
+        ResultSet rs = ps2.executeQuery();
+        if (rs.next()) {
+            if (rs.getInt(1) == 0) {
                 return true;
             } else {
                 return false;

@@ -29,8 +29,6 @@ public class FournitureController implements Initializable {
     @FXML
     private TextField passwordField;
     @FXML
-    private PasswordField confirmPasswordField;
-    @FXML
     private ChoiceBox<String> roleField;
 
     @Override
@@ -66,15 +64,9 @@ public class FournitureController implements Initializable {
             return;
         }
         String fournisseur = this.passwordField.getText();
-        String confirmation = this.confirmPasswordField.getText();
 
-        if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty() || confirmation.isEmpty()) {
+        if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty()) {
             this.erreur.setText("Veuillez remplir tous les champs.");
-            this.erreur.setVisible(true);
-            return;
-        }
-        if (!fournisseur.equals(confirmation)) {
-            this.erreur.setText("Erreur, les champs ne coïncident pas !");
             this.erreur.setVisible(true);
             return;
         }
@@ -98,15 +90,9 @@ public class FournitureController implements Initializable {
             return;
         }
         String fournisseur = this.passwordField.getText();
-        String confirmation = this.confirmPasswordField.getText();
 
-        if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty() || confirmation.isEmpty()) {
+        if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty()) {
             this.erreur.setText("Veuillez remplir tous les champs.");
-            this.erreur.setVisible(true);
-            return;
-        }
-        if (!fournisseur.equals(confirmation)) {
-            this.erreur.setText("Erreur, les champs ne coïncident pas !");
             this.erreur.setVisible(true);
             return;
         }
@@ -130,18 +116,14 @@ public class FournitureController implements Initializable {
             return;
         }
         String fournisseur = this.passwordField.getText();
-        String confirmation = this.confirmPasswordField.getText();
 
-        if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty() || confirmation.isEmpty()) {
+        if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty()) {
             this.erreur.setText("Veuillez remplir tous les champs.");
             this.erreur.setVisible(true);
             return;
         }
-        if (!fournisseur.equals(confirmation)) {
-            this.erreur.setText("Erreur, les champs ne coïncident pas !");
-            this.erreur.setVisible(true);
-            return;
-        }        Fourniture fourniture = new Fourniture(libelle, description, prix, fournisseur);
+
+        Fourniture fourniture = new Fourniture(libelle, description, prix, fournisseur);
 
         FournitureRepository fournitureRepository = new FournitureRepository();
         fournitureRepository.deleteFourniture(fourniture);
@@ -151,7 +133,6 @@ public class FournitureController implements Initializable {
     protected void supprimerFournitureMenu() throws IOException {
         StartApplication.changeScene("stock/removeStockView.fxml");
     }
-
 
     @FXML
     protected void modifierFournitureMenu() throws IOException {

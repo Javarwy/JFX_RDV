@@ -23,6 +23,7 @@ public class StartApplication extends Application {
     public static void changeScene(String nomDuFichierFxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource(nomDuFichierFxml));
         Scene scene = new Scene(fxmlLoader.load(), 550, 600);
+
         mainStage.setScene(scene);
     }
 

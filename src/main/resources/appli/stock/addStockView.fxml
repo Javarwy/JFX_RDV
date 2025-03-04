@@ -44,7 +44,7 @@
          <Font name="System Italic" size="14.0" />
       </font>
    </TextField>
-    <Text id = "erreurField" text="" visible="false" />
+    <Label id = "erreurField" text="" visible="false" />
    <Button onAction="#deconnexion" text="Annuler" />
    <Button onAction="#ajoutFourniture" text="Confirmer l'ajout" />
 </VBox>

@@ -132,6 +132,7 @@ public class DossiersProfesseurController implements Initializable {
             }
             tableauDossier.getColumns().add(maColonne);
         }
+        tableauDossier.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         DossierRepository dossierRepository = new DossierRepository();
         ArrayList<String> filieres;
         EtudiantRepository etudiantRepository = new EtudiantRepository();

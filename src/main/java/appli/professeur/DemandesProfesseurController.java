@@ -110,6 +110,7 @@ public class DemandesProfesseurController implements Initializable {
             }
             tableauDemandes.getColumns().add(maColonne);
         }
+        tableauDemandes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         DemandeFournitureRepository demandeFournitureRepository = new DemandeFournitureRepository();
         try {
             this.demandes = demandeFournitureRepository.getDemandeFournituresByUtilisateur(UtilisateurConnecte.getInstance());

@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import modeles.*;
 import repository.LogsRepository;
 import repository.RendezVousRepository;
@@ -33,15 +34,11 @@ public class PrendreRdvProfesseurController implements Initializable {
     @FXML
     private Label erreur;
     @FXML
-    private Label labelDate;
+    private VBox form;
     @FXML
     private DatePicker date;
     @FXML
-    private Label labelHeure;
-    @FXML
     private Spinner<Integer> heure;
-    @FXML
-    private Label labelMinute;
     @FXML
     private Spinner<Integer> minute;
 
@@ -69,6 +66,7 @@ public class PrendreRdvProfesseurController implements Initializable {
             maColonne.setCellValueFactory(new PropertyValueFactory<Salle,String>(colonnes[i][1]));
             tableauSalle.getColumns().add(maColonne);
         }
+        this.tableauSalle.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         SalleRepository salleRepository = new SalleRepository();
         ArrayList<Salle> salles;
         try {
@@ -94,12 +92,8 @@ public class PrendreRdvProfesseurController implements Initializable {
             int indexLigne = cell.getRow();
             TableColumn colonne = cell.getTableColumn();
             this.salleSel = tableauSalle.getItems().get(indexLigne);
-            this.labelDate.setVisible(true);
-            this.date.setVisible(true);
-            this.labelHeure.setVisible(true);
-            this.heure.setVisible(true);
-            this.labelMinute.setVisible(true);
-            this.minute.setVisible(true);
+            this.form.setVisible(true);
+            this.form.setManaged(true);
         }
     }
     @FXML

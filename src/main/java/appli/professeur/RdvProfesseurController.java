@@ -143,6 +143,7 @@ public class RdvProfesseurController implements Initializable {
             }
             tableauRdv.getColumns().add(maColonne);
         }
+        tableauRdv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         RendezVousRepository rendezVousRepository = new RendezVousRepository();
         SalleRepository salleRepository = new SalleRepository();
         ArrayList<Salle> salles;

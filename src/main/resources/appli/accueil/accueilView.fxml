@@ -5,20 +5,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="appli.accueil.AccueilController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
 
-  <Label fx:id="welcomeText" text="Bienvenue !">
-    <font>
-      <Font size="24.0" />
-    </font>
-  </Label>
+  <Label fx:id="welcomeText" text="Bienvenue !" />
   <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
-   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+   <HBox alignment="CENTER">
       <children>
       <Button onAction="#modifierInfos" text="Modifier mes informations" />
       </children>

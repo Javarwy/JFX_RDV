@@ -7,43 +7,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="appli.accueil.LoginController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-  </padding>
 
-  <Label fx:id="welcomeText" text="Bienvenue !">
-    <font>
-      <Font size="24.0" />
-    </font>
-  </Label>
-  <Label fx:id="emailText" text="Votre email :">
-  <font>
-    <Font size="14.0" />
-  </font>
-  </Label>
+  <Label fx:id="welcomeText" text="Bienvenue !" />
+  <Label fx:id="emailText" text="Votre email :" />
   <TextField fx:id="emailField">
-    <font>
-      <Font size="10.0" />
-    </font>
   </TextField>
-  <Label fx:id="passwordText" text="Votre mot de passe :">
-    <font>
-      <Font size="14.0" />
-    </font>
-  </Label>
+  <Label fx:id="passwordText" text="Votre mot de passe :" />
   <PasswordField fx:id="passwordField">
-    <font>
-      <Font size="10.0" />
-    </font>
   </PasswordField>
   <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
   <Button onAction="#connexion" text="Se connecter" />
    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
       <children>
-      <Button onAction="#inscription" text="Inscription" />
+      <Button onAction="#inscription" text="Pas de compte ? Cliquez ici" />
       </children>
    </HBox>
 </VBox>

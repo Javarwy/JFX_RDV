@@ -8,35 +8,30 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
 
-  <Label text="Modifier rendez-vous">
-    <font>
-      <Font size="18.0" />
-    </font>
-  </Label>
-  <Label fx:id="idRdv">
-    <font>
-      <Font name="System Bold" />
-    </font>
-  </Label>
-  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="500.0" spacing="5">
+  <Label fx:id="welcomeText" text="Modifier rendez-vous" />
+  <Label fx:id="idRdv" textFill="blue" />
+  <VBox alignment="CENTER" spacing="10">
     <children>
-      <Label text="Date :" />
-      <DatePicker fx:id="date" />
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="50.0" spacing="5">
+      <HBox alignment="CENTER">
+        <Label text="Date : " />
+        <DatePicker fx:id="date" />
+      </HBox>
+      <HBox alignment="CENTER" spacing="5">
         <Label text="Heure :"/>
         <Spinner fx:id="heure" min="8" max="18"/>
         <Label text="Minutes :"/>
         <Spinner fx:id="minute" max="59"/>
       </HBox>
-      <Label text="Salle :" />
-      <ComboBox fx:id="salle" />
+      <HBox alignment="CENTER">
+        <Label text="Salle : " />
+        <ComboBox fx:id="salle" />
+      </HBox>
       <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
       <Button onAction="#confirmer" text="Confirmer les modifications" />
     </children>

@@ -10,24 +10,23 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.professeur.RdvProfesseurController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
 
-  <Label text="Rendez-vous">
-    <font>
-        <Font size="18.0" />
-    </font>
-  </Label>
+  <Label fx:id="welcomeText" text="Rendez-vous" />
     <VBox alignment="CENTER" prefHeight="800.0" prefWidth="600.0">
         <children>
-            <Button text="Recherche par filtre" onAction="#activerRecherche" />
+            <Button text="Recherche par filtre" onAction="#activerRecherche">
+                <VBox.margin>
+                    <Insets top="5" bottom="5" />
+                </VBox.margin>
+            </Button>
             <VBox fx:id="rechercheAvancee" spacing="10" visible="false" managed="false" >
                 <VBox.margin>
-                    <Insets top="10" bottom="10" />
+                    <Insets top="5" bottom="5" />
                 </VBox.margin>
                 <children>
                     <HBox alignment="CENTER">
@@ -67,9 +66,13 @@
                 </children>
             </VBox>
             <Label text="Pour visualiser le dossier d'inscription du rendez-vous, double-cliquez sur celui-ci." textFill="blue" />
-            <TableView fx:id="tableauRdv" onMouseClicked="#onRdvSelection" prefHeight="400.0" prefWidth="600.0" />
+            <TableView fx:id="tableauRdv" onMouseClicked="#onRdvSelection">
+                <VBox.margin>
+                    <Insets top="5" />
+                </VBox.margin>
+            </TableView>
             <Label fx:id="erreur" textFill="red" visible="false" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="50.0" spacing="5">
+            <HBox alignment="CENTER" prefWidth="50.0" spacing="5">
                 <children>
                     <Button fx:id="modifRdv" disable="true" onAction="#modifRdv" text="Modifier rendez-vous" />
                     <Button fx:id="annulerRdv" disable="true" onAction="#annulerRdv" text="Annuler rendez-vous" />

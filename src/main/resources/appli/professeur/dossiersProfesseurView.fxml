@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.HBox?>
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.professeur.DossiersProfesseurController">
@@ -17,17 +16,17 @@
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
 
-  <Label text="Dossiers d'inscription">
-    <font>
-        <Font size="18.0" />
-    </font>
-  </Label>
+  <Label fx:id="welcomeText" text="Dossiers d'inscription" />
     <VBox alignment="CENTER" prefHeight="800.0" prefWidth="600.0">
         <children>
-            <Button text="Recherche par filtre" onAction="#activerRecherche" />
+            <Button text="Recherche par filtre" onAction="#activerRecherche">
+                <VBox.margin>
+                    <Insets top="5" bottom="5" />
+                </VBox.margin>
+            </Button>
             <VBox fx:id="rechercheAvancee" spacing="10" visible="false" managed="false">
                 <VBox.margin>
-                    <Insets top="10" bottom="10" />
+                    <Insets top="5" bottom="5" />
                 </VBox.margin>
                 <children>
                     <HBox alignment="CENTER">
@@ -38,11 +37,11 @@
                     </HBox>
                     <HBox alignment="CENTER">
                         <Label text="Heure : " />
-                        <Spinner fx:id="heureDebut" max="23" maxWidth="55" />
-                        <Spinner fx:id="minuteDebut" max="59" maxWidth="55" />
+                        <Spinner fx:id="heureDebut" max="23" />
+                        <Spinner fx:id="minuteDebut" max="59" />
                         <Label text=" à " />
-                        <Spinner fx:id="heureFin" max="23" maxWidth="55" />
-                        <Spinner fx:id="minuteFin" max="59" maxWidth="55" />
+                        <Spinner fx:id="heureFin" max="23" />
+                        <Spinner fx:id="minuteFin" max="59" />
                     </HBox>
                     <HBox alignment="CENTER" spacing="5">
                         <Label text="Filière : " />
@@ -72,13 +71,13 @@
                     </HBox>
                 </children>
             </VBox>
-            <TableView fx:id="tableauDossier" onMouseClicked="#onDossierSelection" prefHeight="400.0" prefWidth="600.0" />
-            <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
-            <Button fx:id="rdv" disable="true" onAction="#prendreRdv" text="Prendre rendez-vous">
+            <TableView fx:id="tableauDossier" onMouseClicked="#onDossierSelection">
                 <VBox.margin>
-                    <Insets top="10.0" />
+                    <Insets top="5" />
                 </VBox.margin>
-            </Button>
+            </TableView>
+            <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
+            <Button fx:id="rdv" disable="true" onAction="#prendreRdv" text="Prendre rendez-vous" />
         </children>
     </VBox>
     <Button layoutX="69.0" layoutY="491.0" mnemonicParsing="false" onAction="#retour" text="Retour" />

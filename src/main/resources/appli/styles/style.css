@@ -10,8 +10,16 @@
     -fx-text-fill: #FFFFFF;
 }
 
+.button:focused {
+    -fx-background-color: #68BBFF;
+}
+
 .button:hover {
     -fx-background-color: #68BBFF;
+}
+
+.combo-box {
+    -fx-font-size: 14.0;
 }
 
 .label {

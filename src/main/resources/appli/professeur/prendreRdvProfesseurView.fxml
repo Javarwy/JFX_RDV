@@ -19,7 +19,7 @@
     <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
         <children>
             <Label text="Salles disponibles" />
-            <TableView fx:id="tableauSalle" onMouseClicked="#onSalleSelection" />
+            <TableView fx:id="tableauSalle" onMouseClicked="#onSalleSelection" maxWidth="600.0" />
             <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
             <VBox fx:id="form" spacing="10" visible="false" managed="false">
                 <VBox.margin>

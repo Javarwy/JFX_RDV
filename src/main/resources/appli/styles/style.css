@@ -1,17 +1,17 @@
 .root {
-    -fx-background-color: linear-gradient(to top, #008AD3, #FFFFFF);
+    -fx-background-color: linear-gradient(to top, #008AD3, #EEEEEE);
     -fx-font-family: "Franklin Gothic Medium";
 }
 
 .button {
-    -fx-background-color: #68BBFF;
+    -fx-background-color: #3498db;
     -fx-border-color: #008AD3;
     -fx-font-size: 24.0;
     -fx-text-fill: #FFFFFF;
 }
 
 .button:hover {
-    -fx-background-color: #3498db;
+    -fx-background-color: #68BBFF;
 }
 
 .label {
@@ -20,6 +20,22 @@
 
 .spinner {
     -fx-max-width: 60;
+}
+
+.table-row-cell {
+    -fx-background-color: #ACDCFF;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #EEEEEE;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #3498db;
+}
+
+.table-view {
+    -fx-background-color: #008AD3;
 }
 
 .text-field, .password-field {

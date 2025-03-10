@@ -132,6 +132,7 @@ public class DossiersProfesseurController implements Initializable {
             }
             tableauDossier.getColumns().add(maColonne);
         }
+        // Permet de rendre la taille des colonnes du TableView dynamique
         tableauDossier.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         DossierRepository dossierRepository = new DossierRepository();
         ArrayList<String> filieres;
@@ -153,14 +154,17 @@ public class DossiersProfesseurController implements Initializable {
         observableList.setAll(this.dossiers);
         this.filiereRecherche.getItems().add(null);
         this.diplomeRecherche.getItems().add(null);
+        // Ajoute les filières dans la ComboBox Filières de la recherche avancée
         for (String s : filieres){
             this.filiereRecherche.getItems().add(s);
         }
+        // Ajoute les diplômes dans la ComboBox Diplômes de la recherche avancée
         for (String s : diplomes){
             this.diplomeRecherche.getItems().add(s);
         }
         this.dateDebut.setValue(LocalDate.now());
         this.dateFin.setValue(LocalDate.now());
+        // Mettre 23 et 59 comme valeur par défaut sur les Spinners de l'horaire de fin de la recherche avancée
         this.heureFin.getValueFactory().setValue(23);
         this.minuteFin.getValueFactory().setValue(59);
     }
@@ -199,11 +203,13 @@ public class DossiersProfesseurController implements Initializable {
             }
         }
     }
+    // Redirection vers la page de prise de rendez-vous
     @FXML
     protected void prendreRdv() throws IOException {
         StartApplication.changeScene("professeur/prendreRdvProfesseurView.fxml", new PrendreRdvProfesseurController(this.dossierSel));
     }
 
+    // Affiche ou désactive les champs de recherche avancée
     @FXML
     protected void activerRecherche() {
         if (this.rechercheAvancee.isVisible()) {
@@ -215,6 +221,7 @@ public class DossiersProfesseurController implements Initializable {
         }
     }
 
+    // Effectue une requête à la bdd avec les filtres demandés
     @FXML
     protected void filtrage() throws SQLException {
         if (this.dateDebut == null && this.dateFin == null && this.heureDebut == null && this.heureFin == null && this.filiereRecherche == null && this.motivationRecherche == null && this.nomRecherche == null && this.prenomRecherche == null && this.diplomeRecherche == null && this.emailRecherche == null && this.telRecherche == null) {
@@ -243,6 +250,7 @@ public class DossiersProfesseurController implements Initializable {
         }
     }
 
+    // Réinitialise les filtres (champs en valeur par défaut)
     @FXML
     protected void resetFiltres() {
         this.dateDebut.setValue(LocalDate.now());

@@ -70,6 +70,7 @@ public class PrendreRdvProfesseurController implements Initializable {
         SalleRepository salleRepository = new SalleRepository();
         ArrayList<Salle> salles;
         try {
+            // Ajoute les salles libres dans la ComboBox Salles du formulaire
             salles = salleRepository.getSallesLibres();
         } catch (SQLException e) {
             throw new RuntimeException(e);

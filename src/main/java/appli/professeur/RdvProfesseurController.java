@@ -213,11 +213,13 @@ public class RdvProfesseurController implements Initializable {
             alert.showAndWait();
         }
     }
+    // Redirection vers la page de modification de rendez-vous (avec le rdv sélectionné)
     @FXML
     protected void modifRdv() {
         StartApplication.changeScene("professeur/modifierRdvView.fxml", new ModifierRdvController(this.rdvSel));
     }
 
+    // Affiche un alert avec OK/Cancel pour annuler (supprimer) le rendez-vous
     @FXML
     protected void annulerRdv() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -263,6 +265,7 @@ public class RdvProfesseurController implements Initializable {
         });
     }
 
+    // Affiche ou désactive les champs de recherche avancée
     @FXML
     protected void activerRecherche() {
         if (this.rechercheAvancee.isVisible()) {
@@ -274,6 +277,7 @@ public class RdvProfesseurController implements Initializable {
         }
     }
 
+    // Effectue une requête à la bdd avec les filtres demandés
     @FXML
     protected void filtrage() throws SQLException {
         if (this.dateDebut == null && this.dateFin == null && this.heureDebut == null && this.heureFin == null && this.nomRecherche == null && this.prenomRecherche == null && this.emailRecherche == null && this.telRecherche == null) {
@@ -300,6 +304,7 @@ public class RdvProfesseurController implements Initializable {
         }
     }
 
+    // Réinitialise les filtres (champs en valeur par défaut)
     @FXML
     protected void resetFiltres() {
         this.dateDebut.setValue(LocalDate.now());

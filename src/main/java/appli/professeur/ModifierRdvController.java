@@ -57,6 +57,7 @@ public class ModifierRdvController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        // Ajoute les salles libres dans la ComboBox Salles du formulaire
         for (Salle salle : salles) {
             this.salle.getItems().add(salle);
         }

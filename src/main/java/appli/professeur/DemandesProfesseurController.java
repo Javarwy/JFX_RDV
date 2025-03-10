@@ -110,6 +110,7 @@ public class DemandesProfesseurController implements Initializable {
             }
             tableauDemandes.getColumns().add(maColonne);
         }
+        // Permet de rendre la taille des colonnes du TableView dynamique
         tableauDemandes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         DemandeFournitureRepository demandeFournitureRepository = new DemandeFournitureRepository();
         try {
@@ -154,11 +155,13 @@ public class DemandesProfesseurController implements Initializable {
             TableColumn colonne = cell.getTableColumn();
         }
     }
+    // Redirection vers la page de nouvelle demande de fournitures
     @FXML
     protected void nouvelleDemande() throws IOException {
         StartApplication.changeScene("professeur/nouvelleDemandeProfesseurView.fxml");
     }
 
+    // Affiche un alert avec OK/Cancel pour annuler (supprimer) la demande
     @FXML
     protected void annulerDemande() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -166,7 +169,7 @@ public class DemandesProfesseurController implements Initializable {
         alert.setHeaderText("Souhaitez-vous annuler cette demande de fournitures ?");
         alert.setContentText("Cette action est irréversible !");
         alert.showAndWait().ifPresent(reponse -> {
-            // Si OK cliqué, annule (supprime) le rendez-vous
+            // Si OK cliqué, annule (supprime) la demande
             if (reponse == ButtonType.OK){
                 DemandeFournitureRepository demandeFournitureRepository = new DemandeFournitureRepository();
                 boolean check = false;
@@ -190,6 +193,7 @@ public class DemandesProfesseurController implements Initializable {
         });
     }
 
+    // Affiche ou désactive les champs de recherche avancée
     @FXML
     protected void activerRecherche() {
         if (this.rechercheAvancee.isVisible()) {
@@ -201,6 +205,7 @@ public class DemandesProfesseurController implements Initializable {
         }
     }
 
+    // Effectue une requête à la bdd avec les filtres demandés
     @FXML
     protected void filtrage() throws SQLException {
         if (this.libelleRecherche == null && this.descriptionRecherche == null && this.prixDebutRecherche == null && this.prixFinRecherche == null && this.fournisseurRecherche == null && this.quantiteDebutRecherche == null && this.quantiteFinRecherche == null && this.raisonRecherche == null && this.statutRecherche == null) {
@@ -223,6 +228,7 @@ public class DemandesProfesseurController implements Initializable {
         }
     }
 
+    // Réinitialise les filtres (champs en valeur par défaut)
     @FXML
     protected void resetFiltres() {
         this.libelleRecherche.clear();

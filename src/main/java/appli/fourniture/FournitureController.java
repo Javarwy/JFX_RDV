@@ -1,19 +1,22 @@
 package appli.fourniture;
 
 import appli.StartApplication;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import modeles.Fourniture;
 import modeles.UtilisateurConnecte;
 import repository.FournitureRepository;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class FournitureController implements Initializable {
@@ -30,11 +33,8 @@ public class FournitureController implements Initializable {
     private TextField passwordField;
     @FXML
     private ChoiceBox<String> roleField;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+    @FXML
+    private ListView<Fourniture> listviewFourniture;
 
     @FXML
     protected void changeSceneTableauFournitures() throws IOException {
@@ -53,80 +53,74 @@ public class FournitureController implements Initializable {
 
     @FXML
     protected void ajoutFourniture() throws IOException, SQLException {
-        String libelle = this.nomField.getText();
-        String description = this.prenomField.getText();
+        String libelle = nomField.getText();
+        String description = prenomField.getText();
         double prix;
         try {
-            prix = Double.parseDouble(this.emailField.getText());
+            prix = Double.parseDouble(emailField.getText());
         } catch (NumberFormatException e) {
-            this.erreur.setText("Le prix doit être un nombre.");
-            this.erreur.setVisible(true);
+            erreur.setText("Le prix doit être un nombre.");
+            erreur.setVisible(true);
             return;
         }
-        String fournisseur = this.passwordField.getText();
-
+        String fournisseur = passwordField.getText();
         if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty()) {
-            this.erreur.setText("Veuillez remplir tous les champs.");
-            this.erreur.setVisible(true);
+            erreur.setText("Veuillez remplir tous les champs.");
+            erreur.setVisible(true);
             return;
         }
-
         Fourniture fourniture = new Fourniture(libelle, description, prix, fournisseur);
-
         FournitureRepository fournitureRepository = new FournitureRepository();
         fournitureRepository.addFourniture(fourniture);
+        StartApplication.changeScene("stock/menuStockView.fxml");
     }
 
     @FXML
     protected void modifierFourniture() throws IOException, SQLException {
-        String libelle = this.nomField.getText();
-        String description = this.prenomField.getText();
+        String libelle = nomField.getText();
+        String description = prenomField.getText();
         double prix;
         try {
-            prix = Double.parseDouble(this.emailField.getText());
+            prix = Double.parseDouble(emailField.getText());
         } catch (NumberFormatException e) {
-            this.erreur.setText("Le prix doit être un nombre.");
-            this.erreur.setVisible(true);
+            erreur.setText("Le prix doit être un nombre.");
+            erreur.setVisible(true);
             return;
         }
-        String fournisseur = this.passwordField.getText();
-
+        String fournisseur = passwordField.getText();
         if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty()) {
-            this.erreur.setText("Veuillez remplir tous les champs.");
-            this.erreur.setVisible(true);
+            erreur.setText("Veuillez remplir tous les champs.");
+            erreur.setVisible(true);
             return;
         }
-
         Fourniture fourniture = new Fourniture(libelle, description, prix, fournisseur);
-
         FournitureRepository fournitureRepository = new FournitureRepository();
         fournitureRepository.updateFourniture(fourniture);
+        StartApplication.changeScene("stock/menuStockView.fxml");
     }
 
     @FXML
     protected void supprimerFourniture() throws IOException, SQLException {
-        String libelle = this.nomField.getText();
-        String description = this.prenomField.getText();
+        String libelle = nomField.getText();
+        String description = prenomField.getText();
         double prix;
         try {
-            prix = Double.parseDouble(this.emailField.getText());
+            prix = Double.parseDouble(emailField.getText());
         } catch (NumberFormatException e) {
-            this.erreur.setText("Le prix doit être un nombre.");
-            this.erreur.setVisible(true);
+            erreur.setText("Le prix doit être un nombre.");
+            erreur.setVisible(true);
             return;
         }
-        String fournisseur = this.passwordField.getText();
-
+        String fournisseur = passwordField.getText();
         if (libelle.isEmpty() || description.isEmpty() || prix == 0 || fournisseur.isEmpty()) {
-            this.erreur.setText("Veuillez remplir tous les champs.");
-            this.erreur.setVisible(true);
+            erreur.setText("Veuillez remplir tous les champs.");
+            erreur.setVisible(true);
             return;
         }
-
         Fourniture fourniture = new Fourniture(libelle, description, prix, fournisseur);
-
         FournitureRepository fournitureRepository = new FournitureRepository();
         fournitureRepository.deleteFourniture(fourniture);
+        StartApplication.changeScene("stock/menuStockView.fxml");
     }
 
     @FXML
@@ -143,5 +137,44 @@ public class FournitureController implements Initializable {
     protected void deconnexion() throws IOException {
         UtilisateurConnecte.clearInstance();
         StartApplication.changeScene("accueil/loginView.fxml");
+    }
+
+    @FXML
+    protected void page_pres_fourniture() throws IOException {
+        StartApplication.changeScene("stock/menuStockView.fxml");
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        chargerDonnees();
+    }
+
+    private void chargerDonnees() {
+        FournitureRepository fournitureRepository = new FournitureRepository();
+        try {
+            ArrayList<Fourniture> fournitures = fournitureRepository.getListFourniture();
+            ObservableList<Fourniture> observableList = FXCollections.observableArrayList(fournitures);
+            if (listviewFourniture != null) {
+                listviewFourniture.setItems(observableList);
+            } else {
+                System.out.println("listviewFourniture est null, aucun affichage des fournitures.");
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    protected void onDossierSelection() {
+    }
+
+    @FXML
+    protected void prendreRdv() {
+    }
+
+    @FXML
+    protected void retour() throws IOException {
+        StartApplication.changeScene("professeur/menuProfesseurView.fxml");
     }
 }

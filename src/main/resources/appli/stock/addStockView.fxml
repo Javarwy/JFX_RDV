@@ -45,6 +45,6 @@
       </font>
    </TextField>
     <Label id = "erreurField" text="" visible="false" />
-   <Button onAction="#deconnexion" text="Annuler" />
+   <Button onAction="#page_pres_fourniture" text="Annuler" />
    <Button onAction="#ajoutFourniture" text="Confirmer l'ajout" />
 </VBox>

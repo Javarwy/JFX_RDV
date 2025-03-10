@@ -19,8 +19,8 @@
   </Label>
    <HBox alignment="CENTER" prefHeight="150.0" prefWidth="450.0" spacing="5">
     <children>
-        <Button onAction="#changeSceneTableauFournitures" prefHeight="50.0" prefWidth="150.0" text="Gestion des fournitures" />
-        <Button prefHeight="50.0" prefWidth="150.0" text="Demande de fournitures" />
+        <Button onAction="#changeSceneTableauFournitures" prefHeight="50.0" prefWidth="300.0" text="Gestion des fournitures" />
+        <Button prefHeight="50.0" prefWidth="300.0" text="Dema2nde de fournitures" />
     </children>
    </HBox>
    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="50.0" spacing="5">

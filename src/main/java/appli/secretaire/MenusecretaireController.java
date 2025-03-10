@@ -30,7 +30,7 @@ public class MenusecretaireController {
 
     }
 
-    public void listeDossier(ActionEvent event) throws IOException {
+    public void listeDossier() throws IOException {
         StartApplication.changeScene("secretaire/listeDossierInscriptionView.fxml");
 
     }

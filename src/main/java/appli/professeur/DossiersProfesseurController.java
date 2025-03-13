@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -90,6 +91,18 @@ public class DossiersProfesseurController implements Initializable {
             TableColumn<Dossier,String> maColonne = new TableColumn<>(colonnes[i][0]);
             maColonne.setCellValueFactory(new PropertyValueFactory<Dossier,String>(colonnes[i][1]));
             switch(colonnes[i][1]){
+                // Pour la colonne "date", mettre la date en format jour/mois/année (dd/MM/yyyy)
+                case "date":
+                    maColonne.setCellValueFactory(cellData ->
+                            new SimpleStringProperty((cellData.getValue().getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))))
+                    );
+                    break;
+                // Pour la colonne "heure", afficher les secondes (même quand l'heure est pile)
+                case "heure":
+                    maColonne.setCellValueFactory(cellData ->
+                            new SimpleStringProperty((cellData.getValue().getHeure().format(DateTimeFormatter.ofPattern("HH:mm[:ss]"))))
+                    );
+                    break;
                 // Pour la colonne "id_etudiant", cache la colonne et insère l'id de l'étudiant dedans
                 case "id_etudiant":
                     maColonne.setVisible(false);

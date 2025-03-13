@@ -94,6 +94,12 @@ public class RdvProfesseurController implements Initializable {
             TableColumn<RendezVous, String> maColonne = new TableColumn<>(colonnes[i][0]);
             maColonne.setCellValueFactory(new PropertyValueFactory<RendezVous,String>(colonnes[i][1]));
             switch(colonnes[i][1]){
+                // Pour la colonne "date_rendezvous", mettre la date en format jour/mois/année (dd/MM/yyyy)
+                case "date_rendezvous":
+                    maColonne.setCellValueFactory(cellData ->
+                            new SimpleStringProperty((cellData.getValue().getDate_rendezvous().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))))
+                    );
+                    break;
                 // Pour la colonne "refDossier", cache la colonne et insère l'id du dossier dedans
                 case "refDossier":
                     maColonne.setVisible(false);

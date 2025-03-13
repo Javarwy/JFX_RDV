@@ -1,15 +1,18 @@
 package modeles;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Dossier {
 
     public int id_dossier;
-    public String date;
-    public String heure;
+    public LocalDate date;
+    public LocalTime heure;
     public String filliere;
     public String motivation;
     public Etudiant refEtudiant;
 
-    public Dossier (int id_dossier, String date, String heure, String filliere, String motivation, Etudiant refEtudiant) {
+    public Dossier (int id_dossier, LocalDate date, LocalTime heure, String filliere, String motivation, Etudiant refEtudiant) {
         this.id_dossier = id_dossier;
         this.date = date;
         this.heure = heure;
@@ -26,19 +29,19 @@ public class Dossier {
         this.id_dossier = id_dossier;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getHeure() {
+    public LocalTime getHeure() {
         return heure;
     }
 
-    public void setHeure(String heure) {
+    public void setHeure(LocalTime heure) {
         this.heure = heure;
     }
 

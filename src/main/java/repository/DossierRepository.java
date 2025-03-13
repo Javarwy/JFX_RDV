@@ -16,7 +16,7 @@ public class DossierRepository {
         ArrayList<Dossier> dossiers = new ArrayList<>();
         while(rs.next()) {
             Etudiant etudiant = new Etudiant(rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11));
-            dossiers.add(new Dossier(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), etudiant));
+            dossiers.add(new Dossier(rs.getInt(1), rs.getDate(2).toLocalDate(), rs.getTime(3).toLocalTime(), rs.getString(4), rs.getString(5), etudiant));
         }
         return dossiers;
     }
@@ -86,7 +86,7 @@ public class DossierRepository {
         ArrayList<Dossier> dossiers = new ArrayList<>();
         while(rs.next()) {
             Etudiant etudiant = new Etudiant(rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11));
-            dossiers.add(new Dossier(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), etudiant));
+            dossiers.add(new Dossier(rs.getInt(1), rs.getDate(2).toLocalDate(), rs.getTime(3).toLocalTime(), rs.getString(4), rs.getString(5), etudiant));
         }
         return dossiers;
     }

@@ -107,7 +107,7 @@ public class RendezVousRepository {
         while (rs.next()) {
             Salle salle = new Salle(rs.getInt("ref_salle"), rs.getString("nom_salle"), rs.getBoolean("occupe"), rs.getInt("professeur_present"));
             Etudiant etudiant = new Etudiant(rs.getInt("ref_etudiant"), rs.getString("nomEtudiant"), rs.getString("prenomEtudiant"), rs.getString("diplome"), rs.getString("emailEtudiant"), rs.getString("telephone"));
-            Dossier dossier = new Dossier(rs.getInt("ref_dossier"), rs.getString("date"), rs.getString("heure"), rs.getString("filliere"), rs.getString("motivation"), etudiant);
+            Dossier dossier = new Dossier(rs.getInt("ref_dossier"), rs.getDate("date").toLocalDate(), rs.getTime("heure").toLocalTime(), rs.getString("filliere"), rs.getString("motivation"), etudiant);
             rendezVous.add(new RendezVous(rs.getInt("id_rendezvous"), rs.getDate("date_rendezvous").toLocalDate(), rs.getTime("heure_rendezvous").toLocalTime(), dossier, salle));
         }
         return rendezVous;
@@ -184,7 +184,7 @@ public class RendezVousRepository {
         while (rs.next()) {
             Salle salle = new Salle(rs.getInt("ref_salle"), rs.getString("nom_salle"), rs.getBoolean("occupe"), rs.getInt("professeur_present"));
             Etudiant etudiant = new Etudiant(rs.getInt("ref_etudiant"), rs.getString("nomEtudiant"), rs.getString("prenomEtudiant"), rs.getString("diplome"), rs.getString("emailEtudiant"), rs.getString("telephone"));
-            Dossier dossier = new Dossier(rs.getInt("ref_dossier"), rs.getString("date"), rs.getString("heure"), rs.getString("filliere"), rs.getString("motivation"), etudiant);
+            Dossier dossier = new Dossier(rs.getInt("ref_dossier"), rs.getDate("date").toLocalDate(), rs.getTime("heure").toLocalTime(), rs.getString("filliere"), rs.getString("motivation"), etudiant);
             rendezVous.add(new RendezVous(rs.getInt("id_rendezvous"), rs.getDate("date_rendezvous").toLocalDate(), rs.getTime("heure_rendezvous").toLocalTime(), dossier, salle));
         }
         return rendezVous;

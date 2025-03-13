@@ -22,6 +22,28 @@
     -fx-font-size: 14.0;
 }
 
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #008AD3;
+}
+
+.date-picker-popup .month-year-pane .label {
+    -fx-font-size: 16.0;
+    -fx-text-fill: #FFFFFF;
+}
+
+.date-picker-popup .spinner .button {
+    -fx-background-color: #008AD3;
+}
+
+.date-picker-popup .spinner .left-arrow, .date-picker-popup .spinner .right-arrow {
+    -fx-background-color: #FFFFFF;
+    -fx-font-size: 16.0;
+}
+
+.date-picker-popup .spinner .left-arrow:hover, .date-picker-popup .spinner .right-arrow:hover {
+    -fx-background-color: #EEEEEE;
+}
+
 .label {
     -fx-font-size: 18.0;
 }

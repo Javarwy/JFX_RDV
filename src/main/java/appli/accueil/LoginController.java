@@ -18,6 +18,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import javafx.scene.input.KeyCode;
 
 public class LoginController implements Initializable {
     @FXML
@@ -30,7 +31,17 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         StartApplication.changeTitle("Connexion");
+        passwordField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                try {
+                    connexion();
+                } catch (SQLException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
 
     @FXML
     protected void connexion() throws SQLException, IOException {
@@ -79,6 +90,8 @@ public class LoginController implements Initializable {
     @FXML
     protected void inscription() throws IOException {
         StartApplication.changeScene("accueil/inscriptionView.fxml");
+
+
     }
 
 }

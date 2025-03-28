@@ -31,5 +31,6 @@
       <TextField fx:id="telephoneField" />
       <Label fx:id="erreur" text="Erreur" textFill="crimson" visible="false"/>
       <Button onAction="#createFiche" text="Inscrire" />
+    <Button layoutX="69.0" layoutY="491.0" mnemonicParsing="false" onAction="#retour" text="Retour" />
 
 </VBox>

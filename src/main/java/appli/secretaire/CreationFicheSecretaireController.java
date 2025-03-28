@@ -1,5 +1,6 @@
 package appli.secretaire;
 
+import appli.StartApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -42,6 +43,11 @@ public class CreationFicheSecretaireController {
             new EtudiantRepository().createFiche(new Etudiant(prenomEtudiant,nomEtudiant,diplome,emailEtudiant,telephone));
 
 
+    }
+
+    @FXML
+    protected void retour() throws IOException{
+        StartApplication.changeScene("secretaire/menuSecretaireView.fxml");
     }
 
 }

@@ -35,7 +35,7 @@ public class ListeDossierController implements Initializable {
 
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle){
-        StartApplication.changeTitle("Liste des dossiers");
+        StartApplication.changeTitle("Liste des dossiers d'inscription");
         String[][] colonnes = {
                 {"Id. dossier", "id_dossier"},
                 {"Date", "date"},
@@ -85,6 +85,7 @@ public class ListeDossierController implements Initializable {
                 }
                 tableauDossier.getColumns().add(maColonne);
             }
+            // Permet de rendre la taille des colonnes du TableView dynamique
             tableauDossier.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
             DossierRepository dossierRepository = new DossierRepository();
             ArrayList<String> filières;

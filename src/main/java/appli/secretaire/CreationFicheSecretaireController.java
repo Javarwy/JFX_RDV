@@ -2,18 +2,21 @@ package appli.secretaire;
 
 import appli.StartApplication;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import modeles.Etudiant;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import modeles.Utilisateur;
 import repository.EtudiantRepository;
 
 
-public class CreationFicheSecretaireController {
+public class CreationFicheSecretaireController implements Initializable {
 
     @FXML
     private Label erreur;
@@ -32,6 +35,11 @@ public class CreationFicheSecretaireController {
 
     @FXML
     private TextField telephoneField;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        StartApplication.changeTitle("Création de fiche étudiant");
+    }
 
     @FXML
     protected void createFiche() throws SQLException, IOException{

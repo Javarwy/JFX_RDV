@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 
 <?import javafx.geometry.Insets?>
@@ -13,23 +12,19 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-      <Label fx:id="welcomeT" text="Creations de fiches etudiants">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label fx:id="prenomEtudiantText" text="Prenom :" />
+      <Label fx:id="welcomeText" text="Création de fiche étudiant" />
+      <Label fx:id="prenomEtudiantText" text="Prénom :" />
       <TextField fx:id="prenomEtudiantField" />
       <Label  fx:id="nomEtudiantText" text="Nom :" />
       <TextField  fx:id="nomEtudiantField"  />
-      <Label fx:id="diplomeText" text="Diplome :" />
+      <Label fx:id="diplomeText" text="Diplôme :" />
       <TextField fx:id="diplomeField"/>
 
       <Label fx:id="emailEtudiantText" text="Email :" />
       <TextField fx:id="emailEtudiantField" />
-      <Label fx:id="telephoneText"  text=" Telephone:" />
+      <Label fx:id="telephoneText"  text=" Téléphone:" />
       <TextField fx:id="telephoneField" />
-      <Label fx:id="erreur" text="Erreur" textFill="crimson" visible="false"/>
+      <Label fx:id="erreur" text="Erreur" textFill="red" visible="false"/>
       <Button onAction="#createFiche" text="Inscrire" />
     <Button layoutX="69.0" layoutY="491.0" mnemonicParsing="false" onAction="#retour" text="Retour" />
 

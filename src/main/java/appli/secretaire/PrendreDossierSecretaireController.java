@@ -37,8 +37,8 @@ public class PrendreDossierSecretaireController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        StartApplication.changeTitle("Prendre dossier");
-        this.labelEtudiant.setText("Id. etudiant : " + this.etudiantSel.getId_etudiant() + "\nNom : " + this.etudiantSel.getNomEtudiant() + "\nPrénom : " + this.etudiantSel.getPrenomEtudiant());
+        StartApplication.changeTitle("Prendre le dossier d'inscription");
+        this.labelEtudiant.setText("Id. étudiant : " + this.etudiantSel.getId_etudiant() + "\nNom : " + this.etudiantSel.getNomEtudiant() + "\nPrénom : " + this.etudiantSel.getPrenomEtudiant());
     }
 
     @FXML

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.fourniture.FournitureController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.fourniture.FournitureController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
@@ -20,7 +20,6 @@
    <HBox alignment="CENTER" prefHeight="150.0" prefWidth="450.0" spacing="5">
     <children>
         <Button onAction="#changeSceneTableauFournitures" prefHeight="50.0" prefWidth="300.0" text="Gestion des fournitures" />
-        <Button prefHeight="50.0" prefWidth="300.0" text="Demande 2 fournitures" />
     </children>
    </HBox>
    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="50.0" spacing="5">

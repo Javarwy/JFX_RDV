@@ -10,8 +10,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import modeles.DemandeFourniture;
 import modeles.Fourniture;
 import modeles.UtilisateurConnecte;
+import repository.DemandeFournitureRepository;
 import repository.FournitureRepository;
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +25,8 @@ public class FournitureController implements Initializable {
 
     @FXML
     private Label erreur;
+
+    // TextField Fourniture
     @FXML
     private TextField nomField;
     @FXML
@@ -31,10 +35,25 @@ public class FournitureController implements Initializable {
     private TextField emailField;
     @FXML
     private TextField passwordField;
+
+    // TextField DemandeFourniture
+    @FXML
+    private TextField DnomField;
+    @FXML
+    private TextField DprenomField;
+    @FXML
+    private TextField DemailField;
+    @FXML
+    private TextField DpasswordField;
+
     @FXML
     private ChoiceBox<String> roleField;
     @FXML
     private ListView<Fourniture> listviewFourniture;
+
+    // Nouveau ListView pour les DemandeFourniture
+    @FXML
+    private ListView<DemandeFourniture> listviewDemandeFourniture;
 
     @FXML
     protected void changeSceneTableauFournitures() throws IOException {
@@ -157,13 +176,36 @@ public class FournitureController implements Initializable {
             if (listviewFourniture != null) {
                 listviewFourniture.setItems(observableList);
             } else {
-                System.out.println("listviewFourniture est null, aucun affichage des fournitures.");
+                System.out.println("listviewFourniture null.");
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
 
+    @FXML
+    private void chargerDonneesDemandeFourni() {
+        DemandeFournitureRepository demandeFournitureRepository = new DemandeFournitureRepository();
+        try {
+            ArrayList<DemandeFourniture> demandeFournitures = demandeFournitureRepository.getDemandeFournituresByUtilisateur(UtilisateurConnecte.getInstance());
+            ObservableList<DemandeFourniture> observableList = FXCollections.observableArrayList(demandeFournitures);
+            if (listviewDemandeFourniture != null) {
+                listviewDemandeFourniture.setItems(observableList);
+            } else {
+                System.out.println("listviewDemandeFourniture.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void noDemandeFourniture(){
+    }
+
+    @FXML
+    private void yesDemandeFourniture(){
+    }
 
     @FXML
     protected void onDossierSelection() {
@@ -175,6 +217,6 @@ public class FournitureController implements Initializable {
 
     @FXML
     protected void retour() throws IOException {
-        StartApplication.changeScene("professeur/menuProfesseurView.fxml");
+        StartApplication.changeScene("stock/menuStockView.fxml");
     }
 }

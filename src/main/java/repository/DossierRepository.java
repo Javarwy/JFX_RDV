@@ -8,6 +8,20 @@ import modeles.Dossier;
 import modeles.Etudiant;
 
 public class DossierRepository {
+    // Ajoute un dossier d'inscription dans la base de données
+    public void ajoutDossier(Dossier dossier) throws SQLException {
+        Database db = new Database();
+        PreparedStatement ps = db.getConnection().prepareStatement(
+                "INSERT INTO dossier (date, heure, filliere, motivation, ref_etudiant) VALUES (?,?,?,?,?)"
+        );
+        ps.setDate(1, Date.valueOf(dossier.getDate()));
+        ps.setTime(2, Time.valueOf(dossier.getHeure()));
+        ps.setString(3, dossier.getFilliere());
+        ps.setString(4, dossier.getMotivation());
+        ps.setInt(5, dossier.getRefEtudiant().getId_etudiant());
+        ps.executeUpdate();
+    }
+
     // Récupère une liste de tous les dossiers (avec informations de l'étudiant)
     public ArrayList<Dossier> getDossiers() throws SQLException {
         Database db = new Database();

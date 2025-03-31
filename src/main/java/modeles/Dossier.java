@@ -21,6 +21,14 @@ public class Dossier {
         this.refEtudiant = refEtudiant;
     }
 
+    public Dossier (LocalDate date, LocalTime heure, String filliere, String motivation, Etudiant refEtudiant) {
+        this.date = date;
+        this.heure = heure;
+        this.filliere = filliere;
+        this.motivation = motivation;
+        this.refEtudiant = refEtudiant;
+    }
+
     public int getId_dossier() {
         return id_dossier;
     }

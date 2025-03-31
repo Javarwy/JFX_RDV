@@ -67,4 +67,22 @@ public class EtudiantRepository {
             return diplomes;
     }
 
+    public boolean aDejaUnDossier (int refEtudiant) throws SQLException {
+        Database db = new Database();
+        PreparedStatement ps = db.getConnection().prepareStatement(
+                "SELECT COUNT(*) FROM dossier as d INNER JOIN etudiant as e ON d.ref_etudiant = e.id_etudiant WHERE d.ref_etudiant = ?; "
+        );
+        ps.setInt(1,refEtudiant);
+        ResultSet rs =ps.executeQuery();
+        if (rs.next()){
+            if(rs.getInt(1) == 1){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
 }

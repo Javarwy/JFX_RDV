@@ -86,7 +86,7 @@ public class CreationDossierSecretaireController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
-        StartApplication.changeTitle("Création dossier d'inscription");
+        StartApplication.changeTitle("Création de dossier d'inscription");
 
 
         String[][] colonnes = {
@@ -132,7 +132,8 @@ public class CreationDossierSecretaireController implements Initializable {
 
 
 
-
+        // Permet de rendre la taille des colonnes du TableView dynamique
+        tableauEtudiant.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
         EtudiantRepository etudiantRepository = new EtudiantRepository();
 
@@ -204,7 +205,7 @@ public class CreationDossierSecretaireController implements Initializable {
 
            if (aDejaUnDossier == true){
                          dos.setDisable(true);
-                         erreur.setText("Cette fiche a déja dans un dossier.");
+                         erreur.setText("Cette fiche a déjà dans un dossier.");
                          erreur.setVisible(true);
 
            }else {

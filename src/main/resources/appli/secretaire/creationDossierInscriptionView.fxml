@@ -5,28 +5,20 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.secretaire.CreationDossierSecretaireController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <Label text="Dossier d'inscription">
-        <font>
-            <Font size="18.0" />
-        </font>
-    </Label>
+    <Label fx:id="welcomeText" text="Création de dossier d'inscription" />
     <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
         <children>
             <TableView fx:id="tableauEtudiant" onMouseClicked="#onEtudiant" prefHeight="400.0" prefWidth="600.0" />
         </children>
+        <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
+        <Button fx:id="dos" onAction="#prendreDossier" text="Ajouter au dossier" />
     </VBox>
-    <Label fx:id="erreur" text="Erreur" textFill="RED" visible="false" />
-
-
-
-    <Button fx:id="dos" layoutX="69.0" layoutY="491.0" mnemonicParsing="false" onAction="#prendreDossier" text="Ajouter au dossier" />
     <Button fx:id="retour" layoutX="69.0" layoutY="491.0" mnemonicParsing="false" onAction="#retour" text="Retour" />
 </VBox>
 

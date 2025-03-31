@@ -28,7 +28,7 @@ public class EtudiantSecretaireController implements Initializable {
     private Etudiant etudiantSel;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        StartApplication.changeTitle("Liste des fiches etudiant");
+        StartApplication.changeTitle("Liste des fiches étudiant");
         String[][] colonnes = {
                 {"Id. etudiant", "id_etudiant"},
                 {"Prenom", "prenomEtudiant"},
@@ -43,6 +43,8 @@ public class EtudiantSecretaireController implements Initializable {
             maColonne.setCellValueFactory(new PropertyValueFactory<Etudiant,String>(colonnes[i][1]));
             tableauEtudiant.getColumns().add(maColonne);
         }
+        // Permet de rendre la taille des colonnes du TableView dynamique
+        tableauEtudiant.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         EtudiantRepository etudiantRepository = new EtudiantRepository();
         ArrayList<Etudiant> etudiants;
         try {

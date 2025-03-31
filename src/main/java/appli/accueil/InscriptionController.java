@@ -52,29 +52,34 @@ public class InscriptionController implements Initializable {
             this.erreur.setVisible(true);
         } else {
             if (password.equals(confirmPassword)) {
-                this.erreur.setVisible(false);
-                Utilisateur utilisateur = new Utilisateur(
-                    nom, prenom, email, encoder.encode(password), role
-                );
-                UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
-                Utilisateur emailCheck = utilisateurRepository.getUtilisateurByEmail(email);
-                if (emailCheck != null) {
-                    this.erreur.setText("L'adresse e-mail est déjà utilisée !");
+                if (isPasswordValid(password) == false){
+                    this.erreur.setText("Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&).");
                     this.erreur.setVisible(true);
                 } else {
                     this.erreur.setVisible(false);
-                    boolean check = utilisateurRepository.inscription(utilisateur);
-                    if (check == true){
-                        this.erreur.setVisible(false);
-                        this.nomField.clear();
-                        this.prenomField.clear();
-                        this.emailField.clear();
-                        this.passwordField.clear();
-                        this.confirmPasswordField.clear();
-                        StartApplication.changeScene("accueil/loginView.fxml");
-                    } else {
-                        this.erreur.setText("Erreur lors de l'ajout.");
+                    Utilisateur utilisateur = new Utilisateur(
+                            nom, prenom, email, encoder.encode(password), role
+                    );
+                    UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
+                    Utilisateur emailCheck = utilisateurRepository.getUtilisateurByEmail(email);
+                    if (emailCheck != null) {
+                        this.erreur.setText("L'adresse e-mail est déjà utilisée !");
                         this.erreur.setVisible(true);
+                    } else {
+                        this.erreur.setVisible(false);
+                        boolean check = utilisateurRepository.inscription(utilisateur);
+                        if (check == true){
+                            this.erreur.setVisible(false);
+                            this.nomField.clear();
+                            this.prenomField.clear();
+                            this.emailField.clear();
+                            this.passwordField.clear();
+                            this.confirmPasswordField.clear();
+                            StartApplication.changeScene("accueil/loginView.fxml");
+                        } else {
+                            this.erreur.setText("Erreur lors de l'ajout.");
+                            this.erreur.setVisible(true);
+                        }
                     }
                 }
             } else {
@@ -87,5 +92,13 @@ public class InscriptionController implements Initializable {
     @FXML
     protected void connexion() throws IOException {
         StartApplication.changeScene("accueil/loginView.fxml");
+    }
+    protected boolean isPasswordValid(String password) {
+        String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$";
+        if (!password.matches(passwordPattern)) {
+            return false;
+        } else{
+            return true;
+        }
     }
 }

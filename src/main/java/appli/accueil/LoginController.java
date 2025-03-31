@@ -90,8 +90,6 @@ public class LoginController implements Initializable {
     @FXML
     protected void inscription() throws IOException {
         StartApplication.changeScene("accueil/inscriptionView.fxml");
-
-
     }
 
 }
